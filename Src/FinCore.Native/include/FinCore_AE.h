@@ -92,3 +92,18 @@ typedef struct {
     double  opening_balance;
     int     is_active;
 } FINC_Account;
+
+typedef struct {
+    char    entry_id[FINC_MAX_ENTRY_ID_LEN];
+    char    date[FINC_MAX_DATE_LEN];
+    char    account_code[FINC_MAX_ACCOUNT_CODE_LEN];
+    char    label[FINC_MAX_LABEL_LEN];
+    char    reference[FINC_MAX_REFERENCE_LEN];
+    double  debit;
+    double  credit;
+    char    currency[FINC_MAX_CURRENCY_LEN];
+    double  exchange_rate;
+    char    period_id[FINC_MAX_PERIOD_ID_LEN];
+    char    user_id[FINC_MAX_USER_ID_LEN];
+    char    created_at[FINC_MAX_DATETIME_LEN];
+} FINC_JournalLine;
