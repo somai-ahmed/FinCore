@@ -81,3 +81,14 @@ typedef enum {
     FINC_DET_OUTLIER = 0x08,
     FINC_DET_ALL = 0x0F
 } FINC_DetectionFlags; /*ouvre documentation fichier pour l'explication du binaire*/
+
+/*=========STRUCTURE DES DONNEES=========*/
+typedef struct {
+    char    code[FINC_MAX_ACCOUNT_CODE_LEN];
+    char    label[FINC_MAX_LABEL_LEN];
+    int     type;
+    int     category;
+    char    parent[FINC_MAX_ACCOUNT_CODE_LEN];
+    double  opening_balance;
+    int     is_active;
+} FINC_Account;
