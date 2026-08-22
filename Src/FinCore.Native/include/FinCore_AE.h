@@ -67,3 +67,9 @@ typedef enum {
     FINC_CAT_BILAN = 1,
     FINC_CAT_RESULTAT = 2
 } FINC_AccountCategory;
+
+typedef enum {
+    FINC_PERIOD_OPEN = 0,
+    FINC_PERIOD_CLOSED = 1,
+    FINC_PERIOD_LOCKED = 2
+} FINC_PeriodStatus;
