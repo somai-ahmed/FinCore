@@ -10,3 +10,7 @@
  *   - VB.NET P/Invoke marshaling layer
  *   - Documentation / interop contract
  */
+
+
+#ifndef FINCORE_AE_H
+#define FINCORE_AE_H
