@@ -34,3 +34,5 @@
 #define FINC_MAX_DETECTION_HITS          10000
 #define FINC_MAX_REPORT_LINES            50000
 #define FINC_BENFORD_MIN_SAMPLE          300
+
+/*=======les enumerations========*/
