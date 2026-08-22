@@ -1,11 +1,11 @@
-# MHC-OS Accounting & Fraud Detection Engine
+# FinCore Accounting & Fraud Detection Engine
 ## Project Explication Book — v1.0
 
 ---
 
 ## 1. Executive Summary
 
-**Project Name:** MHC Accounting Engine (MHC-AE)  
+**Project Name:** FinCore Accounting Engine (FinCore-AE)  
 **Type:** Desktop accounting system with embedded fraud detection  
 **Primary Language:** C (core engine, Windows DLL)  
 **GUI Layer:** VB.NET / Windows Forms  
@@ -38,7 +38,7 @@
                     P/Invoke Boundary
                            |
 +--------------------------+-----------------------------------+
-|              C Core Engine (Windows DLL — mhc_ae.dll)         |
+|              C Core Engine (Windows DLL — FinCore_ae.dll)         |
 |  +-------------+  +-------------+  +---------------------+  |
 |  |  Journal    |  |  Reporting  |  |   Detection Engine  |  |
 |  |  Engine     |  |  (GL/Bal/Bil|  |   (Benford + Rules) |  |
@@ -70,48 +70,48 @@
 ### 3.1 Fundamental Types
 
 ```c
-// mhc_ae_types.h
+// FinCore_ae_types.h
 
-#define MHC_MAX_LABEL_LEN       256
-#define MHC_MAX_ACCOUNT_CODE_LEN 16
-#define MHC_MAX_CURRENCY_LEN     4
-#define MHC_MAX_ENTRIES_PER_JOURNAL 10000
-#define MHC_MAX_ACCOUNTS         1000
-#define MHC_MAX_PERIODS          50
-
-typedef enum {
-    MHC_OK = 0,
-    MHC_ERR_INVALID_INPUT = -1,
-    MHC_ERR_OUT_OF_MEMORY = -2,
-    MHC_ERR_ACCOUNT_NOT_FOUND = -3,
-    MHC_ERR_UNBALANCED_ENTRY = -4,
-    MHC_ERR_PERIOD_CLOSED = -5,
-    MHC_ERR_DUPLICATE_KEY = -6,
-    MHC_ERR_FILE_IO = -7,
-    MHC_ERR_DETECTION = -8
-} MHC_Status;
+#define FinCore_MAX_LABEL_LEN       256
+#define FinCore_MAX_ACCOUNT_CODE_LEN 16
+#define FinCore_MAX_CURRENCY_LEN     4
+#define FinCore_MAX_ENTRIES_PER_JOURNAL 10000
+#define FinCore_MAX_ACCOUNTS         1000
+#define FinCore_MAX_PERIODS          50
 
 typedef enum {
-    MHC_DET_BENFORD = 0x01,
-    MHC_DET_DUPLICATE = 0x02,
-    MHC_DET_ROUND_NUMBER = 0x04,
-    MHC_DET_OUTLIER = 0x08,
-    MHC_DET_ALL = 0x0F
-} MHC_DetectionFlags;
+    FinCore_OK = 0,
+    FinCore_ERR_INVALID_INPUT = -1,
+    FinCore_ERR_OUT_OF_MEMORY = -2,
+    FinCore_ERR_ACCOUNT_NOT_FOUND = -3,
+    FinCore_ERR_UNBALANCED_ENTRY = -4,
+    FinCore_ERR_PERIOD_CLOSED = -5,
+    FinCore_ERR_DUPLICATE_KEY = -6,
+    FinCore_ERR_FILE_IO = -7,
+    FinCore_ERR_DETECTION = -8
+} FinCore_Status;
+
+typedef enum {
+    FinCore_DET_BENFORD = 0x01,
+    FinCore_DET_DUPLICATE = 0x02,
+    FinCore_DET_ROUND_NUMBER = 0x04,
+    FinCore_DET_OUTLIER = 0x08,
+    FinCore_DET_ALL = 0x0F
+} FinCore_DetectionFlags;
 ```
 
 ### 3.2 Account Structure (Plan Comptable)
 
 ```c
 typedef struct {
-    char     code[MHC_MAX_ACCOUNT_CODE_LEN];   // e.g., "512", "701", "120"
-    char     label[MHC_MAX_LABEL_LEN];         // e.g., "Banques", "Ventes France"
+    char     code[FinCore_MAX_ACCOUNT_CODE_LEN];   // e.g., "512", "701", "120"
+    char     label[FinCore_MAX_LABEL_LEN];         // e.g., "Banques", "Ventes France"
     int      type;                             // 1=Actif, 2=Passif, 3=Charge, 4=Produit
     int      category;                         // 0=Balance, 1=Bilan, 2=Compte de resultat
-    char     parent[MHC_MAX_ACCOUNT_CODE_LEN]; // Hierarchical parent code (empty = root)
+    char     parent[FinCore_MAX_ACCOUNT_CODE_LEN]; // Hierarchical parent code (empty = root)
     double   opening_balance;                  // Solde d'ouverture
     int      is_active;                        // 0=disabled, 1=active
-} MHC_Account;
+} FinCore_Account;
 ```
 
 **Account Type Mapping (French PCG-aligned):**
@@ -141,17 +141,17 @@ typedef struct {
 typedef struct {
     char     entry_id[32];                     // UUID or sequential "E-2024-00001"
     char     date[11];                         // ISO-8601: "2024-03-15"
-    char     account_code[MHC_MAX_ACCOUNT_CODE_LEN];
-    char     label[MHC_MAX_LABEL_LEN];         // Libelle de l'ecriture
+    char     account_code[FinCore_MAX_ACCOUNT_CODE_LEN];
+    char     label[FinCore_MAX_LABEL_LEN];         // Libelle de l'ecriture
     char     reference[64];                    // Piece justificative
     double   debit;                            // Montant au debit
     double   credit;                           // Montant au credit
-    char     currency[MHC_MAX_CURRENCY_LEN];   // "EUR", "USD"
+    char     currency[FinCore_MAX_CURRENCY_LEN];   // "EUR", "USD"
     double   exchange_rate;                    // 1.0 for base currency
-    char     period_id[16];                    // Links to MHC_Period
+    char     period_id[16];                    // Links to FinCore_Period
     char     user_id[32];                      // Audit trail
     char     created_at[20];                   // ISO-8601 datetime
-} MHC_JournalLine;
+} FinCore_JournalLine;
 ```
 
 **Journal Entry Rules (enforced by C engine):**
@@ -167,13 +167,13 @@ typedef struct {
 ```c
 typedef struct {
     char     period_id[16];                    // e.g., "2024-01", "2024-FY"
-    char     label[MHC_MAX_LABEL_LEN];         // "Janvier 2024", "Exercice 2024"
+    char     label[FinCore_MAX_LABEL_LEN];         // "Janvier 2024", "Exercice 2024"
     char     start_date[11];                   // "2024-01-01"
     char     end_date[11];                     // "2024-01-31"
     int      status;                           // 0=open, 1=closed, 2=locked
     char     closed_by[32];                    // User who closed it
     char     closed_at[20];                    // ISO-8601 datetime
-} MHC_Period;
+} FinCore_Period;
 ```
 
 ### 3.5 Grand Livre Line (Report Output)
@@ -183,25 +183,25 @@ typedef struct {
     char     date[11];
     char     entry_id[32];
     char     reference[64];
-    char     label[MHC_MAX_LABEL_LEN];
+    char     label[FinCore_MAX_LABEL_LEN];
     double   debit;
     double   credit;
     double   running_balance;                  // Cumul after this line
-} MHC_GLLine;
+} FinCore_GLLine;
 ```
 
 ### 3.6 Balance Line (Report Output)
 
 ```c
 typedef struct {
-    char     account_code[MHC_MAX_ACCOUNT_CODE_LEN];
-    char     label[MHC_MAX_LABEL_LEN];
+    char     account_code[FinCore_MAX_ACCOUNT_CODE_LEN];
+    char     label[FinCore_MAX_LABEL_LEN];
     double   opening_balance;
     double   total_debit;
     double   total_credit;
     double   closing_balance;                  // opening + debit - credit (or per account type)
     int      account_type;
-} MHC_BalanceLine;
+} FinCore_BalanceLine;
 ```
 
 ### 3.7 Bilan Line (Report Output)
@@ -209,15 +209,15 @@ typedef struct {
 ```c
 typedef struct {
     char     section[64];                      // "ACTIF", "PASSIF", "CAPITAUX PROPRES"
-    char     account_code[MHC_MAX_ACCOUNT_CODE_LEN];
-    char     label[MHC_MAX_LABEL_LEN];
+    char     account_code[FinCore_MAX_ACCOUNT_CODE_LEN];
+    char     label[FinCore_MAX_LABEL_LEN];
     double   gross_amount;                     // Brut
     double   depreciation;                     // Amortissements / Depreciations
     double   net_amount;                       // Net
     int      display_order;                    // Sort order for presentation
     int      is_total_row;                     // 1 = subtotal / total line
     int      indent_level;                     // 0=section, 1=category, 2=account
-} MHC_BilanLine;
+} FinCore_BilanLine;
 ```
 
 ### 3.8 Detection Result Structure
@@ -225,22 +225,22 @@ typedef struct {
 ```c
 typedef struct {
     char     entry_id[32];
-    char     account_code[MHC_MAX_ACCOUNT_CODE_LEN];
+    char     account_code[FinCore_MAX_ACCOUNT_CODE_LEN];
     char     date[11];
     double   amount;
     int      flag;                             // Which rule triggered (bitmask)
     double   score;                            // 0.0-1.0 severity / confidence
-    char     description[MHC_MAX_LABEL_LEN];   // Human-readable explanation
-    char     recommendation[MHC_MAX_LABEL_LEN];// Suggested action
-} MHC_DetectionHit;
+    char     description[FinCore_MAX_LABEL_LEN];   // Human-readable explanation
+    char     recommendation[FinCore_MAX_LABEL_LEN];// Suggested action
+} FinCore_DetectionHit;
 
 typedef struct {
     int                hit_count;
-    MHC_DetectionHit*  hits;                   // Allocated by C, freed by caller
+    FinCore_DetectionHit*  hits;                   // Allocated by C, freed by caller
     double             benford_chi_square;     // x2 statistic for digit-1 test
     double             benford_p_value;        // Statistical significance
     int                benford_sample_size;    // Number of transactions tested
-} MHC_DetectionReport;
+} FinCore_DetectionReport;
 ```
 
 ### 3.9 Benford Distribution (for charting)
@@ -252,7 +252,7 @@ typedef struct {
     double   actual_frequency;                 // Observed in dataset
     int      actual_count;                     // Raw count
     double   deviation;                        // actual - expected
-} MHC_BenfordDigit;
+} FinCore_BenfordDigit;
 ```
 
 
@@ -263,70 +263,70 @@ typedef struct {
 ### 4.1 Lifecycle & Context
 
 ```c
-// mhc_ae.h
+// FinCore_ae.h
 
-#ifdef MHC_AE_EXPORTS
-#define MHC_API __declspec(dllexport)
+#ifdef FinCore_AE_EXPORTS
+#define FinCore_API __declspec(dllexport)
 #else
-#define MHC_API __declspec(dllimport)
+#define FinCore_API __declspec(dllimport)
 #endif
 
 // Creates a new accounting session (in-memory context)
 // Returns: opaque handle (void*) or NULL on failure
-MHC_API void* MHC_CreateSession(const char* company_name,
+FinCore_API void* FinCore_CreateSession(const char* company_name,
                                 const char* base_currency,
                                 const char* fiscal_year_start);
 
 // Destroys session and frees all associated memory
-MHC_API void  MHC_DestroySession(void* session);
+FinCore_API void  FinCore_DestroySession(void* session);
 
 // Persists current session to disk
-MHC_API MHC_Status MHC_SaveSession(void* session, const char* filepath);
+FinCore_API FinCore_Status FinCore_SaveSession(void* session, const char* filepath);
 
 // Loads session from disk
-MHC_API void* MHC_LoadSession(const char* filepath);
+FinCore_API void* FinCore_LoadSession(const char* filepath);
 
 // Returns last error message as null-terminated string
-MHC_API const char* MHC_GetLastError(void* session);
+FinCore_API const char* FinCore_GetLastError(void* session);
 ```
 
 ### 4.2 Account Chart Management
 
 ```c
 // Adds or updates an account in the chart
-MHC_API MHC_Status MHC_SetAccount(void* session, const MHC_Account* account);
+FinCore_API FinCore_Status FinCore_SetAccount(void* session, const FinCore_Account* account);
 
-// Retrieves account by code. Returns MHC_OK or MHC_ERR_ACCOUNT_NOT_FOUND
-MHC_API MHC_Status MHC_GetAccount(void* session,
+// Retrieves account by code. Returns FinCore_OK or FinCore_ERR_ACCOUNT_NOT_FOUND
+FinCore_API FinCore_Status FinCore_GetAccount(void* session,
                                    const char* code,
-                                   MHC_Account* out_account);
+                                   FinCore_Account* out_account);
 
 // Deletes account (only if balance is zero and no journal lines exist)
-MHC_API MHC_Status MHC_DeleteAccount(void* session, const char* code);
+FinCore_API FinCore_Status FinCore_DeleteAccount(void* session, const char* code);
 
 // Returns count of accounts
-MHC_API int MHC_GetAccountCount(void* session);
+FinCore_API int FinCore_GetAccountCount(void* session);
 
 // Retrieves all accounts. Caller provides array of sufficient size.
-MHC_API MHC_Status MHC_GetAllAccounts(void* session,
-                                       MHC_Account* out_accounts,
+FinCore_API FinCore_Status FinCore_GetAllAccounts(void* session,
+                                       FinCore_Account* out_accounts,
                                        int max_count,
                                        int* out_actual_count);
 
 // Loads standard French PCG chart (classes 1-7)
-MHC_API MHC_Status MHC_LoadStandardChart(void* session);
+FinCore_API FinCore_Status FinCore_LoadStandardChart(void* session);
 ```
 
 ### 4.3 Period Management
 
 ```c
-MHC_API MHC_Status MHC_CreatePeriod(void* session, const MHC_Period* period);
-MHC_API MHC_Status MHC_GetPeriod(void* session,
+FinCore_API FinCore_Status FinCore_CreatePeriod(void* session, const FinCore_Period* period);
+FinCore_API FinCore_Status FinCore_GetPeriod(void* session,
                                   const char* period_id,
-                                  MHC_Period* out_period);
-MHC_API MHC_Status MHC_ClosePeriod(void* session, const char* period_id);
-MHC_API MHC_Status MHC_ReopenPeriod(void* session, const char* period_id);
-MHC_API int        MHC_GetPeriodCount(void* session);
+                                  FinCore_Period* out_period);
+FinCore_API FinCore_Status FinCore_ClosePeriod(void* session, const char* period_id);
+FinCore_API FinCore_Status FinCore_ReopenPeriod(void* session, const char* period_id);
+FinCore_API int        FinCore_GetPeriodCount(void* session);
 ```
 
 ### 4.4 Journal Entry Operations
@@ -335,36 +335,36 @@ MHC_API int        MHC_GetPeriodCount(void* session);
 // Posts a multi-line journal entry.
 // The array of lines must balance (sum debit == sum credit).
 // All lines share the same entry_id and date.
-MHC_API MHC_Status MHC_PostEntry(void* session,
-                                  const MHC_JournalLine* lines,
+FinCore_API FinCore_Status FinCore_PostEntry(void* session,
+                                  const FinCore_JournalLine* lines,
                                   int line_count);
 
 // Retrieves all lines for a given entry_id
-MHC_API MHC_Status MHC_GetEntry(void* session,
+FinCore_API FinCore_Status FinCore_GetEntry(void* session,
                                  const char* entry_id,
-                                 MHC_JournalLine* out_lines,
+                                 FinCore_JournalLine* out_lines,
                                  int max_count,
                                  int* out_actual_count);
 
 // Retrieves all entries in a date range
-MHC_API MHC_Status MHC_GetEntriesByDateRange(void* session,
+FinCore_API FinCore_Status FinCore_GetEntriesByDateRange(void* session,
                                               const char* start_date,
                                               const char* end_date,
-                                              MHC_JournalLine* out_lines,
+                                              FinCore_JournalLine* out_lines,
                                               int max_count,
                                               int* out_actual_count);
 
 // Reverses an entry (creates contra-entry with same amounts, opposite signs)
-MHC_API MHC_Status MHC_ReverseEntry(void* session,
+FinCore_API FinCore_Status FinCore_ReverseEntry(void* session,
                                      const char* entry_id,
                                      const char* reversal_date,
                                      char* out_reversal_id);
 
 // Deletes an entry entirely (only if period is open)
-MHC_API MHC_Status MHC_DeleteEntry(void* session, const char* entry_id);
+FinCore_API FinCore_Status FinCore_DeleteEntry(void* session, const char* entry_id);
 
 // Returns total number of journal lines
-MHC_API int MHC_GetJournalLineCount(void* session);
+FinCore_API int FinCore_GetJournalLineCount(void* session);
 ```
 
 ### 4.5 Reporting Engine
@@ -372,36 +372,36 @@ MHC_API int MHC_GetJournalLineCount(void* session);
 ```c
 // -- Grand Livre (General Ledger) --
 // Generates GL for a single account over a period range
-MHC_API MHC_Status MHC_GenerateGL(void* session,
+FinCore_API FinCore_Status FinCore_GenerateGL(void* session,
                                    const char* account_code,
                                    const char* start_date,
                                    const char* end_date,
-                                   MHC_GLLine* out_lines,
+                                   FinCore_GLLine* out_lines,
                                    int max_count,
                                    int* out_actual_count);
 
 // -- Balance (Trial Balance) --
 // Generates trial balance for all accounts in a period
-MHC_API MHC_Status MHC_GenerateBalance(void* session,
+FinCore_API FinCore_Status FinCore_GenerateBalance(void* session,
                                         const char* period_id,
-                                        MHC_BalanceLine* out_lines,
+                                        FinCore_BalanceLine* out_lines,
                                         int max_count,
                                         int* out_actual_count);
 
 // -- Bilan (Balance Sheet) --
 // Generates balance sheet as of a given date
-MHC_API MHC_Status MHC_GenerateBilan(void* session,
+FinCore_API FinCore_Status FinCore_GenerateBilan(void* session,
                                       const char* as_of_date,
-                                      MHC_BilanLine* out_lines,
+                                      FinCore_BilanLine* out_lines,
                                       int max_count,
                                       int* out_actual_count);
 
 // -- Compte de Resultat (P&L) --
 // Generates income statement for a period range
-MHC_API MHC_Status MHC_GenerateCompteResultat(void* session,
+FinCore_API FinCore_Status FinCore_GenerateCompteResultat(void* session,
                                                const char* start_date,
                                                const char* end_date,
-                                               MHC_BilanLine* out_lines,
+                                               FinCore_BilanLine* out_lines,
                                                int max_count,
                                                int* out_actual_count);
 ```
@@ -410,46 +410,46 @@ MHC_API MHC_Status MHC_GenerateCompteResultat(void* session,
 
 ```c
 // Runs detection rules on a dataset
-// flags: bitmask of MHC_DetectionFlags
+// flags: bitmask of FinCore_DetectionFlags
 // dataset: "all", or a specific account_code, or date range "2024-01-01:2024-12-31"
-MHC_API MHC_Status MHC_RunDetection(void* session,
+FinCore_API FinCore_Status FinCore_RunDetection(void* session,
                                      int flags,
                                      const char* dataset,
-                                     MHC_DetectionReport* out_report);
+                                     FinCore_DetectionReport* out_report);
 
 // Frees detection report memory allocated by C engine
-MHC_API void MHC_FreeDetectionReport(MHC_DetectionReport* report);
+FinCore_API void FinCore_FreeDetectionReport(FinCore_DetectionReport* report);
 
 // Gets Benford distribution for charting
-MHC_API MHC_Status MHC_GetBenfordDistribution(void* session,
+FinCore_API FinCore_Status FinCore_GetBenfordDistribution(void* session,
                                                const char* dataset,
-                                               MHC_BenfordDigit* out_digits,
+                                               FinCore_BenfordDigit* out_digits,
                                                int* out_sample_size);
 
 // -- Individual Rule APIs (for granular control) --
-MHC_API MHC_Status MHC_CheckBenford(void* session,
+FinCore_API FinCore_Status FinCore_CheckBenford(void* session,
                                      const char* dataset,
                                      double* out_chi_square,
                                      double* out_p_value,
                                      int* out_sample_size);
 
-MHC_API MHC_Status MHC_CheckDuplicates(void* session,
+FinCore_API FinCore_Status FinCore_CheckDuplicates(void* session,
                                         const char* dataset,
-                                        MHC_DetectionHit* out_hits,
+                                        FinCore_DetectionHit* out_hits,
                                         int max_count,
                                         int* out_actual_count);
 
-MHC_API MHC_Status MHC_CheckRoundNumbers(void* session,
+FinCore_API FinCore_Status FinCore_CheckRoundNumbers(void* session,
                                           const char* dataset,
                                           double threshold,      // e.g., 1000.0
-                                          MHC_DetectionHit* out_hits,
+                                          FinCore_DetectionHit* out_hits,
                                           int max_count,
                                           int* out_actual_count);
 
-MHC_API MHC_Status MHC_CheckOutliers(void* session,
+FinCore_API FinCore_Status FinCore_CheckOutliers(void* session,
                                       const char* dataset,
                                       double z_threshold,      // e.g., 3.0 for 3-sigma
-                                      MHC_DetectionHit* out_hits,
+                                      FinCore_DetectionHit* out_hits,
                                       int max_count,
                                       int* out_actual_count);
 ```
@@ -458,19 +458,19 @@ MHC_API MHC_Status MHC_CheckOutliers(void* session,
 
 ```c
 // Validates a batch of journal lines without posting
-// Returns first error index in out_error_index, or MHC_OK
-MHC_API MHC_Status MHC_ValidateBatch(void* session,
-                                      const MHC_JournalLine* lines,
+// Returns first error index in out_error_index, or FinCore_OK
+FinCore_API FinCore_Status FinCore_ValidateBatch(void* session,
+                                      const FinCore_JournalLine* lines,
                                       int line_count,
                                       int* out_error_index);
 
 // Posts a validated batch atomically (all or nothing)
-MHC_API MHC_Status MHC_PostBatch(void* session,
-                                  const MHC_JournalLine* lines,
+FinCore_API FinCore_Status FinCore_PostBatch(void* session,
+                                  const FinCore_JournalLine* lines,
                                   int line_count);
 
 // Returns summary statistics for a period
-MHC_API MHC_Status MHC_GetPeriodStats(void* session,
+FinCore_API FinCore_Status FinCore_GetPeriodStats(void* session,
                                        const char* period_id,
                                        int* out_entry_count,
                                        int* out_line_count,
@@ -486,24 +486,24 @@ MHC_API MHC_Status MHC_GetPeriodStats(void* session,
 ### 5.1 Project Structure
 
 ```
-MHCAccountingGUI/
-|-- MHCAccountingGUI.vbproj
+FinCoreAccountingGUI/
+|-- FinCoreAccountingGUI.vbproj
 |-- App.config
 |
 |-- Core/
 |   |-- PInvoke/
-|   |   |-- MhcNative.vb          ' All DllImport declarations
+|   |   |-- FinCoreNative.vb          ' All DllImport declarations
 |   |   |-- Structs.vb            ' Blittable struct definitions
 |   |   |-- Marshaling.vb         ' Helper: StringBuilder, IntPtr management
 |   |
 |   |-- Models/
-|   |   |-- Account.vb            ' Domain wrapper for MHC_Account
-|   |   |-- JournalEntry.vb       ' Domain wrapper for MHC_JournalLine
-|   |   |-- Period.vb             ' Domain wrapper for MHC_Period
-|   |   |-- DetectionResult.vb    ' Domain wrapper for MHC_DetectionHit
+|   |   |-- Account.vb            ' Domain wrapper for FinCore_Account
+|   |   |-- JournalEntry.vb       ' Domain wrapper for FinCore_JournalLine
+|   |   |-- Period.vb             ' Domain wrapper for FinCore_Period
+|   |   |-- DetectionResult.vb    ' Domain wrapper for FinCore_DetectionHit
 |   |
 |   |-- Services/
-|   |   |-- SessionService.vb     ' MHC_CreateSession / DestroySession
+|   |   |-- SessionService.vb     ' FinCore_CreateSession / DestroySession
 |   |   |-- AccountService.vb     ' Chart CRUD operations
 |   |   |-- JournalService.vb     ' Entry posting, retrieval
 |   |   |-- ReportService.vb      ' GL, Balance, Bilan generation
@@ -553,7 +553,7 @@ MHCAccountingGUI/
 |   |   |-- ColorPalette.vb       ' Corporate colors
 ```
 
-### 5.2 P/Invoke Declarations (MhcNative.vb)
+### 5.2 P/Invoke Declarations (FinCoreNative.vb)
 
 ```vb
 ' All strings marshaled as ANSI (LPStr) for C compatibility
@@ -561,182 +561,182 @@ MHCAccountingGUI/
 
 Imports System.Runtime.InteropServices
 
-Public Module MhcNative
+Public Module FinCoreNative
 
-    Private Const DLL_NAME As String = "mhc_ae.dll"
+    Private Const DLL_NAME As String = "FinCore_ae.dll"
 
     ' -- Lifecycle --
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_CreateSession(companyName As String,
+    Public Function FinCore_CreateSession(companyName As String,
                                        baseCurrency As String,
                                        fiscalYearStart As String) As IntPtr
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Sub MHC_DestroySession(session As IntPtr)
+    Public Sub FinCore_DestroySession(session As IntPtr)
     End Sub
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_SaveSession(session As IntPtr, filepath As String) As Integer
+    Public Function FinCore_SaveSession(session As IntPtr, filepath As String) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_LoadSession(filepath As String) As IntPtr
+    Public Function FinCore_LoadSession(filepath As String) As IntPtr
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GetLastError(session As IntPtr) As IntPtr
+    Public Function FinCore_GetLastError(session As IntPtr) As IntPtr
     End Function
 
     ' -- Accounts --
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_SetAccount(session As IntPtr, ByRef account As MHC_Account) As Integer
+    Public Function FinCore_SetAccount(session As IntPtr, ByRef account As FinCore_Account) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GetAccount(session As IntPtr,
+    Public Function FinCore_GetAccount(session As IntPtr,
                                     code As String,
-                                    ByRef outAccount As MHC_Account) As Integer
+                                    ByRef outAccount As FinCore_Account) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_DeleteAccount(session As IntPtr, code As String) As Integer
+    Public Function FinCore_DeleteAccount(session As IntPtr, code As String) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_GetAccountCount(session As IntPtr) As Integer
+    Public Function FinCore_GetAccountCount(session As IntPtr) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_GetAllAccounts(session As IntPtr,
-                                        <Out()> outAccounts As MHC_Account(),
+    Public Function FinCore_GetAllAccounts(session As IntPtr,
+                                        <Out()> outAccounts As FinCore_Account(),
                                         maxCount As Integer,
                                         ByRef outActualCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_LoadStandardChart(session As IntPtr) As Integer
+    Public Function FinCore_LoadStandardChart(session As IntPtr) As Integer
     End Function
 
     ' -- Periods --
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_CreatePeriod(session As IntPtr, ByRef period As MHC_Period) As Integer
+    Public Function FinCore_CreatePeriod(session As IntPtr, ByRef period As FinCore_Period) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GetPeriod(session As IntPtr,
+    Public Function FinCore_GetPeriod(session As IntPtr,
                                    periodId As String,
-                                   ByRef outPeriod As MHC_Period) As Integer
+                                   ByRef outPeriod As FinCore_Period) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_ClosePeriod(session As IntPtr, periodId As String) As Integer
+    Public Function FinCore_ClosePeriod(session As IntPtr, periodId As String) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_ReopenPeriod(session As IntPtr, periodId As String) As Integer
+    Public Function FinCore_ReopenPeriod(session As IntPtr, periodId As String) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_GetPeriodCount(session As IntPtr) As Integer
+    Public Function FinCore_GetPeriodCount(session As IntPtr) As Integer
     End Function
 
     ' -- Journal --
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_PostEntry(session As IntPtr,
-                                   lines As MHC_JournalLine(),
+    Public Function FinCore_PostEntry(session As IntPtr,
+                                   lines As FinCore_JournalLine(),
                                    lineCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GetEntry(session As IntPtr,
+    Public Function FinCore_GetEntry(session As IntPtr,
                                   entryId As String,
-                                  <Out()> outLines As MHC_JournalLine(),
+                                  <Out()> outLines As FinCore_JournalLine(),
                                   maxCount As Integer,
                                   ByRef outActualCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GetEntriesByDateRange(session As IntPtr,
+    Public Function FinCore_GetEntriesByDateRange(session As IntPtr,
                                                startDate As String,
                                                endDate As String,
-                                               <Out()> outLines As MHC_JournalLine(),
+                                               <Out()> outLines As FinCore_JournalLine(),
                                                maxCount As Integer,
                                                ByRef outActualCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_ReverseEntry(session As IntPtr,
+    Public Function FinCore_ReverseEntry(session As IntPtr,
                                       entryId As String,
                                       reversalDate As String,
                                       outReversalId As StringBuilder) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_DeleteEntry(session As IntPtr, entryId As String) As Integer
+    Public Function FinCore_DeleteEntry(session As IntPtr, entryId As String) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_GetJournalLineCount(session As IntPtr) As Integer
+    Public Function FinCore_GetJournalLineCount(session As IntPtr) As Integer
     End Function
 
     ' -- Reports --
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GenerateGL(session As IntPtr,
+    Public Function FinCore_GenerateGL(session As IntPtr,
                                     accountCode As String,
                                     startDate As String,
                                     endDate As String,
-                                    <Out()> outLines As MHC_GLLine(),
+                                    <Out()> outLines As FinCore_GLLine(),
                                     maxCount As Integer,
                                     ByRef outActualCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GenerateBalance(session As IntPtr,
+    Public Function FinCore_GenerateBalance(session As IntPtr,
                                          periodId As String,
-                                         <Out()> outLines As MHC_BalanceLine(),
+                                         <Out()> outLines As FinCore_BalanceLine(),
                                          maxCount As Integer,
                                          ByRef outActualCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GenerateBilan(session As IntPtr,
+    Public Function FinCore_GenerateBilan(session As IntPtr,
                                        asOfDate As String,
-                                       <Out()> outLines As MHC_BilanLine(),
+                                       <Out()> outLines As FinCore_BilanLine(),
                                        maxCount As Integer,
                                        ByRef outActualCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GenerateCompteResultat(session As IntPtr,
+    Public Function FinCore_GenerateCompteResultat(session As IntPtr,
                                                 startDate As String,
                                                 endDate As String,
-                                                <Out()> outLines As MHC_BilanLine(),
+                                                <Out()> outLines As FinCore_BilanLine(),
                                                 maxCount As Integer,
                                                 ByRef outActualCount As Integer) As Integer
     End Function
 
     ' -- Detection --
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_RunDetection(session As IntPtr,
+    Public Function FinCore_RunDetection(session As IntPtr,
                                       flags As Integer,
                                       dataset As String,
-                                      ByRef outReport As MHC_DetectionReport) As Integer
+                                      ByRef outReport As FinCore_DetectionReport) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Sub MHC_FreeDetectionReport(ByRef report As MHC_DetectionReport)
+    Public Sub FinCore_FreeDetectionReport(ByRef report As FinCore_DetectionReport)
     End Sub
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GetBenfordDistribution(session As IntPtr,
+    Public Function FinCore_GetBenfordDistribution(session As IntPtr,
                                                 dataset As String,
-                                                <Out()> outDigits As MHC_BenfordDigit(),
+                                                <Out()> outDigits As FinCore_BenfordDigit(),
                                                 ByRef outSampleSize As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_CheckBenford(session As IntPtr,
+    Public Function FinCore_CheckBenford(session As IntPtr,
                                       dataset As String,
                                       ByRef outChiSquare As Double,
                                       ByRef outPValue As Double,
@@ -744,47 +744,47 @@ Public Module MhcNative
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_CheckDuplicates(session As IntPtr,
+    Public Function FinCore_CheckDuplicates(session As IntPtr,
                                          dataset As String,
-                                         <Out()> outHits As MHC_DetectionHit(),
+                                         <Out()> outHits As FinCore_DetectionHit(),
                                          maxCount As Integer,
                                          ByRef outActualCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_CheckRoundNumbers(session As IntPtr,
+    Public Function FinCore_CheckRoundNumbers(session As IntPtr,
                                            dataset As String,
                                            threshold As Double,
-                                           <Out()> outHits As MHC_DetectionHit(),
+                                           <Out()> outHits As FinCore_DetectionHit(),
                                            maxCount As Integer,
                                            ByRef outActualCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_CheckOutliers(session As IntPtr,
+    Public Function FinCore_CheckOutliers(session As IntPtr,
                                        dataset As String,
                                        zThreshold As Double,
-                                       <Out()> outHits As MHC_DetectionHit(),
+                                       <Out()> outHits As FinCore_DetectionHit(),
                                        maxCount As Integer,
                                        ByRef outActualCount As Integer) As Integer
     End Function
 
     ' -- Batch / Import --
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_ValidateBatch(session As IntPtr,
-                                       lines As MHC_JournalLine(),
+    Public Function FinCore_ValidateBatch(session As IntPtr,
+                                       lines As FinCore_JournalLine(),
                                        lineCount As Integer,
                                        ByRef outErrorIndex As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl)>
-    Public Function MHC_PostBatch(session As IntPtr,
-                                   lines As MHC_JournalLine(),
+    Public Function FinCore_PostBatch(session As IntPtr,
+                                   lines As FinCore_JournalLine(),
                                    lineCount As Integer) As Integer
     End Function
 
     <DllImport(DLL_NAME, CallingConvention:=CallingConvention.Cdecl, CharSet:=CharSet.Ansi)>
-    Public Function MHC_GetPeriodStats(session As IntPtr,
+    Public Function FinCore_GetPeriodStats(session As IntPtr,
                                         periodId As String,
                                         ByRef outEntryCount As Integer,
                                         ByRef outLineCount As Integer,
@@ -802,7 +802,7 @@ End Module
 Imports System.Runtime.InteropServices
 
 <StructLayout(LayoutKind.Sequential, Pack:=8, CharSet:=CharSet.Ansi)>
-Public Structure MHC_Account
+Public Structure FinCore_Account
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=16)>
     Public Code As String
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=256)>
@@ -816,7 +816,7 @@ Public Structure MHC_Account
 End Structure
 
 <StructLayout(LayoutKind.Sequential, Pack:=8, CharSet:=CharSet.Ansi)>
-Public Structure MHC_JournalLine
+Public Structure FinCore_JournalLine
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
     Public EntryId As String
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=11)>
@@ -841,7 +841,7 @@ Public Structure MHC_JournalLine
 End Structure
 
 <StructLayout(LayoutKind.Sequential, Pack:=8, CharSet:=CharSet.Ansi)>
-Public Structure MHC_Period
+Public Structure FinCore_Period
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=16)>
     Public PeriodId As String
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=256)>
@@ -858,7 +858,7 @@ Public Structure MHC_Period
 End Structure
 
 <StructLayout(LayoutKind.Sequential, Pack:=8, CharSet:=CharSet.Ansi)>
-Public Structure MHC_GLLine
+Public Structure FinCore_GLLine
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=11)>
     Public DateStr As String
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
@@ -873,7 +873,7 @@ Public Structure MHC_GLLine
 End Structure
 
 <StructLayout(LayoutKind.Sequential, Pack:=8, CharSet:=CharSet.Ansi)>
-Public Structure MHC_BalanceLine
+Public Structure FinCore_BalanceLine
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=16)>
     Public AccountCode As String
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=256)>
@@ -886,7 +886,7 @@ Public Structure MHC_BalanceLine
 End Structure
 
 <StructLayout(LayoutKind.Sequential, Pack:=8, CharSet:=CharSet.Ansi)>
-Public Structure MHC_BilanLine
+Public Structure FinCore_BilanLine
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=64)>
     Public Section As String
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=16)>
@@ -902,7 +902,7 @@ Public Structure MHC_BilanLine
 End Structure
 
 <StructLayout(LayoutKind.Sequential, Pack:=8, CharSet:=CharSet.Ansi)>
-Public Structure MHC_DetectionHit
+Public Structure FinCore_DetectionHit
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=32)>
     Public EntryId As String
     <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=16)>
@@ -919,16 +919,16 @@ Public Structure MHC_DetectionHit
 End Structure
 
 <StructLayout(LayoutKind.Sequential, Pack:=8)>
-Public Structure MHC_DetectionReport
+Public Structure FinCore_DetectionReport
     Public HitCount As Integer
-    Public Hits As IntPtr          ' Pointer to array of MHC_DetectionHit
+    Public Hits As IntPtr          ' Pointer to array of FinCore_DetectionHit
     Public BenfordChiSquare As Double
     Public BenfordPValue As Double
     Public BenfordSampleSize As Integer
 End Structure
 
 <StructLayout(LayoutKind.Sequential, Pack:=8)>
-Public Structure MHC_BenfordDigit
+Public Structure FinCore_BenfordDigit
     Public Digit As Integer
     Public ExpectedFrequency As Double
     Public ActualFrequency As Double
@@ -1093,7 +1093,7 @@ End Structure
 
 ```
 +-----------------------------------------------------------------+
-|  MHC Accounting Engine  |  Societe: [Name]  |  Exercice: [Year] |
+|  FinCore Accounting Engine  |  Societe: [Name]  |  Exercice: [Year] |
 +-----------------------------------------------------------------+
 |  [Journal] [Grand Livre] [Balance] [Bilan] [Detection] [Import] |
 +-----------------------------------------------------------------+
@@ -1193,28 +1193,28 @@ Flag a digit if: `|actual_frequency - expected_frequency| > 0.05` (5 percentage 
 
 ## 9. Detection Rules Specification
 
-### 9.1 Benford's Law (MHC_DET_BENFORD)
+### 9.1 Benford's Law (FinCore_DET_BENFORD)
 - **Scope:** All transaction amounts in selected dataset
 - **Trigger:** p-value < 0.05
 - **Severity:** 1.0 (highest)
 - **Description:** "La distribution des chiffres significatifs s'ecarte significativement de la loi de Benford. Possible manipulation des donnees."
 - **Recommendation:** "Verifier les ecritures manuelles et les ajustements de fin d'exercice."
 
-### 9.2 Duplicate Detection (MHC_DET_DUPLICATE)
+### 9.2 Duplicate Detection (FinCore_DET_DUPLICATE)
 - **Scope:** Same amount, same account, within 7 days
 - **Trigger:** Exact match on (amount, account_code) with different entry_id
 - **Severity:** 0.7
 - **Description:** "Ecriture en double detectee: meme montant et meme compte sur une periode de 7 jours."
 - **Recommendation:** "Verifier s'il s'agit d'un paiement recurrent legitime ou d'un doublon de saisie."
 
-### 9.3 Round Number Detection (MHC_DET_ROUND_NUMBER)
+### 9.3 Round Number Detection (FinCore_DET_ROUND_NUMBER)
 - **Scope:** All transactions
 - **Trigger:** Amount is a multiple of threshold (default: 1000.00) AND amount > threshold
 - **Severity:** 0.4
 - **Description:** "Montant rond detecte: {amount} est un multiple de {threshold}."
 - **Recommendation:** "Les montants ronds peuvent indiquer des estimations ou des arrondis artificiels."
 
-### 9.4 Outlier Detection (MHC_DET_OUTLIER)
+### 9.4 Outlier Detection (FinCore_DET_OUTLIER)
 - **Scope:** Per account
 - **Trigger:** Z-score > threshold (default: 3.0) within account
 - **Calculation:** `z = (x - mu) / sigma` where mu and sigma are mean and stddev of account's historical amounts
@@ -1228,7 +1228,7 @@ Flag a digit if: `|actual_frequency - expected_frequency| > 0.05` (5 percentage 
 
 ### 10.1 File Format
 
-**Extension:** `.mhc` (JSON-based, gzipped optional)
+**Extension:** `.FinCore` (JSON-based, gzipped optional)
 **Structure:**
 ```json
 {
@@ -1285,7 +1285,7 @@ Flag a digit if: `|actual_frequency - expected_frequency| > 0.05` (5 percentage 
 - Auto-save every 5 minutes if dirty
 - Auto-save on period close
 - Manual save via Ctrl+S
-- Backup: `.mhc.bak` created before every overwrite
+- Backup: `.FinCore.bak` created before every overwrite
 
 
 ---
@@ -1414,7 +1414,7 @@ Flag a digit if: `|actual_frequency - expected_frequency| > 0.05` (5 percentage 
 ### 13.3 Demo Script (3 minutes)
 
 **0:00-0:30 -- Setup & Context**
-> "This is MHC Accounting Engine, a desktop system I built for SME accounting with built-in fraud detection. The core is a C DLL handling all accounting math and detection logic. The GUI is VB.NET calling it through P/Invoke."
+> "This is FinCore Accounting Engine, a desktop system I built for SME accounting with built-in fraud detection. The core is a C DLL handling all accounting math and detection logic. The GUI is VB.NET calling it through P/Invoke."
 
 **0:30-1:00 -- Data Entry**
 > "I'll create a journal entry: a sale to a client. The form enforces double-entry -- debit must equal credit. The account picker auto-completes from the French chart of accounts."
@@ -1436,13 +1436,13 @@ Flag a digit if: `|actual_frequency - expected_frequency| > 0.05` (5 percentage 
 
 ```
 /dist/
-|-- MHCAccountingGUI.exe          ' VB.NET executable
-|-- mhc_ae.dll                    ' C core engine
+|-- FinCoreAccountingGUI.exe          ' VB.NET executable
+|-- FinCore_ae.dll                    ' C core engine
 |-- ClosedXML.dll                 ' Excel library
 |-- DocumentFormat.OpenXml.dll    ' ClosedXML dependency
 |-- ExcelNumberFormat.dll         ' ClosedXML dependency
 |-- System.IO.Packaging.dll       ' OpenXML dependency
-|-- demo_data.mhc                 ' Pre-loaded demo session
+|-- demo_data.FinCore                 ' Pre-loaded demo session
 ```
 
 ### 14.2 Runtime Requirements
@@ -1462,28 +1462,28 @@ Flag a digit if: `|actual_frequency - expected_frequency| > 0.05` (5 percentage 
 ## 15. Error Handling Strategy
 
 ### 15.1 C Engine Error Model
-- All functions return `MHC_Status` (int)
+- All functions return `FinCore_Status` (int)
 - Error details stored per-session
-- `MHC_GetLastError()` returns human-readable string
+- `FinCore_GetLastError()` returns human-readable string
 - No exceptions -- pure C return codes
 
 ### 15.2 VB.NET Error Model
 - Service layer wraps every P/Invoke call
-- On `MHC_Status != MHC_OK`: throw custom `MhcException` with C error message
-- UI layer catches `MhcException` and shows `MessageBox`
+- On `FinCore_Status != FinCore_OK`: throw custom `FinCoreException` with C error message
+- UI layer catches `FinCoreException` and shows `MessageBox`
 - All P/Invoke calls wrapped in `Try/Catch` with fallback to generic error
 
 ### 15.3 Common Error Scenarios
 
 | Scenario | C Returns | VB.NET Action |
 |----------|-----------|---------------|
-| Unbalanced entry | `MHC_ERR_UNBALANCED_ENTRY` | Highlight total row in red, show "Ecriture non equilibree" |
-| Account not found | `MHC_ERR_ACCOUNT_NOT_FOUND` | AccountComboBox shows red border, tooltip "Compte inexistant" |
-| Period closed | `MHC_ERR_PERIOD_CLOSED` | Disable "Valider", show lock icon |
-| Invalid date | `MHC_ERR_INVALID_INPUT` | DatePicker shows red border |
-| File not found | `MHC_ERR_FILE_IO` | Show file dialog to locate file |
-| Out of memory | `MHC_ERR_OUT_OF_MEMORY` | Show critical error, suggest restart |
-| Duplicate key | `MHC_ERR_DUPLICATE_KEY` | Highlight conflicting field, show existing value |
+| Unbalanced entry | `FinCore_ERR_UNBALANCED_ENTRY` | Highlight total row in red, show "Ecriture non equilibree" |
+| Account not found | `FinCore_ERR_ACCOUNT_NOT_FOUND` | AccountComboBox shows red border, tooltip "Compte inexistant" |
+| Period closed | `FinCore_ERR_PERIOD_CLOSED` | Disable "Valider", show lock icon |
+| Invalid date | `FinCore_ERR_INVALID_INPUT` | DatePicker shows red border |
+| File not found | `FinCore_ERR_FILE_IO` | Show file dialog to locate file |
+| Out of memory | `FinCore_ERR_OUT_OF_MEMORY` | Show critical error, suggest restart |
+| Duplicate key | `FinCore_ERR_DUPLICATE_KEY` | Highlight conflicting field, show existing value |
 
 ---
 
@@ -1532,7 +1532,7 @@ Flag a digit if: `|actual_frequency - expected_frequency| > 0.05` (5 percentage 
 | Concern | Mitigation |
 |---------|------------|
 | DLL hijacking | Sign DLL, verify hash on load |
-| Session file tampering | Optional HMAC signature on .mhc files |
+| Session file tampering | Optional HMAC signature on .FinCore files |
 | Input injection | All strings bounded, null-terminated in C |
 | Numeric overflow | Use double (IEEE 754) with range checks |
 | Path traversal | Validate and sanitize all file paths |
