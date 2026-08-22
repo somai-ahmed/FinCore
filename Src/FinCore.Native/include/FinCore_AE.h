@@ -15,7 +15,7 @@
 #ifndef FINCORE_AE_H
 #define FINCORE_AE_H
 
-/*============definig constants===========*/
+/*=======definition des constants========*/
 #define FINC_MAX_LABEL_LEN               256
 #define FINC_MAX_ACCOUNT_CODE_LEN        16
 #define FINC_MAX_CURRENCY_LEN            4
