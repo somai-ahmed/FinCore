@@ -61,3 +61,9 @@ typedef enum {
     FINC_CHARGE = 3,
     FINC_PRODUIT = 4
 } FINC_AccountType;
+
+typedef enum {
+    FINC_CAT_BALANCE = 0,
+    FINC_CAT_BILAN = 1,
+    FINC_CAT_RESULTAT = 2
+} FINC_AccountCategory;
