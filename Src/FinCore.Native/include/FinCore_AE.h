@@ -73,3 +73,11 @@ typedef enum {
     FINC_PERIOD_CLOSED = 1,
     FINC_PERIOD_LOCKED = 2
 } FINC_PeriodStatus;
+
+typedef enum {
+    FINC_DET_BENFORD = 0x01,
+    FINC_DET_DUPLICATE = 0x02,
+    FINC_DET_ROUND_NUMBER = 0x04,
+    FINC_DET_OUTLIER = 0x08,
+    FINC_DET_ALL = 0x0F
+} FINC_DetectionFlags; /*ouvre documentation fichier pour l'explication du binaire*/
