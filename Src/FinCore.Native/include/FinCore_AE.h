@@ -54,3 +54,10 @@ typedef enum {
     FINC_ERR_INVALID_DATE = -14,
     FINC_ERR_INSUFFICIENT_DATA = -15
 } FINC_Status;
+
+typedef enum {
+    FINC_ACTIF = 1,
+    FINC_PASSIF = 2,
+    FINC_CHARGE = 3,
+    FINC_PRODUIT = 4
+} FINC_AccountType;
