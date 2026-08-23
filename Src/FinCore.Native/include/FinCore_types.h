@@ -5,12 +5,15 @@
 #include <stddef.h>
 
 /* ============================================================
- * FinCore Accounting Engine - Core Type Definitions
+ * Moteur comptable FinCore — Définitions des types fondamentaux
  * ============================================================ */
 
-/* Fixed-point money representation: integer minor units (e.g. millimes)
- * to avoid floating point rounding errors in accounting calculations. */
+/* Représentation monétaire en virgule fixe : unités entières mineures (ex. millimes)
+ * pour éviter les erreurs d'arrondi en virgule flottante dans les calculs comptables. */
 typedef int64_t FinCore_Monnaie;
 
 #define FinCore_Monnaie_Size 1000  /* 3 decimal places (millimes) */
+
+/*structure interne masquée aux consommateurs */
+typedef struct FinCore_Session FinCore_Session;
 
