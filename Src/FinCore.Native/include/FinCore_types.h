@@ -17,3 +17,8 @@ typedef int64_t FinCore_Monnaie;
 /*structure interne masquée aux consommateurs */
 typedef struct FinCore_Session FinCore_Session;
 
+/* Identifiants uniques */
+typedef uint32_t FinCore_AccountId;
+typedef uint32_t FinCore_JournalEntryId;
+typedef uint32_t FinCore_PeriodId;
+typedef uint32_t FinCore_LineId;
