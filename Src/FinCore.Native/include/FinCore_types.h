@@ -24,3 +24,7 @@ typedef uint32_t FinCore_PeriodId;
 typedef uint32_t FinCore_LineId;
 
 #define INVALID_ID 0
+
+/* ------------------------------------------------------------
+ * Classification des comptes (plan comptable de type PCG tunisien / français)
+ * ------------------------------------------------------------ */
