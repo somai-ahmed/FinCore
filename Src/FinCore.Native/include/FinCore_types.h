@@ -22,3 +22,5 @@ typedef uint32_t FinCore_AccountId;
 typedef uint32_t FinCore_JournalEntryId;
 typedef uint32_t FinCore_PeriodId;
 typedef uint32_t FinCore_LineId;
+
+#define INVALID_ID 0
