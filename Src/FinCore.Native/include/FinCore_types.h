@@ -48,3 +48,8 @@ typedef enum FinCore_TypeCompte {
     FinCore_COMPTE_PRODUIT = 4,   
     FinCore_COMPTE_CHARGE = 5    
 } FinCore_TypeCompte;
+
+typedef enum FinCore_SoldeNormal {
+    FinCore_SOLDE_DEBITEUR = 0,        /* DEBIT */
+    FinCore_SOLDE_CREDITEUR = 1        /* CREDIT */
+} FinCore_SoldeNormal;
