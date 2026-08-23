@@ -39,3 +39,4 @@ typedef enum FinCore_classes_comptabilite {
     FinCore_CLASS_6_CHARGES = 6,
     FinCore_CLASS_7_PRODUITS = 7
 } FinCore_classes_comptabilite ;
+
