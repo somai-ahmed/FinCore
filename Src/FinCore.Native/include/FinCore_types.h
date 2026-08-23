@@ -28,6 +28,7 @@ typedef uint32_t FinCore_LineId;
 /* ------------------------------------------------------------
  * Classification des comptes (plan comptable de type PCG tunisien / français)
  * ------------------------------------------------------------ */
+/*see documentation/classes_comptabilite.md*/
 typedef enum FinCore_classes_comptabilite {
     FinCore_CLASS_1_CP&PNC = 1,   /* Comptes de capitaux propres et passifs non courants */
     FinCore_CLASS_2_ANC = 2,
