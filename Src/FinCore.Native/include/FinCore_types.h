@@ -29,14 +29,16 @@ typedef uint32_t FinCore_LineId;
  * Classification des comptes (plan comptable de type PCG tunisien / français)
  * ------------------------------------------------------------ */
 /*see documentation/classes_comptabilite.md*/
-typedef enum FinCore_classes_comptabilite {
-    FinCore_CLASS_1_CP_&_PNC = 1,   /* Comptes de capitaux propres et passifs non courants */
-    FinCore_CLASS_2_ANC = 2,
-    FinCore_CLASS_3_STOCKS = 3,
-    FinCore_CLASS_4_TIERS = 4,
-    FinCore_CLASS_5_FINANCIER = 5,
-    /*CHARGES ET PRODUITS ne sont pas des classes mais on le met ici pour le coder*/
-    FinCore_CLASS_6_CHARGES = 6,
-    FinCore_CLASS_7_PRODUITS = 7
-} FinCore_classes_comptabilite ;
+typedef enum FinCore_ClasseCompte {
+    FinCore_CLASSE_1_CP_ET_PNC = 1,   /* Comptes de capitaux propres et passifs non courants */
+    FinCore_CLASSE_2_ACTIFS_NON_COURANTS = 2,
+    FinCore_CLASSE_3_STOCKS = 3,
+    FinCore_CLASSE_4_TIERS = 4,
+    FinCore_CLASSE_5_TRESORERIE = 5,
+    /* Les charges et produits ne sont pas des classes au sens strict,
+       mais on les code ici pour l'uniformité du modèle. */
+    FinCore_CLASSE_6_CHARGES = 6,
+    FinCore_CLASSE_7_PRODUITS = 7
+} FinCore_ClasseCompte;
+
 
