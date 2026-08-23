@@ -1,1 +1,2 @@
-
+#ifndef FINCORE_TYPES_H
+#define FINCORE_TYPES_H
