@@ -41,4 +41,10 @@ typedef enum FinCore_ClasseCompte {
     FinCore_CLASSE_7_PRODUITS = 7
 } FinCore_ClasseCompte;
 
-
+typedef enum FinCore_TypeCompte {
+    FinCore_COMPTE_ACTIF = 0,          
+    FinCore_COMPTE_PASSIF = 1,    
+    FinCore_COMPTE_CAPITAUX = 2,    
+    FinCore_COMPTE_PRODUIT = 3,   
+    FinCore_COMPTE_CHARGE = 4    
+} FinCore_TypeCompte;
