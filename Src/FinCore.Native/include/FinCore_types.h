@@ -18,7 +18,7 @@ typedef int64_t FinCore_Monnaie;
 typedef struct FinCore_Session FinCore_Session;
 
 /* Identifiants uniques */
-typedef uint32_t FinCore_AccountId;
+typedef uint32_t FinCore_IdCompte;
 typedef uint32_t FinCore_JournalEntryId;
 typedef uint32_t FinCore_PeriodId;
 typedef uint32_t FinCore_LineId;
@@ -53,3 +53,14 @@ typedef enum FinCore_SoldeNormal {
     FinCore_SOLDE_DEBITEUR = 0,        /* DEBIT */
     FinCore_SOLDE_CREDITEUR = 1        /* CREDIT */
 } FinCore_SoldeNormal;
+
+typedef struct FinCore_Compte {
+    FinCore_IdCompte     id;
+    char                 code[16];           /* ex. "512000" */
+    char                 nom[128];
+    FinCore_ClasseCompte classe;
+    FinCore_TypeCompte   type;
+    FinCore_SoldeNormal  solde_normal;
+    FinCore_IdCompte     parent_id;          /* 0 si racine */
+    bool                  actif;
+} FinCore_Compte;
