@@ -12,7 +12,7 @@
  * pour éviter les erreurs d'arrondi en virgule flottante dans les calculs comptables. */
 typedef int64_t FinCore_Monnaie;
 
-#define FinCore_Monnaie_Size 1000  /* 3 decimal places (millimes) */
+#define FinCore_Monnaie_Unite 1000  /* 3 decimal places (millimes) */
 
 /*structure interne masquée aux consommateurs */
 typedef struct FinCore_Session FinCore_Session;
