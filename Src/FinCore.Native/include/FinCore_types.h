@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 /* ============================================================
  * Moteur comptable FinCore — Définitions des types fondamentaux
