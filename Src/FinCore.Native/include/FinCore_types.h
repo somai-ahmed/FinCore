@@ -72,7 +72,7 @@ typedef struct Compte {
     FNC_SoldeNormal  solde_normal;
     FNC_IdCompte     parent_id;          /* 0 si racine */
     int                  est_active;
-} FNC_Compte;
+}Compte;
 
 /*--------------------------------------------------------------
     l implementation des structures pour la journal
@@ -111,5 +111,16 @@ typedef struct prop_periode_fiscale {
 }prop_periode_fiscale;
 
 /*--------------------------------------------------------------
-    l implementation des structures pour le rapport
+    l implementation des structures pour la balance
 ---------------------------------------------------------------*/
+
+/*implementation d une structure pour appeler les champs du la structure compte*/
+typedef struct compte_ref{
+    id_compte id;
+    char code [16]
+    char nom[256];
+}compte_ref;
+
+
+
+    
