@@ -137,3 +137,9 @@ typedef struct Entree_GrandLivre {
     FinCore_Monnaie credit;
     FinCore_Monnaie solde_cumule;
 }Entree_GrandLivre;
+
+typedef struct ligne_bilan {
+    char libelle[128];
+    FinCore_Monnaie  montant;
+    int est_sous_total;   /* 0/1 */
+} ligne_bilan;
