@@ -80,7 +80,7 @@ typedef struct ligne_journal{
 typedef struct FinCore_Ecriture {
     FinCore_IdEcriture     id;
     FinCore_IdPeriode      periode_id;
-    char                   date[11];
+    DATE                   date[11];
     char                   reference[32];
     char                   description[256];
     FinCore_LigneJournal*  lignes;
