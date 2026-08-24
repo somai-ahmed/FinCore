@@ -66,3 +66,13 @@ typedef struct FinCore_Compte {
     int                  est_active;
 } FinCore_Compte;
 
+/*--------------------------------------------------------------
+    l implementation des structures pour la journal
+---------------------------------------------------------------*/
+typedef struct ligne_journal{
+    id_ligne id;
+    id_compte compte_id;
+    FinCore_Monnaie Debit;
+    FinCore_Monnaie credit ;
+    char libelle[256] ;
+}ligne_journal;
