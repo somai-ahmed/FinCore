@@ -100,5 +100,12 @@ typedef enum status_periode_fiscale{
     PERIODE_FISCALE_OUVERTE = 1 ;
     PERIODE_FISCALE_CLOTURE = 2 ;
     PERIODE_FISCALE_VEROUILLEE = 3 ;
-}periode_fiscale;
+}statsus_periode_fiscale;
 
+typedef struct prop_periode_fiscale {
+    FNC_IdPeriode    id;
+    char nom[64];
+    DATE date_debut;
+    DATE date_fin[11];
+    status_periode_fiscale statut;
+}prop_periode_fiscale;
