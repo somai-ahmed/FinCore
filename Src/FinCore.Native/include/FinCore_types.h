@@ -122,11 +122,18 @@ typedef struct ref_compte{
 }ref_compte;
 
 typedef struct ligne_balance {
-    ref_compte  compte;
-    FNC_Monnaie    total_debit;
-    FNC_Monnaie    total_credit;
-    FNC_Monnaie    solde_debit;
-    FNC_Monnaie    solde_credit;
-} FNC_LigneBalance;
+    ref_compte compte;
+    FNC_Monnaie total_debit;
+    FNC_Monnaie total_credit;
+    FNC_Monnaie solde_debit;
+    FNC_Monnaie solde_credit;
+}LigneBalance;
 
-    
+typedef struct Entree_GrandLivre {
+    DATE date;
+    char reference[32];
+    char libelle[256];
+    FinCore_Monnaie debit;
+    FinCore_Monnaie credit;
+    FinCore_Monnaie solde_cumule;
+}Entree_GrandLivre;
