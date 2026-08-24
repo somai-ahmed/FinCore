@@ -66,3 +66,6 @@ typedef struct FinCore_Compte {
     bool                  est_active;
 } FinCore_Compte;
 
+/*--------------------------------------------------------------
+    l implementation des structures pour la journal
+---------------------------------------------------------------*/
