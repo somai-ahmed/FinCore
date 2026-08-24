@@ -1,1 +1,70 @@
+on a que le bilan comptabilite est du cette forme
+ce schema visuel vise a expliquer les niveaux du bilan
 
+
+BILAN
+├── ACTIF
+│   ├── Actif non courant
+│   │   ├── Immobilisations incorporelles
+│   │   │   └── Frais d'établissement ........... 12 000
+│   │   └── Immobilisations corporelles
+│   │       └── Terrains ........................ 50 000
+│   ├── Actif courant
+│   │   └── Stocks
+│   │       └── Matières premières .............. 8 500
+│   └── TOTAL ACTIF ............................. 70 500
+├── PASSIF
+│   ├── Capitaux propres
+│   │   └── Capital social ...................... 40 000
+│   └── TOTAL PASSIF ............................ 70 500
+
+
+on voit que la grande unite est le BILAN , a deux grande branches nommes "ACTIF" et "PASSIF"
+on a la relation fondamentale ACTIF = PASSIF + CAPITAUX PROPRES
+donc c'est quoi le PROFONDEUR dans la structure du ligne du bilan 
+
+dans le code en C : 
+
+typedef struct ligne_bilan {
+    char libelle[128];
+    FinCore_Monnaie  montant;
+    int est_sous_total;   /* 0/1 */
+    int profondeur;
+} ligne_bilan;
+
+le profondeur est le niveau d'installation du tel compte dans l'arborescense du BILAN
+dans cet exemple : 
+
+pour le 1er Niveau : on a 
+          - ACTIF
+          - PASSIF
+
+pour le 2eme Niveau : on a 
+          - pour ACTIF : 
+              -->ACTIF NON COURANT
+              -->ACTIF COURANT
+
+          -pour PASSIF : 
+              -->CAPITAUX PROPRES
+  
+pour le 3eme Niveau : on a 
+          -pour ACTIF NON COURANT :
+                --> IMMOBILISATIONS INCORPORELLES 
+                --> IMMOBILISATIONS CORPORELLES
+        
+          -pour ACTIF COURANT :
+                --> STOCKS
+
+          - pour capitaux propres : 
+                --> capital social 
+
+pour le 4eme niveau : on a 
+          - pour IMMOBILISATIONS INCORPORELLES : 
+                  -->Frais d'établissement
+          -->pour IMMOBILISATIONS CORPORELLES : 
+                  -->terrains ------------------------------------>>>>(trouvé)
+etc...
+
+un peu plus "CRAZY" , on peut appliquer le BFS pour connaitre les niveaux du bilan (bilan est concidere comme un graphe) 
+
+ 
