@@ -77,3 +77,13 @@ typedef struct ligne_journal{
     char libelle[256] ;
 }ligne_journal;
 
+typedef struct FinCore_Ecriture {
+    FinCore_IdEcriture     id;
+    FinCore_IdPeriode      periode_id;
+    char                   date[11];
+    char                   reference[32];
+    char                   description[256];
+    FinCore_LigneJournal*  lignes;
+    size_t                 nombre_lignes;
+    int                    est_validee;     /* 0 = brouillon, 1 = validée */
+} FinCore_Ecriture;
