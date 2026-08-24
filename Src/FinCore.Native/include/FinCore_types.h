@@ -37,7 +37,7 @@ typedef uint32_t id_ligne;
 /* ------------------------------------------------------------
  * Classification des comptes (plan comptable de type PCG tunisien / français)
  * ------------------------------------------------------------ */
-/*see documentation/classes_comptabilite.md*/
+/*voir documentation/classes_comptabilite.md*/
 typedef enum FNC_ClasseCompte {
     FNC_CLASSE_1_CP_ET_PNC = 1,   /* Comptes de capitaux propres et passifs non courants */
     FNC_CLASSE_2_ACTIFS_NON_COURANTS = 2,
@@ -142,4 +142,5 @@ typedef struct ligne_bilan {
     char libelle[128];
     FinCore_Monnaie  montant;
     int est_sous_total;   /* 0/1 */
+    int profondeur /*voir documentation/bilan_exp.md*/
 } ligne_bilan;
