@@ -109,3 +109,7 @@ typedef struct prop_periode_fiscale {
     DATE date_fin[11];
     status_periode_fiscale statut;
 }prop_periode_fiscale;
+
+/*--------------------------------------------------------------
+    l implementation des structures pour le rapport
+---------------------------------------------------------------*/
