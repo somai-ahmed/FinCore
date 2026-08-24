@@ -115,12 +115,18 @@ typedef struct prop_periode_fiscale {
 ---------------------------------------------------------------*/
 
 /*implementation d une structure pour appeler les champs du la structure compte*/
-typedef struct compte_ref{
+typedef struct ref_compte{
     id_compte id;
     char code [16]
     char nom[256];
-}compte_ref;
+}ref_compte;
 
-
+typedef struct ligne_balance {
+    ref_compte  compte;
+    FNC_Monnaie    total_debit;
+    FNC_Monnaie    total_credit;
+    FNC_Monnaie    solde_debit;
+    FNC_Monnaie    solde_credit;
+} FNC_LigneBalance;
 
     
