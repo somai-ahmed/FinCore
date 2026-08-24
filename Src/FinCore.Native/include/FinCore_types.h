@@ -96,4 +96,8 @@ typedef struct FinCore_Ecriture {
     int                    est_validee;     /* 0 = brouillon, 1 = validée */
 } FinCore_Ecriture;
 
-typedef enum periode_fiscale{}
+typedef enum periode_fiscale{
+    PERIODE_FISCALE_OUVERTE = 1 ;
+    PERIODE_FISCALE_CLOTURE = 2 ;
+    PERIODE_FISCALE_VEROUILLEE = 3 ;
+}periode_fiscale;
