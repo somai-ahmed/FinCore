@@ -63,6 +63,6 @@ typedef struct FinCore_Compte {
     FinCore_TypeCompte   type;
     FinCore_SoldeNormal  solde_normal;
     FinCore_IdCompte     parent_id;          /* 0 si racine */
-    bool                  actif;
+    bool                  est_active;
 } FinCore_Compte;
 
