@@ -29,7 +29,7 @@ typedef struct FNC_Session FNC_Session;
 typedef uint32_t id_compte;
 typedef uint32_t FNC_IdEcriture;
 typedef uint32_t FNC_JournalEntryId;
-typedef uint32_t FNC_PeriodId;
+typedef uint32_t FNC_idperiodefiscale;
 typedef uint32_t id_ligne;
 
 #define INVALID_ID 0
@@ -95,3 +95,5 @@ typedef struct FinCore_Ecriture {
     size_t                 nombre_lignes;
     int                    est_validee;     /* 0 = brouillon, 1 = validée */
 } FinCore_Ecriture;
+
+typedef enum
