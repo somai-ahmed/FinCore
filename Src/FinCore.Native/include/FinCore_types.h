@@ -4,6 +4,13 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include <time.h>
+
+typedef struct DATE{
+    int jour;
+    int mois;
+    int annee;
+}DATE;
 
 /* ============================================================
  * Moteur comptable FinCore — Définitions des types fondamentaux
