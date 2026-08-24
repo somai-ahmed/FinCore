@@ -19,10 +19,10 @@ typedef int64_t FinCore_Monnaie;
 typedef struct FinCore_Session FinCore_Session;
 
 /* Identifiants uniques */
-typedef uint32_t FinCore_IdCompte;
+typedef uint32_t id_compte;
 typedef uint32_t FinCore_JournalEntryId;
 typedef uint32_t FinCore_PeriodId;
-typedef uint32_t FinCore_LineId;
+typedef uint32_t id_ligne;
 
 #define INVALID_ID 0
 
@@ -63,9 +63,6 @@ typedef struct FinCore_Compte {
     FinCore_TypeCompte   type;
     FinCore_SoldeNormal  solde_normal;
     FinCore_IdCompte     parent_id;          /* 0 si racine */
-    bool                  est_active;
+    int                  est_active;
 } FinCore_Compte;
 
-/*--------------------------------------------------------------
-    l implementation des structures pour la journal
----------------------------------------------------------------*/
