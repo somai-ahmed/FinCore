@@ -144,3 +144,7 @@ typedef struct ligne_bilan {
     int est_sous_total;   /* 0/1 */
     int profondeur /*voir documentation/bilan_exp.md*/
 } ligne_bilan;
+
+/* ------------------------------------------------------------
+ * Buffer générique pour passage de frontière FFI
+ * ------------------------------------------------------------ */
