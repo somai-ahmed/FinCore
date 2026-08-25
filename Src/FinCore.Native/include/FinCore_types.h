@@ -148,3 +148,7 @@ typedef struct ligne_bilan {
 /* ------------------------------------------------------------
  * Buffer générique pour passage de frontière FFI
  * ------------------------------------------------------------ */
+typedef struct Buffer {
+    uint8_t* donnees;
+    size_t   taille;
+} FinCore_Buffer;
