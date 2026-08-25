@@ -10,3 +10,6 @@
  * de -100 afin que VB.NET puisse mapper les plages à des
  * types d'exceptions.
  * ============================================================ */
+
+typedef enum FinCore_Status {
+    FinCore_OK = 0,
