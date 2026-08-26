@@ -40,11 +40,11 @@ typedef enum FinCore_Etat {
     FinCore_ERR_TRES_PETIT_BUFFER     = -7,
 
     /* Accounting errors: -100 to -199 */
-    FinCore_ERR_ACCOUNT_NOT_FOUND    = -100,
-    FinCore_ERR_ACCOUNT_EXISTS       = -101,
-    FinCore_ERR_ACCOUNT_INACTIVE     = -102,
-    FinCore_ERR_ACCOUNT_HAS_CHILDREN = -103,
-    FinCore_ERR_INVALID_ACCOUNT_CODE = -104,
+    FinCore_ERR_COMPTE_INTROUVABLE    = -100,
+    FinCore_ERR_COMPTE_EXISTE         = -101,
+    FinCore_ERR_COMPTE_INACTIF        = -102,
+    FinCore_ERR_COMPTE_AVEC_ENFANTS   = -103,
+    FinCore_ERR_CODE_COMPTE_INVALIDE  = -104,
 
     /* Journal errors: -200 to -299 */
     FinCore_ERR_JOURNAL_NOT_FOUND    = -200,
