@@ -68,3 +68,12 @@ typedef enum FinCore_Etat {
     /* Erreurs du moteur de détection : -500 à -599 */
     ERR_ECHEC_DETECTION         = -500,
     ERR_DONNEES_INSUFFISANTES   = -501,
+
+    /* Erreurs de persistance : -600 à -699 */
+    ERR_FICHIER_INTROUVABLE       = -600,
+    ERR_ACCES_FICHIER_REFUSE      = -601,
+    ERR_FICHIER_CORROMPU          = -602,
+    ERR_ECHEC_SERIALISATION      = -603,
+    ERR_ECHEC_DESERIALISATION    = -604,
+    ERR_VERSION_NON_SUPPORTEE    = -605,
+    ERR_ERREUR_ENTREE_SORTIE     = -606
