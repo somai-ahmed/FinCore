@@ -11,6 +11,22 @@
  * types d'exceptions.
  * ============================================================ */
 
+/* --------------------------------------------------------------
+    FinCore peut envisager pluseieurs erreurs : ces erreurs sont
+    clasé sur plusieures modules , dont chaque erreur appartient
+    a un grand classe des erreur : 
+    les codes des erreurs sont presentes comme des intervalles
+    c'est le cas ou : 
+    on definit l'erreur par : 
+        |    INTERVALLE     | MODULE    |  ERREUR PREVUE     |
+
+        NB : les erreurs sont ppresente en nombres NEGATIFS (le 
+        correcte codage des codes des erreurs)
+
+    voir documentation/erreurs.md
+    -------------------------------------------------------------*/
+        
+
 typedef enum FinCore_Status {
     FinCore_OK = 0,
 
