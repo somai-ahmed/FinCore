@@ -66,5 +66,5 @@ typedef enum FinCore_Etat {
     ERR_AUCUNE_DONNEE_PERIODE    = -401,
 
     /* Erreurs du moteur de détection : -500 à -599 */
-    FinCore_ERR_ECHEC_DETECTION         = -500,
-    FinCore_ERR_DONNEES_INSUFFISANTES   = -501,
+    ERR_ECHEC_DETECTION         = -500,
+    ERR_DONNEES_INSUFFISANTES   = -501,
