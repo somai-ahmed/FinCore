@@ -31,13 +31,13 @@ typedef enum FinCore_Etat {
     FinCore_OK = 0,
 
     /* Generic / session errors: -1 to -99 */
-    FinCore_ERR_UNKNOWN              = -1,
-    FinCore_ERR_INVALID_ARGUMENT     = -2,
-    FinCore_ERR_NULL_POINTER         = -3,
-    FinCore_ERR_OUT_OF_MEMORY        = -4,
-    FinCore_ERR_INVALID_SESSION      = -5,
-    FinCore_ERR_NOT_INITIALIZED      = -6,
-    FinCore_ERR_BUFFER_TOO_SMALL     = -7,
+    FinCore_ERR_INCONNU              = -1,
+    FinCore_ERR_ARGUMENT_INVALIDE     = -2,
+    FinCore_ERR_POINTEUR_NULLE         = -3,
+    FinCore_ERR_SORTIE_DU_MEMOIRE        = -4,
+    FinCore_ERR_SESSION_INVALIDE      = -5,
+    FinCore_ERR_NON_INITIALISE      = -6,
+    FinCore_ERR_TRES_PETIT_BUFFER     = -7,
 
     /* Accounting errors: -100 to -199 */
     FinCore_ERR_ACCOUNT_NOT_FOUND    = -100,
