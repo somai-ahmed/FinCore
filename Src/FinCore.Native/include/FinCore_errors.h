@@ -64,3 +64,7 @@ typedef enum FinCore_Etat {
     /* Erreurs de rapport : -400 à -499 */
     ERR_ECHEC_GENERATION_RAPPORT = -400,
     ERR_AUCUNE_DONNEE_PERIODE    = -401,
+
+    /* Erreurs du moteur de détection : -500 à -599 */
+    FinCore_ERR_ECHEC_DETECTION         = -500,
+    FinCore_ERR_DONNEES_INSUFFISANTES   = -501,
