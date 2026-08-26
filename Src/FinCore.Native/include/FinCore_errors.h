@@ -27,7 +27,7 @@
     -------------------------------------------------------------*/
         
 
-typedef enum FinCore_Status {
+typedef enum FinCore_Etat {
     FinCore_OK = 0,
 
     /* Generic / session errors: -1 to -99 */
