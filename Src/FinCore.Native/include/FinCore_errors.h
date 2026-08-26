@@ -1,5 +1,5 @@
-#ifndef ERRORS_H
-#define ERRORS_H
+#ifndef FINCORE_ERRORS_H
+#define FINCORE_ERRORS_H
 
 /* ============================================================
  * Moteur Comptable FinCore - Codes d'erreur
