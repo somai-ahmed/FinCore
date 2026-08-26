@@ -33,7 +33,7 @@ typedef enum FinCore_Etat {
     /* Erreurs générales : -1 à -99 */
     ERR_INCONNU              = -1,
     ERR_ARGUMENT_INVALIDE     = -2,
-    _ERR_POINTEUR_NULLE         = -3,
+    ERR_POINTEUR_NULLE         = -3,
     ERR_SORTIE_DU_MEMOIRE        = -4,
     ERR_SESSION_INVALIDE      = -5,
     ERR_NON_INITIALISE      = -6,
@@ -60,3 +60,7 @@ typedef enum FinCore_Etat {
     FinCore_ERR_PERIODE_VERROUILLEE    = -302,
     FinCore_ERR_PERIODE_CHEVAUCHEMENT  = -303,
     FinCore_ERR_PLAGE_DATES_INVALIDE   = -304,
+
+    /* Erreurs de rapport : -400 à -499 */
+    FinCore_ERR_ECHEC_GENERATION_RAPPORT = -400,
+    FinCore_ERR_AUCUNE_DONNEE_PERIODE    = -401,
