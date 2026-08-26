@@ -30,7 +30,7 @@
 typedef enum FinCore_Etat {
     FinCore_OK = 0,
 
-    /* Generic / session errors: -1 to -99 */
+    /* Erreurs générales : -1 à -99 */
     FinCore_ERR_INCONNU              = -1,
     FinCore_ERR_ARGUMENT_INVALIDE     = -2,
     FinCore_ERR_POINTEUR_NULLE         = -3,
@@ -39,17 +39,17 @@ typedef enum FinCore_Etat {
     FinCore_ERR_NON_INITIALISE      = -6,
     FinCore_ERR_TRES_PETIT_BUFFER     = -7,
 
-    /* Accounting errors: -100 to -199 */
+    /* Erreurs comptables : -100 à -199 */
     FinCore_ERR_COMPTE_INTROUVABLE    = -100,
     FinCore_ERR_COMPTE_EXISTE         = -101,
     FinCore_ERR_COMPTE_INACTIF        = -102,
     FinCore_ERR_COMPTE_AVEC_ENFANTS   = -103,
     FinCore_ERR_CODE_COMPTE_INVALIDE  = -104,
 
-    /* Journal errors: -200 to -299 */
-    FinCore_ERR_JOURNAL_NOT_FOUND    = -200,
-    FinCore_ERR_JOURNAL_UNBALANCED   = -201,
-    FinCore_ERR_JOURNAL_EMPTY        = -202,
-    FinCore_ERR_JOURNAL_ALREADY_POSTED = -203,
-    FinCore_ERR_JOURNAL_INVALID_LINE = -204,
-    FinCore_ERR_JOURNAL_NEGATIVE_AMOUNT = -205,
+    /* Erreurs de journal : -200 à -299 */
+    FinCore_ERR_JOURNAL_INTROUVABLE       = -200,
+    FinCore_ERR_JOURNAL_NON_EQUILIBRE     = -201,
+    FinCore_ERR_JOURNAL_VIDE              = -202,
+    FinCore_ERR_JOURNAL_DEJA_COMPTABILISE = -203,
+    FinCore_ERR_LIGNE_JOURNAL_INVALIDE    = -204,
+    FinCore_ERR_JOURNAL_MONTANT_NEGATIF   = -205,
