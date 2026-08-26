@@ -53,3 +53,10 @@ typedef enum FinCore_Etat {
     ERR_JOURNAL_DEJA_COMPTABILISE = -203,
     ERR_LIGNE_JOURNAL_INVALIDE    = -204,
     ERR_JOURNAL_MONTANT_NEGATIF   = -205,
+
+    /* Erreurs de période : -300 à -399 */
+    FinCore_ERR_PERIODE_INTROUVABLE    = -300,
+    FinCore_ERR_PERIODE_FERMEE         = -301,
+    FinCore_ERR_PERIODE_VERROUILLEE    = -302,
+    FinCore_ERR_PERIODE_CHEVAUCHEMENT  = -303,
+    FinCore_ERR_PLAGE_DATES_INVALIDE   = -304,
