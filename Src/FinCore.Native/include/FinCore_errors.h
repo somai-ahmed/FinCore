@@ -141,3 +141,15 @@ typedef enum FinCore_Etat {
     ERR_ECHEC_CHARGEMENT             = -608,
     ERR_JSON_INVALIDE                 = -609,
     ERR_CSV_INVALIDE                  = -610,
+
+    /* Erreurs de validation comptable : -800 à -899 */
+    ERR_DONNEES_COMPTABLES_INVALIDES       = -800,
+    ERR_BALANCE_GENERALE_INCOHERENTE       = -801,
+    ERR_TOTAL_DEBIT_INCORRECT              = -802,
+    ERR_TOTAL_CREDIT_INCORRECT             = -803,
+    ERR_DEBIT_CREDIT_DIFFERENTS            = -804,
+    ERR_SOLDE_COMPTE_INCOHERENT            = -805,
+    ERR_MOUVEMENT_COMPTABLE_INVALIDE       = -806,
+    ERR_GRAND_LIVRE_BALANCE_DIFFERENTS     = -807,
+    ERR_BALANCE_BILAN_DIFFERENTS           = -808,
+    ERR_RESULTAT_FINANCIER_INCOHERENT      = -809,
