@@ -89,11 +89,16 @@ typedef enum FinCore_Etat {
     ERR_ECART_SOLDE_BANCAIRE             = -259,
 
     /* Erreurs de période : -300 à -399 */
-    ERR_PERIODE_INTROUVABLE    = -300,
-    ERR_PERIODE_FERMEE         = -301,
-    ERR_PERIODE_VERROUILLEE    = -302,
-    ERR_PERIODE_CHEVAUCHEMENT  = -303,
-    ERR_PLAGE_DATES_INVALIDE   = -304,
+    ERR_PERIODE_INTROUVABLE              = -300,
+    ERR_PERIODE_FERMEE                   = -301,
+    ERR_PERIODE_VERROUILLEE              = -302,
+    ERR_PERIODE_CHEVAUCHEMENT            = -303,
+    ERR_PLAGE_DATES_INVALIDE             = -304,
+    ERR_EXERCICE_INTROUVABLE             = -305,
+    ERR_EXERCICE_FERME                   = -306,
+    ERR_DATE_HORS_EXERCICE               = -307,
+    ERR_MODIFICATION_PERIODE_FERMEE      = -308,
+    ERR_PERIODE_EXISTE                   = -309,
 
     /* Erreurs de rapport : -400 à -499 */
     ERR_ECHEC_GENERATION_RAPPORT = -400,
