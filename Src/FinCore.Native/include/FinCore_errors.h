@@ -116,7 +116,6 @@ typedef enum FinCore_Etat {
     ERR_GRAND_LIVRE_BALANCE_INCOHERENTS  = -412,
     ERR_BALANCE_BILAN_INCOHERENTS        = -413,
     ERR_RESULTAT_BILAN_INCOHERENTS       = -414,
-    /*........etc...*/
 
     /* Erreurs du moteur de détection : -500 à -599 */
     ERR_ECHEC_DETECTION                    = -500,
@@ -153,3 +152,13 @@ typedef enum FinCore_Etat {
     ERR_GRAND_LIVRE_BALANCE_DIFFERENTS     = -807,
     ERR_BALANCE_BILAN_DIFFERENTS           = -808,
     ERR_RESULTAT_FINANCIER_INCOHERENT      = -809,
+
+    /* Erreurs de transaction : -900 à -999 */
+
+    ERR_TRANSACTION_INVALIDE               = -900,
+    ERR_TRANSACTION_DEJA_COMPTABILISEE     = -901,
+    ERR_TRANSACTION_ANNULEE                = -902,
+    ERR_TRANSACTION_NON_ANNULABLE          = -903,
+    ERR_TRANSACTION_HORS_PERIODE           = -904,
+    ERR_TRANSACTION_NON_EQUILIBREE         = -905,
+    ERR_TRANSACTION_INTERDITE              = -906
