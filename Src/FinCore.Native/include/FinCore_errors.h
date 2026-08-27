@@ -31,13 +31,18 @@ typedef enum FinCore_Etat {
     ETAT_OK = 0,
 
     /* Erreurs générales : -1 à -99 */
-    ERR_INCONNU              = -1,
-    ERR_ARGUMENT_INVALIDE     = -2,
-    ERR_POINTEUR_NULLE         = -3,
+
+    ERR_INCONNU                  = -1,
+    ERR_ARGUMENT_INVALIDE        = -2,
+    ERR_POINTEUR_NULLE           = -3,
     ERR_SORTIE_DU_MEMOIRE        = -4,
-    ERR_SESSION_INVALIDE      = -5,
-    ERR_NON_INITIALISE      = -6,
-    ERR_TRES_PETIT_BUFFER     = -7,
+    ERR_SESSION_INVALIDE         = -5,
+    ERR_NON_INITIALISE           = -6,
+    ERR_TRES_PETIT_BUFFER        = -7,
+    ERR_OPERATION_INTERDITE      = -8,
+    ERR_IDENTIFIANT_INVALIDE     = -9,
+    ERR_ELEMENT_DEJA_EXISTANT    = -10,
+    ERR_ELEMENT_INTROUVABLE      = -11,
 
     /* Erreurs comptables : -100 à -199 */
     ERR_COMPTE_INTROUVABLE    = -100,
