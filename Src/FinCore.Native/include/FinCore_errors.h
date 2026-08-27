@@ -45,11 +45,18 @@ typedef enum FinCore_Etat {
     ERR_ELEMENT_INTROUVABLE      = -11,
 
     /* Erreurs comptables : -100 à -199 */
-    ERR_COMPTE_INTROUVABLE    = -100,
-    ERR_COMPTE_EXISTE         = -101,
-    ERR_COMPTE_INACTIF        = -102,
-    ERR_COMPTE_AVEC_ENFANTS   = -103,
-    ERR_CODE_COMPTE_INVALIDE  = -104,
+    ERR_COMPTE_INTROUVABLE          = -100,
+    ERR_COMPTE_EXISTE               = -101,
+    ERR_COMPTE_INACTIF              = -102,
+    ERR_COMPTE_AVEC_ENFANTS         = -103,
+    ERR_CODE_COMPTE_INVALIDE        = -104,
+    ERR_TYPE_COMPTE_INVALIDE        = -105,
+    ERR_CLASSE_COMPTE_INVALIDE      = -106,
+    ERR_COMPTE_NON_AUTORISE         = -107,
+    ERR_COMPTE_UTILISE              = -108,
+    ERR_COMPTE_COLLECTIF_INVALIDE   = -109,
+    ERR_COMPTE_AUXILIAIRE_INVALIDE  = -110,
+    ERR_COMPTE_RESTREINT            = -111,
 
     /* Erreurs de journal : -200 à -299 */
     ERR_JOURNAL_INTROUVABLE       = -200,
