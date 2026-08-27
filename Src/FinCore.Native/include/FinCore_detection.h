@@ -23,6 +23,7 @@
 * Voir documentation/detection-engine.md
 * ============================================================ */
 
+
 typedef enum FinCore_DetectionMethod {
     FinCore_DETECT_BENFORD = 0,
     FinCore_DETECT_DOUBLONS = 1,
