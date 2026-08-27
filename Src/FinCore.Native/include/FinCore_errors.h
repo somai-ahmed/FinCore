@@ -164,3 +164,7 @@ typedef enum FinCore_Etat {
     ERR_TRANSACTION_INTERDITE              = -906
 
 }FinCore_Etat;
+
+const char* FinCore_GetErrorMessage(FinCore_Status status);
+
+#endif
