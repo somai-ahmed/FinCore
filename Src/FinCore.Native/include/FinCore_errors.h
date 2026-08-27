@@ -162,3 +162,5 @@ typedef enum FinCore_Etat {
     ERR_TRANSACTION_HORS_PERIODE           = -904,
     ERR_TRANSACTION_NON_EQUILIBREE         = -905,
     ERR_TRANSACTION_INTERDITE              = -906
+
+}FinCore_Etat;
