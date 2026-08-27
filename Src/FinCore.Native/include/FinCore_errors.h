@@ -58,7 +58,7 @@ typedef enum FinCore_Etat {
     ERR_COMPTE_AUXILIAIRE_INVALIDE  = -110,
     ERR_COMPTE_RESTREINT            = -111,
 
-    /* Erreurs de journal : -200 à -299 */
+    /* Erreurs de journal : -200 à -249 */
     ERR_JOURNAL_INTROUVABLE             = -200,
     ERR_JOURNAL_NON_EQUILIBRE           = -201,
     ERR_JOURNAL_VIDE                    = -202,
@@ -75,6 +75,18 @@ typedef enum FinCore_Etat {
     ERR_JOURNAL_PERIODE_INVALIDE        = -213,
     ERR_JOURNAL_PERIODE_FERMEE          = -214,
     ERR_JOURNAL_MONTANT_NUL             = -215,
+
+    /* Erreurs de BANQUE : -250 à -299 */
+    ERR_BANQUE_SOLDE_NEGATIF             = -250,
+    ERR_CAISSE_SOLDE_NEGATIF             = -251,
+    ERR_TRESORERIE_SOLDE_NEGATIF         = -252,
+    ERR_MONTANT_BANCAIRE_INVALIDE        = -253,
+    ERR_COMPTE_BANCAIRE_INTROUVABLE      = -254,
+    ERR_COMPTE_CAISSE_INTROUVABLE        = -255,
+    ERR_SOLDE_INSUFFISANT                = -256,
+    ERR_OPERATION_BANCAIRE_INTERDITE     = -257,
+    ERR_RAPPROCHEMENT_BANCAIRE_ECHEC     = -258,
+    ERR_ECART_SOLDE_BANCAIRE             = -259,
 
     /* Erreurs de période : -300 à -399 */
     ERR_PERIODE_INTROUVABLE    = -300,
