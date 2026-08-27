@@ -130,10 +130,14 @@ typedef enum FinCore_Etat {
     ERR_RESULTAT_DETECTION_INVALIDE         = -508,
 
     /* Erreurs de persistance : -600 à -699 */
-    ERR_FICHIER_INTROUVABLE       = -600,
-    ERR_ACCES_FICHIER_REFUSE      = -601,
-    ERR_FICHIER_CORROMPU          = -602,
-    ERR_ECHEC_SERIALISATION      = -603,
-    ERR_ECHEC_DESERIALISATION    = -604,
-    ERR_VERSION_NON_SUPPORTEE    = -605,
-    ERR_ERREUR_ENTREE_SORTIE     = -606
+    ERR_FICHIER_INTROUVABLE          = -600,
+    ERR_ACCES_FICHIER_REFUSE         = -601,
+    ERR_FICHIER_CORROMPU             = -602,
+    ERR_ECHEC_SERIALISATION          = -603,
+    ERR_ECHEC_DESERIALISATION        = -604,
+    ERR_VERSION_NON_SUPPORTEE        = -605,
+    ERR_ERREUR_ENTREE_SORTIE         = -606,
+    ERR_ECHEC_SAUVEGARDE             = -607,
+    ERR_ECHEC_CHARGEMENT             = -608,
+    ERR_JSON_INVALIDE                 = -609,
+    ERR_CSV_INVALIDE                  = -610,
