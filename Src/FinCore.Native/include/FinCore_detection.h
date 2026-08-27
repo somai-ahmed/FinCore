@@ -1,1 +1,4 @@
+#ifndef FINCORE_DETECTION_H
+#define FINCORZ_DETETCTION_H
+
 
