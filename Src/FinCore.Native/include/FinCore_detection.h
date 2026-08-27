@@ -24,19 +24,31 @@
 * ============================================================ */
 
 
-typedef enum FinCore_DetectionMethod {
+typedef enum Meth_Detection {
     FinCore_DETECT_BENFORD = 0,
     FinCore_DETECT_DOUBLONS = 1,
     FinCore_DETECT_NOMBRES_RONDS = 2,
     FinCore_DETECT_VALS_ABERRANTES = 3
-} FinCore_DetectionMethod;
+} Meth_Detection;
 
 /*Les niveaux de gravite sont numerotes du niveau le plus sain 
     au niveau le plus dangereux*/
-typedef enum FinCore_Gravite {
+typedef enum Gravite {
    FinCore_GRAVITE_INFO     = 0,
    FinCore_GRAVITE_FAIBLE   = 1,
    FinCore_GRAVITE_MOYENNE  = 2,
    FinCore_GRAVITE_ELEVEE   = 3,
    FinCore_GRAVITE_CRITIQUE = 4
-} FinCore_Gravite;
+} Gravite;
+
+typedef struct Resultat_Detection{
+    Meth_Detection methode;
+    Gravite gravite;
+    id_ligne id_ligne; /*extrait de la fichier FinCore_types.h -- << typedef uint32_t id_ligne >> */
+    id_compte id_compte; /*extrait de la fichier FinCore_types.h -- << typedef uint32_t id_compte >> */
+    char description[256];
+    double score ; /*la detection du resultat va etre analyse sur des bases mathematiques et des formules precis sous forme d'un score
+    puis on va classer ceci selon le score obtenu*/
+}Resultat_Detection;
+    
+    
