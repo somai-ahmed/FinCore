@@ -101,8 +101,22 @@ typedef enum FinCore_Etat {
     ERR_PERIODE_EXISTE                   = -309,
 
     /* Erreurs de rapport : -400 à -499 */
-    ERR_ECHEC_GENERATION_RAPPORT = -400,
-    ERR_AUCUNE_DONNEE_PERIODE    = -401,
+    ERR_ECHEC_GENERATION_RAPPORT         = -400,
+    ERR_AUCUNE_DONNEE_PERIODE            = -401,
+    ERR_BILAN_NON_EQUILIBRE              = -402,
+    ERR_ACTIF_PASSIF_INCOHERENT          = -403,
+    ERR_BALANCE_NON_EQUILIBREE           = -404,
+    ERR_BALANCE_DEBIT_CREDIT_INCOHERENTS = -405,
+    ERR_COMPTE_RESULTAT_INVALIDE         = -406,
+    ERR_RESULTAT_NET_INVALIDE            = -407,
+    ERR_GRAND_LIVRE_INCOMPLET            = -408,
+    ERR_DONNEES_BILAN_INSUFFISANTES      = -409,
+    ERR_DONNEES_RESULTAT_INSUFFISANTES   = -410,
+    ERR_ETAT_FINANCIER_INCOHERENT        = -411,
+    ERR_GRAND_LIVRE_BALANCE_INCOHERENTS  = -412,
+    ERR_BALANCE_BILAN_INCOHERENTS        = -413,
+    ERR_RESULTAT_BILAN_INCOHERENTS       = -414,
+    /*........etc...*/
 
     /* Erreurs du moteur de détection : -500 à -599 */
     ERR_ECHEC_DETECTION         = -500,
