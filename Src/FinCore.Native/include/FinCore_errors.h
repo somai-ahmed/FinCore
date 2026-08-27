@@ -59,12 +59,22 @@ typedef enum FinCore_Etat {
     ERR_COMPTE_RESTREINT            = -111,
 
     /* Erreurs de journal : -200 à -299 */
-    ERR_JOURNAL_INTROUVABLE       = -200,
-    ERR_JOURNAL_NON_EQUILIBRE     = -201,
-    ERR_JOURNAL_VIDE              = -202,
-    ERR_JOURNAL_DEJA_COMPTABILISE = -203,
-    ERR_LIGNE_JOURNAL_INVALIDE    = -204,
-    ERR_JOURNAL_MONTANT_NEGATIF   = -205,
+    ERR_JOURNAL_INTROUVABLE             = -200,
+    ERR_JOURNAL_NON_EQUILIBRE           = -201,
+    ERR_JOURNAL_VIDE                    = -202,
+    ERR_JOURNAL_DEJA_COMPTABILISE       = -203,
+    ERR_LIGNE_JOURNAL_INVALIDE          = -204,
+    ERR_JOURNAL_MONTANT_NEGATIF         = -205,
+    ERR_JOURNAL_SANS_MONTANT            = -206,
+    ERR_JOURNAL_DEBIT_CREDIT_SIMULTANES = -207,
+    ERR_DATE_JOURNAL_INVALIDE           = -208,
+    ERR_LIBELLE_JOURNAL_MANQUANT        = -209,
+    ERR_COMPTE_DEBIT_INVALIDE           = -210,
+    ERR_COMPTE_CREDIT_INVALIDE          = -211,
+    ERR_JOURNAL_DEJA_EXISTANT           = -212,
+    ERR_JOURNAL_PERIODE_INVALIDE        = -213,
+    ERR_JOURNAL_PERIODE_FERMEE          = -214,
+    ERR_JOURNAL_MONTANT_NUL             = -215,
 
     /* Erreurs de période : -300 à -399 */
     ERR_PERIODE_INTROUVABLE    = -300,
