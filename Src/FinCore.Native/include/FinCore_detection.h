@@ -30,3 +30,13 @@ typedef enum FinCore_DetectionMethod {
     FinCore_DETECT_NOMBRES_RONDS = 2,
     FinCore_DETECT_VALS_ABERRANTES = 3
 } FinCore_DetectionMethod;
+
+/*Les niveaux de gravite sont numerotes du niveau le plus sain 
+    au niveau le plus dangereux*/
+typedef enum FinCore_Gravite {
+   FinCore_GRAVITE_INFO     = 0,
+   FinCore_GRAVITE_FAIBLE   = 1,
+   FinCore_GRAVITE_MOYENNE  = 2,
+   FinCore_GRAVITE_ELEVEE   = 3,
+   FinCore_GRAVITE_CRITIQUE = 4
+} FinCore_Gravite;
