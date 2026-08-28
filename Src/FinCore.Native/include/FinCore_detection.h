@@ -50,5 +50,11 @@ typedef struct Resultat_Detection{
     double score ; /*la detection du resultat va etre analyse sur des bases mathematiques et des formules precis sous forme d'un score
     puis on va classer ceci selon le score obtenu*/
 }Resultat_Detection;
-    
-    
+
+/*voir l'explication du theorem Benford en Documentation/Benford_strategie.ipynb*/
+typedef struct StatChiffreBenford {
+    int numero; /* intervalle [0,9] */
+    double freq_attendu; /* Proportion attendue selon Benford */
+    double freq_observe; /* Proportion réelle dans le jeu de données */
+    int nombre_observe;
+} StatChiffreBenford;
