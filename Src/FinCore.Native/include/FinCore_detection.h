@@ -61,3 +61,10 @@ typedef struct StatChiffreBenford {
 
 /*pour le rapport on a besoin des statistiques*/
 /*l'appelle du structure "StatChiffreBenford" pour la designiation du rapport*/
+typedef struct Rapport_Benford{
+    StatChiffreBenford stat[9] ;
+    double chiffre_carree;
+    double ecart_absolu_moyen;
+    int taille_echantillon;
+    int estnormal ; /*variable booleenne peut prendre seulemnt 0 ou 1 comme un valeur*/
+}Rapport_Benford;
