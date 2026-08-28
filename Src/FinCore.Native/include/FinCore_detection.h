@@ -58,3 +58,6 @@ typedef struct StatChiffreBenford {
     double freq_observe; /* Proportion réelle dans le jeu de données */
     int nombre_observe;
 } StatChiffreBenford;
+
+/*pour le rapport on a besoin des statistiques*/
+/*l'appelle du structure "StatChiffreBenford" pour la designiation du rapport*/
