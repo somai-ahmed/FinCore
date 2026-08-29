@@ -77,3 +77,14 @@ typedef struct config_detection{
     double seuil_ecart_nombres_ronds; /*ex: montants divisibles par 1000*/
     int fenetre_jours_doublon; /*période de recherche des doublons*/
 }config_detection;
+
+/*pour le fonctionnement d'une maniere propre du programme , on necessite l'integration du l'API du detection*/
+/*cad l API aka "APPLICATION PROGRAMMING INTERFACE" : l'interface entre le programme et le moteur du detection*/
+/*dans ce cas , la session comptable va etre analyse et passe par l'API du detection pour on conclure a la fin
+    le RESULTAT puis le renvoi au programme principal*/
+
+/* voir Documentation/API_detection.ipynb*/
+
+/*----------------------------------------------------------------------
+                        API DU DETECTION
+    ------------------------------------------------------------------*/
