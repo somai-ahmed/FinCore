@@ -88,3 +88,7 @@ typedef struct config_detection{
 /*----------------------------------------------------------------------
                         API DU DETECTION
     ------------------------------------------------------------------*/
+
+/* Remplit config avec des valeurs par défaut 
+    --> Cette fonction ne peut jamais etre FRAUDE*/
+void detection_config_par_defaut(FinCore_DetectionConfig* cfg);
