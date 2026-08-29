@@ -92,3 +92,8 @@ typedef struct config_detection{
 /* Remplit config avec des valeurs par défaut 
     --> Cette fonction ne peut jamais etre FRAUDE*/
 void detection_config_par_defaut(config_detection* cfg);
+
+/* Exécute toutes les méthodes de détection activées sur les écritures
+    comptables validées pendant la période donnée
+    Les résultats sont alloués en interne
+    l'appelant doit appeler FinCore_LibererResultatsDetection lorsqu'il a terminé */
