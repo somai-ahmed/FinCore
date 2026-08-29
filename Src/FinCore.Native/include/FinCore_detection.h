@@ -91,4 +91,4 @@ typedef struct config_detection{
 
 /* Remplit config avec des valeurs par défaut 
     --> Cette fonction ne peut jamais etre FRAUDE*/
-void detection_config_par_defaut(FinCore_DetectionConfig* cfg);
+void detection_config_par_defaut(config_detection* cfg);
