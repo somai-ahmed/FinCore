@@ -63,10 +63,10 @@ typedef enum {
 } Categorie_Compte;
 
 typedef enum {
-    FINC_PERIOD_OPEN = 0,
-    FINC_PERIOD_CLOSED = 1,
-    FINC_PERIOD_LOCKED = 2
-} FINC_PeriodStatus;
+    FINC_PERIODE_OUVERTE = 0,
+    FINC_PERIODE_FERMEE = 1,
+    FINC_PERIODE_VERROUILLEE = 2
+} ETAT_PERIODE;
 
 typedef enum {
     FINC_DET_BENFORD = 0x01,
