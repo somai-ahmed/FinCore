@@ -104,4 +104,4 @@ FinCore_Etat execute_detection(
     const config_detection* cfg,
     Resultat_Detection resultats,
     size_t* nombre_resultats
-);/*outut est du forme FinCore_Etat*/ /*struct en fichier src/FinCore.Native/include/FinCore_errors.h*/
+);/*output est du forme FinCore_Etat*/ /*struct en fichier src/FinCore.Native/include/FinCore_errors.h*/
