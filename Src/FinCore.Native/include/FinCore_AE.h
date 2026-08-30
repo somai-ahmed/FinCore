@@ -70,11 +70,11 @@ typedef enum {
 
 typedef enum {
     FINC_DET_BENFORD = 0x01,
-    FINC_DET_DUPLICATE = 0x02,
-    FINC_DET_ROUND_NUMBER = 0x04,
-    FINC_DET_OUTLIER = 0x08,
-    FINC_DET_ALL = 0x0F
-} FINC_DetectionFlags; /*ouvre documentation fichier pour l'explication du binaire*/
+    FINC_DET_DOUBLON = 0x02,
+    FINC_DET_NOMBRE_ROND = 0x04,
+    FINC_DET_VALEUR_ABERRANTE = 0x08,
+    FINC_DET_TOUTES = 0x0F
+} IndicateurDetection; /* Voir la documentation du fichier pour l'explication du fonctionnement binaire : DOCUMENTATION/Indicateur_Detection_explication_Binaire.ipynb */
 
 /*=========STRUCTURE DES DONNEES=========*/
 typedef struct {
