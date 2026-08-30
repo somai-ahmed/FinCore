@@ -8,25 +8,26 @@
 
 
 /*=======definition des constants========*/
-#define FINC_MAX_LABEL_LEN               256
-#define FINC_MAX_ACCOUNT_CODE_LEN        16
-#define FINC_MAX_CURRENCY_LEN            4
-#define FINC_MAX_ENTRY_ID_LEN            32
-#define FINC_MAX_PERIOD_ID_LEN           16
-#define FINC_MAX_USER_ID_LEN             32
-#define FINC_MAX_REFERENCE_LEN           64
-#define FINC_MAX_SECTION_LEN             64
-#define FINC_MAX_DATE_LEN                11
-#define FINC_MAX_DATETIME_LEN            20
-#define FINC_MAX_SESSIONS                16
-#define FINC_MAX_ACCOUNTS                1000
-#define FINC_MAX_PERIODS                 50
-#define FINC_MAX_JOURNAL_LINES           100000
-#define FINC_MAX_ENTRIES                 50000
-#define FINC_MAX_DETECTION_HITS          10000
-#define FINC_MAX_REPORT_LINES            50000
-#define FINC_BENFORD_MIN_SAMPLE          300
+#define FINC_LONGUEUR_MAX_LIBELLE             256
+#define FINC_LONGUEUR_MAX_CODE_COMPTE         16
+#define FINC_LONGUEUR_MAX_DEVISE              4
+#define FINC_LONGUEUR_MAX_ID_ECRITURE         32
+#define FINC_LONGUEUR_MAX_ID_PERIODE          16
+#define FINC_LONGUEUR_MAX_ID_UTILISATEUR      32
+#define FINC_LONGUEUR_MAX_REFERENCE           64
+#define FINC_LONGUEUR_MAX_SECTION             64
+#define FINC_LONGUEUR_MAX_DATE                11
+#define FINC_LONGUEUR_MAX_DATE_HEURE          20
 
+#define FINC_MAX_SESSIONS                     16
+#define FINC_MAX_COMPTES                      1000
+#define FINC_MAX_PERIODES                     50
+#define FINC_MAX_LIGNES_JOURNAL               100000
+#define FINC_MAX_ECRITURES                    50000
+#define FINC_MAX_DETECTIONS                   10000
+#define FINC_MAX_LIGNES_RAPPORT               50000
+
+#define FINC_BENFORD_ECHANTILLON_MIN          300
 /*=======les enumerations========*/
 typedef enum {
     FINC_OK = 0,
