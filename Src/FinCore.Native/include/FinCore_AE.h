@@ -47,7 +47,7 @@ typedef enum {
     ERREUR_MONTANT_NUL = -13,
     ERREUR_DATE_INVALIDE = -14,
     ERREUR_DONNEES_INSUFFISANTES = -15
-} FINC_Etat;
+} ETAT;
 
 typedef enum {
     ACTIF = 1,
