@@ -6,8 +6,6 @@
 #include "FinCore_detection.h"
 
 
-#ifndef FINCORE_AE_H
-#define FINCORE_AE_H
 
 /*=======definition des constants========*/
 #define FINC_MAX_LABEL_LEN               256
