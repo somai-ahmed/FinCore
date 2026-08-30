@@ -50,11 +50,11 @@ typedef enum {
 } FINC_Etat;
 
 typedef enum {
-    FINC_ACTIF = 1,
-    FINC_PASSIF = 2,
-    FINC_CHARGE = 3,
-    FINC_PRODUIT = 4
-} FINC_AccountType;
+    ACTIF = 1,
+    PASSIF = 2,
+    CHARGE = 3,
+    PRODUIT = 4
+} TypeCompte;
 
 typedef enum {
     FINC_CAT_BALANCE = 0,
