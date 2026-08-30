@@ -121,3 +121,5 @@ FinCore_Etat ExecuteBenfordAnalyse(
     Le tableau de résultats et les données associées sont libérés
     l'appelant doit fournir le nombre de résultats à libérer */
 void liberer_detection_des_rapports(Resultat_Detection* resultat, size_t nombre_resultats);
+
+#endif
