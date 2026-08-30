@@ -80,7 +80,7 @@ typedef enum {
 
 /*=========STRUCTURE DES DONNEES=========*/
 
-typedef struct {
+typedef struct Compte {
     char    code[FINC_LONGUEUR_MAX_CODE_COMPTE];
     char    libelle[FINC_LONGUEUR_MAX_LIBELLE];
     int     type;
@@ -88,20 +88,20 @@ typedef struct {
     char    parent[FINC_LONGUEUR_MAX_CODE_COMPTE];
     double  solde_initial;
     int     est_actif;
-} FINC_Compte;
+}Compte;
 
 
-typedef struct {
-    char    entry_id[FINC_MAX_ENTRY_ID_LEN];
-    char    date[FINC_MAX_DATE_LEN];
-    char    account_code[FINC_MAX_ACCOUNT_CODE_LEN];
-    char    label[FINC_MAX_LABEL_LEN];
-    char    reference[FINC_MAX_REFERENCE_LEN];
+typedef struct LigneJournal{
+    char    id_ecriture[FINC_LONGUEUR_MAX_ID_ECRITURE];
+    char    date[FINC_LONGUEUR_MAX_DATE];
+    char    code_compte[FINC_LONGUEUR_MAX_CODE_COMPTE];
+    char    libelle[FINC_LONGUEUR_MAX_LIBELLE];
+    char    reference[FINC_LONGUEUR_MAX_REFERENCE];
     double  debit;
     double  credit;
-    char    currency[FINC_MAX_CURRENCY_LEN];
-    double  exchange_rate;
-    char    period_id[FINC_MAX_PERIOD_ID_LEN];
-    char    user_id[FINC_MAX_USER_ID_LEN];
-    char    created_at[FINC_MAX_DATETIME_LEN];
-} FINC_JournalLine;
+    char    devise[FINC_LONGUEUR_MAX_DEVISE];
+    double  taux_change;
+    char    id_periode[FINC_LONGUEUR_MAX_ID_PERIODE];
+    char    id_utilisateur[FINC_LONGUEUR_MAX_ID_UTILISATEUR];
+    char    date_creation[FINC_LONGUEUR_MAX_DATE_HEURE];
+} LigneJournal;
