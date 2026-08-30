@@ -76,16 +76,20 @@ typedef enum {
     FINC_DET_TOUTES = 0x0F
 } IndicateurDetection; /* Voir la documentation du fichier pour l'explication du fonctionnement binaire : DOCUMENTATION/Indicateur_Detection_explication_Binaire.ipynb */
 
+
+
 /*=========STRUCTURE DES DONNEES=========*/
+
 typedef struct {
-    char    code[FINC_MAX_ACCOUNT_CODE_LEN];
-    char    label[FINC_MAX_LABEL_LEN];
+    char    code[FINC_LONGUEUR_MAX_CODE_COMPTE];
+    char    libelle[FINC_LONGUEUR_MAX_LIBELLE];
     int     type;
-    int     category;
-    char    parent[FINC_MAX_ACCOUNT_CODE_LEN];
-    double  opening_balance;
-    int     is_active;
-} FINC_Account;
+    int     categorie;
+    char    parent[FINC_LONGUEUR_MAX_CODE_COMPTE];
+    double  solde_initial;
+    int     est_actif;
+} FINC_Compte;
+
 
 typedef struct {
     char    entry_id[FINC_MAX_ENTRY_ID_LEN];
