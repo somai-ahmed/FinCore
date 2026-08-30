@@ -1,15 +1,9 @@
-/*
- * FinCore Accounting Engine
- * Data Contract Header - FinCore_AE.h
- *
- * Pure C data structures, enums, and constants.
- * No function declarations. No C++ guards. No export macros.
- *
- * Used by:
- *   - C core engine implementation
- *   - VB.NET P/Invoke marshaling layer
- *   - Documentation / interop contract
- */
+#ifndef FinCore_AE_H
+#define FinCore_AE_H
+
+#include "FinCore_types.h"
+#include "FinCore_errors.h"
+#include "FinCore_detection.h"
 
 
 #ifndef FINCORE_AE_H
