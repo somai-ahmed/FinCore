@@ -109,5 +109,5 @@ FinCore_Etat execute_detection(
 FinCore_Etat ExecuteBenfordAnalyse(
     Session* session,
     PeriodId id_periode,
-    Rapport_Benford* rappory
+    Rapport_Benford* rapport
 );
