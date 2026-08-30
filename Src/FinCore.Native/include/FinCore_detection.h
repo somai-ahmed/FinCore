@@ -97,3 +97,11 @@ void detection_config_par_defaut(config_detection* cfg);
     comptables validées pendant la période donnée
     Les résultats sont alloués en interne
     l'appelant doit appeler FinCore_LibererResultatsDetection lorsqu'il a terminé */
+
+FinCore_Etat execute_detection(
+    Session* session,
+    PeriodId id_periode,
+    const config_detection* cfg,
+    Resultat_Detection resultats,
+    size_t* nombre_resultats
+);/*outut est du forme FinCore_Etat*/ /*struct en fichier src/FinCore.Native/include/FinCore_errors.h*/
