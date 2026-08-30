@@ -105,3 +105,9 @@ FinCore_Etat execute_detection(
     Resultat_Detection resultats,
     size_t* nombre_resultats
 );/*output est du forme FinCore_Etat*/ /*struct en fichier src/FinCore.Native/include/FinCore_errors.h*/
+
+FinCore_Etat ExecuteBenfordAnalyse(
+    Session* session,
+    PeriodId id_periode,
+    Rapport_Benford* rappory
+);
