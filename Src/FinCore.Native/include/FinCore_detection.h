@@ -106,10 +106,18 @@ FinCore_Etat execute_detection(
     size_t* nombre_resultats
 );/*output est du forme FinCore_Etat*/ /*struct en fichier src/FinCore.Native/include/FinCore_errors.h*/
 
+
+/* Exécute l'analyse de Benford sur les écritures comptables
+    validées pendant la période donnée
+    Le rapport d'analyse est rempli en interne
+    l'appelant doit fournir un pointeur vers le rapport */
 FinCore_Etat ExecuteBenfordAnalyse(
     Session* session,
     PeriodId id_periode,
     Rapport_Benford* rapport
 );
 
+/* Libère la mémoire allouée pour les résultats de détection
+    Le tableau de résultats et les données associées sont libérés
+    l'appelant doit fournir le nombre de résultats à libérer */
 void liberer_detection_des_rapports(Resultat_Detection* resultat, size_t nombre_resultats);
