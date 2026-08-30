@@ -111,7 +111,7 @@ FinCore_Etat execute_detection(
     validées pendant la période donnée
     Le rapport d'analyse est rempli en interne
     l'appelant doit fournir un pointeur vers le rapport */
-FinCore_Etat ExecuteBenfordAnalyse(
+FinCore_Etat Executer_Analyse_Benford(
     Session* session,
     PeriodId id_periode,
     Rapport_Benford* rapport
@@ -120,6 +120,6 @@ FinCore_Etat ExecuteBenfordAnalyse(
 /* Libère la mémoire allouée pour les résultats de détection
     Le tableau de résultats et les données associées sont libérés
     l'appelant doit fournir le nombre de résultats à libérer */
-void liberer_detection_des_rapports(Resultat_Detection* resultat, size_t nombre_resultats);
+void liberer_resultats_detection(Resultat_Detection* resultat, size_t nombre_resultats);
 
 #endif
