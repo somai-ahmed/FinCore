@@ -111,3 +111,5 @@ FinCore_Etat ExecuteBenfordAnalyse(
     PeriodId id_periode,
     Rapport_Benford* rapport
 );
+
+void liberer_detection_des_rapports(Resultat_Detection* resultat, size_t nombre_resultats);
