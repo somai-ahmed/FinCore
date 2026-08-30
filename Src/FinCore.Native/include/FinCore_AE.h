@@ -28,6 +28,7 @@
 #define FINC_MAX_LIGNES_RAPPORT               50000
 
 #define FINC_BENFORD_ECHANTILLON_MIN          300
+
 /*=======les enumerations========*/
 typedef enum {
     FINC_OK = 0,
