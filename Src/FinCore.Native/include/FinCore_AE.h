@@ -68,6 +68,21 @@ typedef enum {
     FINC_PERIODE_VERROUILLEE = 2
 } ETAT_PERIODE;
 
+
+/*
+*    INDICATEUR DU DETECTION
+*    
+* Chaque valeur correspond a un bit :
+* 
+*    0x01 -> Benford
+*    0x02 -> Doublons
+*    0x04 -> Nombres ronds
+*    0x08 -> Valeurs aberrantes
+*
+*    VOIR :
+* Documentation/Indicateur_Detection_explication_Binaire.ipynb
+*/
+    
 typedef enum {
     FINC_DET_BENFORD = 0x01,
     FINC_DET_DOUBLON = 0x02,
