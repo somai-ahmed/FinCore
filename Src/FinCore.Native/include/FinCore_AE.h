@@ -95,20 +95,24 @@ typedef enum {
 
 /*=========STRUCTURE DES DONNEES=========*/
 
-typedef struct Compte {
-    char    code[FINC_LONGUEUR_MAX_CODE_COMPTE];
-    char    libelle[FINC_LONGUEUR_MAX_LIBELLE];
+/*
+ * Structure representant un compte comptable.
+ */
+typedef struct {
+    char    code[ LONGUEUR_MAX_CODE_COMPTE];
+    char    libelle[LONGUEUR_MAX_LIBELLE];
     int     type;
     int     categorie;
-    char    parent[FINC_LONGUEUR_MAX_CODE_COMPTE];
+    char    parent[LONGUEUR_MAX_CODE_COMPTE];
     double  solde_initial;
     int     est_actif;
-}Compte;
+} FINC_Compte;
+
 
 
 typedef struct LigneJournal{
-    char    id_ecriture[FINC_LONGUEUR_MAX_ID_ECRITURE];
-    char    date[FINC_LONGUEUR_MAX_DATE];
+    char    id_ecriture[LONGUEUR_MAX_ID_ECRITURE];
+    DATE    date;
     char    code_compte[FINC_LONGUEUR_MAX_CODE_COMPTE];
     char    libelle[FINC_LONGUEUR_MAX_LIBELLE];
     char    reference[FINC_LONGUEUR_MAX_REFERENCE];
