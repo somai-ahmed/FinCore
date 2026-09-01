@@ -89,9 +89,7 @@ typedef enum {
     FINC_DET_NOMBRE_ROND = 0x04,
     FINC_DET_VALEUR_ABERRANTE = 0x08,
     FINC_DET_TOUTES = 0x0F
-} IndicateurDetection; /* Voir la documentation du fichier pour l'explication du fonctionnement binaire : DOCUMENTATION/Indicateur_Detection_explication_Binaire.ipynb */
-
-
+} IndicateurDetection;
 
 /*=========STRUCTURE DES DONNEES=========*/
 
