@@ -109,18 +109,21 @@ typedef struct {
 }Compte;
 
 
-
-typedef struct LigneJournal{
+/*
+ * Structure representant une ligne d'ecriture comptable.
+ */
+typedef struct {
     char    id_ecriture[LONGUEUR_MAX_ID_ECRITURE];
-    DATE    date;
-    char    code_compte[FINC_LONGUEUR_MAX_CODE_COMPTE];
-    char    libelle[FINC_LONGUEUR_MAX_LIBELLE];
-    char    reference[FINC_LONGUEUR_MAX_REFERENCE];
+    DATE date;
+    char    code_compte[LONGUEUR_MAX_CODE_COMPTE ];
+    char    libelle[LONGUEUR_MAX_LIBELLE];
+    char    reference[LONGUEUR_MAX_REFERENCE];
     double  debit;
     double  credit;
-    char    devise[FINC_LONGUEUR_MAX_DEVISE];
+    char    devise[LONGUEUR_MAX_DEVISE];
     double  taux_change;
-    char    id_periode[FINC_LONGUEUR_MAX_ID_PERIODE];
-    char    id_utilisateur[FINC_LONGUEUR_MAX_ID_UTILISATEUR];
-    char    date_creation[FINC_LONGUEUR_MAX_DATE_HEURE];
-} LigneJournal;
+    char    id_periode[LONGUEUR_MAX_ID_PERIODE];
+    char    id_utilisateur[LONGUEUR_MAX_ID_UTILISATEUR];
+    DATE_H temps_creation;
+}LigneJournal;
+
