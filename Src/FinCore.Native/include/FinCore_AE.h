@@ -106,7 +106,7 @@ typedef struct {
     char    parent[LONGUEUR_MAX_CODE_COMPTE];
     double  solde_initial;
     int     est_actif;
-} FINC_Compte;
+}Compte;
 
 
 
