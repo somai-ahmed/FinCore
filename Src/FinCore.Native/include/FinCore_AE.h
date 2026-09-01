@@ -79,6 +79,8 @@ typedef enum {
 *    0x04 -> Nombres ronds
 *    0x08 -> Valeurs aberrantes
 *
+*    0x0F -> Toutes les detections
+*
 *    VOIR :
 * Documentation/Indicateur_Detection_explication_Binaire.ipynb
 */
