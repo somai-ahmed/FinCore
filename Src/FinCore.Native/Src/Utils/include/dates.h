@@ -22,5 +22,6 @@ typedef enum {
     DATE_FORMAT_FR
 }DATE_FORMAT;
 
+#define LONGEUR_CHAINE_DATE 11 /* 4 POUR ANNNEE , 2 POUR JOUR , 2 POUR MOIS , 3 tirets ou SLACH '/' */
 
 #endif
