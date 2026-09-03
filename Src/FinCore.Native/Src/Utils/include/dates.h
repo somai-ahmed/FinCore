@@ -17,5 +17,10 @@ typedef struct DATE {
     int32_t jour;
 } DATE;
 
+typedef enum {
+    DATE_FORMAT_ISO,
+    DATE_FORMAT_FR
+}DATE_FORMAT;
+
 
 #endif
