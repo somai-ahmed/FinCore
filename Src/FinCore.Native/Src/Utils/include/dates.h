@@ -11,4 +11,11 @@
 #include <stdint.h>
 #include <stddef.h>
 
+typedef struct DATE {
+    int32_t annee;
+    int32_t mois;
+    int32_t jour;
+} DATE;
+
+
 #endif
