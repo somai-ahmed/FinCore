@@ -24,4 +24,7 @@ typedef enum {
 
 #define LONGEUR_CHAINE_DATE 11 /* 4 POUR ANNNEE , 2 POUR JOUR , 2 POUR MOIS , 3 tirets ou SLACH '/' */
 
+bool date_valide(DATE d);
+bool est_annee_bissextile(int32_t annee);
+
 #endif
