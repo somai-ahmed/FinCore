@@ -10,6 +10,23 @@
 #ifndef DATES_H
 #define DATES_H
 
+/* Mois de 31 jours */
+#define JANVIER   1
+#define MARS      3
+#define MAI       5
+#define JUILLET   7
+#define AOUT      8
+#define OCTOBRE   10
+#define DECEMBRE  12
+
+/* Mois de 30 jours */
+#define AVRIL     4
+#define JUIN      6
+#define SEPTEMBRE 9
+#define NOVEMBRE  11
+
+/* Février */
+#define FEVRIER   2
 
 #include <stdbool.h>
 #include <stdint.h>
