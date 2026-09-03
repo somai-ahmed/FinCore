@@ -32,6 +32,7 @@ bool date_valide(DATE d);
 bool est_annee_bissextile(int32_t annee);
 int32_t obtenir_nbr_jours_mois(int32_t annee , int32_t mois); /*pour la verification du mois FEVRIER 28 ou 29*/
 
+int comparer_dates(DATE d1, DATE d2); /*si d1>d2 : fonction retourne >0 sinon <0 :: si la meme date on recoit un ZERO 0 */
 
 
 
