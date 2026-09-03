@@ -24,6 +24,10 @@ typedef enum {
 
 #define LONGEUR_CHAINE_DATE 11 /* 4 POUR ANNNEE , 2 POUR JOUR , 2 POUR MOIS , 3 tirets ou SLACH '/' */
 
+
+/*----------------------------------
+    FONCTIONS DU VERIFICATIONS
+-----------------------------------*/
 bool date_valide(DATE d);
 bool est_annee_bissextile(int32_t annee);
 int32_t obtenir_nbr_jours_mois(int32_t annee , int32_t mois); /*pour la verification du mois FEVRIER 28 ou 29*/
