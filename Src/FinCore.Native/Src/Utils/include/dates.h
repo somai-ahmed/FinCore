@@ -1,7 +1,11 @@
-/* Date utility functions and definitions for handling financial and accounting-related date operations */
+/* Fonctions et definitions utilitaires pour la gestion des dates
+ * liees aux operations comptables et financieres */
 
-/* Centralized date management utilities for journal entries, accounting periods, fiscal years, and financial reports
- * Ensures consistent, reliable, and well-tested date handling across the application */
+/* Gestion centralisee des dates pour les ecritures comptables
+ * les periodes comptables les exercices fiscaux et les rapports financiers
+ * ce qui garentit une gestion des dates coherente fiable et testee
+ * dans l ensemble de l application */
+
 
 #ifndef DATES_H
 #define DATES_H
