@@ -45,6 +45,8 @@ typedef enum {
 
 #define LONGEUR_CHAINE_DATE 11 /* 4 POUR ANNNEE , 2 POUR JOUR , 2 POUR MOIS , 3 tirets ou SLACH '/' */
 
+#define FEVRIER_JOURS_NORMAL    28
+#define FEVRIER_JOURS_BISSEXTILE 29
 
 /*----------------------------------
     FONCTIONS DE VERIFICATION
