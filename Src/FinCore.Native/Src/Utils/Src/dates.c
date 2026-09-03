@@ -18,12 +18,10 @@ bool date_valide(DATE d){
 
     /*fevrier : le cas particulier*/
     /*l'apppel du la fonction du l'annee bissextile*/
-    if (est_annee_bissextile(d.annee)) {
-            if (d.jour > FEVRIER_JOURS_BISSEXTILE) return false;
-        }
-    else {
-            if (d.jour > FEVRIER_JOURS_NORMAL) return false;
-        }
-    
-    return true;
+    if (d.mois == 2) {
+        int max_jour_en_fevrier = est_annee_bissextile(d.annee)? FEVRIER_JOURS_BISSEXTILE : FEVRIER_JOURS_NORMAL;
+        if (d.jour > max_jour_en_fevrier)
+            return false;
+    }
+    return true ; /*date valide et propre*/
 }
