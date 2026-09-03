@@ -46,4 +46,10 @@ DATE difference_date(DATE d1 ,DATE d2);
 int32_t date_en_jdn(DATE d);
 DATE jdn_en_date (int32_t jdn);
 
+/* -------------------------------------------------
+            ANALYSE -- FORMATAGE
+    le principe : la fonction du type booleen :
+    elle retourne :
+ * "TRUE" en cas de succès, "FALSE" en cas d'échec.
+--------------------------------------------------*/
 #endif
