@@ -52,4 +52,7 @@ DATE jdn_en_date (int32_t jdn);
     elle retourne :
  * "TRUE" en cas de succès, "FALSE" en cas d'échec.
 --------------------------------------------------*/
+bool analyser_date(const char *date_en_texte , DATE_FORMAT format , DATE *resultat);
+bool formater_date(DATE date , DATE_FORMAT format , char *buffer , int32_t taille_buffer)
+
 #endif
