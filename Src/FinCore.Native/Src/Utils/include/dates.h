@@ -41,6 +41,9 @@ bool date_inclus_dans_periode (DATE d , DATE debut_periode , DATE fin_periode);
 /*------------------------------------
    FONCTIONS ARITHMETHIQUE SUR DATE            
 -------------------------------------*/
-
+DATE ajouter_jours_au_date(DATE d,int32_t jours);
+DATE difference_date(DATE d1 ,DATE d2);
+int32_t date_en_jdn(DATE d);
+DATE jdn_en_date (int32_t jdn);
 
 #endif
