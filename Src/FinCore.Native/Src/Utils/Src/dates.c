@@ -25,3 +25,20 @@ bool date_valide(DATE d){
     }
     return true ; /*date valide et propre*/
 }
+
+int comparer_dates(DATE d1, DATE d2){
+    /* le type d'output du la fonction comparer_dates est 'integer' : 
+        c'est le cas ou ::    la fonction retourne -2 , si la date est invalide 
+                              la fonction retourne -1 si la 2eme date est superieure que la premiere et 1 en inverse
+                              sinon la foction retourne 0 :: si les deux dates sont identiques*/
+    
+    if (!date_valide(d1) || !date_valide(d2)) return -2;
+
+    if (d1.annee != d2.annee) return (d1.annee < d2.annee) ? -1 : 1;
+
+    if (d1.mois != d2.mois) return (d1.mois < d2.mois) ? -1 : 1;
+
+    if (d1.jour != d2.jour) return (d1.jour < d2.jour) ? -1 : 1;
+
+    return 0 ; /*d1 et d2 sont identiques*/
+}
