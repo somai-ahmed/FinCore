@@ -26,5 +26,7 @@ typedef enum {
 
 bool date_valide(DATE d);
 bool est_annee_bissextile(int32_t annee);
+int32_t obtenir_nbr_jours_mois(int32_t annee , int32_t mois);
+
 
 #endif
