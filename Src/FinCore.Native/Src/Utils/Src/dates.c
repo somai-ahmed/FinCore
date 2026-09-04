@@ -48,9 +48,17 @@ bool date_inclus_dans_periode (DATE d , DATE debut_periode , DATE fin_periode){
         vrai ou faux selon la condition 
 
     * le logique du cette fonction va etre comme ca
-            -> analyse de la date : appliquer tous les modification
+            -> analyse de la date : appliquer tous les verification
             -> comparaison
             (d'autre maniere :: l'usage des fonctions precedents */
+    if (!date_valide(d) || !date_valide(debut_periode) || !date_valide(fin_periode) return false;
 
+    if ( comparer_dates(debut_periode , fin_periode) == -1) return false;
+
+    if(comparer_dates(debut_periode,fin_periode)==0 && !comparer_dates(d,debut_periode)) return false ;
+
+    return true;
+}
+    
 
     
