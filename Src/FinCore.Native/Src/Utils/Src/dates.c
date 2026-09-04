@@ -60,5 +60,10 @@ bool date_inclus_dans_periode (DATE d , DATE debut_periode , DATE fin_periode){
     return true;
 }
     
+DATE ajouter_jours_au_date(DATE d,int32_t jours){
+    if(!date_valide(d)) return;
 
-    
+    if(d.mois==2 && d.jour+jours>29 && est_annee_bissextile(d.annee)) 
+        d.mois = d.mois + (d.jour+jours) % 30 ;
+        d.jour = d
+        
