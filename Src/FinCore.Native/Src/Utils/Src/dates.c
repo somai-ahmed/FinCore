@@ -23,7 +23,7 @@ int32_t jours_dans_mois(int32_t mois,int32_t annee){
             return 30;
 
         case 2 : 
-             return est_annee_bissextile(annee) ? 29 : 28;
+            return est_annee_bissextile(annee) ? FEVRIER_JOURS_BISSEXTILE : FEVRIER_JOURS_NORMAL;
 
         default :
             return 0 ;
