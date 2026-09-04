@@ -99,7 +99,7 @@ DATE ajouter_jours_au_date(DATE d,int32_t jours){
             jours = jours_mois - d.jour + 1;
             d.jour = 1 ;
 
-            if(d.mois = 12){
+            if(d.mois == 12){
                 d.annee++;
                 d.mois = 1;
             }
