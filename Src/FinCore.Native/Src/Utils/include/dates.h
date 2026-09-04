@@ -36,7 +36,7 @@ typedef enum {
 -----------------------------------*/
 bool est_annee_bissextile(int32_t annee);
 bool date_valide(DATE d);
-
+int32_t jours_dans_mois(int32_t mois,int32_t annee);
 /*------------------------------------
     FONCTIONS DE COMPARISON            
 -------------------------------------*/
