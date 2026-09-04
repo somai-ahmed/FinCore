@@ -112,8 +112,37 @@ DATE ajouter_jours_au_date(DATE d,int32_t jours){
     
 }
 
-DATE difference_date(DATE d1 ,DATE d2){
+DATE difference_date(DATE d1, DATE d2){
     if (!date_valide(d1) || !date_valide(d2))
         return DATE_ERREUR;
-    
+
+    int32_t cmp = comparer_dates(d1, d2);
+    if (cmp == 0)
+        return (DATE){ .annee = 0, .mois = 0, .jour = 0 };
+
+    DATE date_recente  = (cmp == 1) ? d1 : d2;
+    DATE date_ancienne = (cmp == 1) ? d2 : d1;
+
+    int32_t jours  = date_recente.jour  - date_ancienne.jour;
+    int32_t mois   = date_recente.mois  - date_ancienne.mois;
+    int32_t annees = date_recente.annee - date_ancienne.annee;
+
+    if (jours < 0) {
+        int32_t mois_prec = date_recente.mois - 1;
+        int32_t annee_du_mois_prec = date_recente.annee;
+        if (mois_prec == 0) {
+            mois_prec = 12;
+            annee_du_mois_prec--;
+        }
+        jours += jours_dans_mois(mois_prec, annee_du_mois_prec);
+        mois--;
+    }
+
+    if (mois < 0) {
+        mois += 12;
+        annees--;
+    }
+
+    return (DATE){ .annee = annees, .mois = mois, .jour = jours };
+}
 
