@@ -31,6 +31,8 @@ typedef enum {
 #define FEVRIER_JOURS_NORMAL    28
 #define FEVRIER_JOURS_BISSEXTILE 29
 
+#define DATE_ERREUR ((DATE){0, 0, 0})
+
 /*----------------------------------
     FONCTIONS DE VERIFICATION
 -----------------------------------*/
