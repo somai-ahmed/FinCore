@@ -111,4 +111,9 @@ DATE ajouter_jours_au_date(DATE d,int32_t jours){
     return d;
     
 }
-        
+
+DATE difference_date(DATE d1 ,DATE d2){
+    if (!date_valide(d1) || !date_valide(d2))
+        return DATE_ERREUR;
+    
+
