@@ -42,3 +42,15 @@ int comparer_dates(DATE d1, DATE d2){
 
     return 0 ; /*d1 et d2 sont identiques*/
 }
+
+bool date_inclus_dans_periode (DATE d , DATE debut_periode , DATE fin_periode){
+    /* la fonction est du type d'output 'BOOLEEN' , c'est a dire elle retourne 
+        vrai ou faux selon la condition 
+
+    * le logique du cette fonction va etre comme ca
+            -> analyse de la date : appliquer tous les modification
+            -> comparaison
+            (d'autre maniere :: l'usage des fonctions precedents */
+
+
+    
