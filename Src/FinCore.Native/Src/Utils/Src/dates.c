@@ -5,6 +5,30 @@ bool est_annee_bissextile(int32_t annee){
     return (annee % 4 == 0 && annee % 100 != 0) || (annee % 400 == 0);
 }
 
+int32_t jours_dans_mois(int32_t mois,int32_t annee){
+    switch(mois)
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            return 31; 
+
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            return 30;
+
+        case 2 : 
+             return est_annee_bissextile(annee) ? 29 : 28;
+
+        default :
+            return 0 ;
+}        
+
 bool date_valide(DATE d){
     if (d.jour < 1 || d.mois < 1 || d.mois > 12) return false;
 
