@@ -155,4 +155,12 @@ int32_t date_en_jdn(DATE d)
     a = (14 - d.mois) / 12;
     y = d.annee + 4800 - a;
     m = d.mois + 12 * a - 3;
+
+    return d.jour
+           + (153 * m + 2) / 5
+           + 365 * y
+           + y / 4
+           - y / 100
+           + y / 400
+           - 32045;
 }
