@@ -85,9 +85,29 @@ bool date_inclus_dans_periode (DATE d , DATE debut_periode , DATE fin_periode){
 }
     
 DATE ajouter_jours_au_date(DATE d,int32_t jours){
-    if(!date_valide(d)) return;
+    if(!date_valide(d)) return d;
 
-    if(d.mois==2 && d.jour+jours>29 && est_annee_bissextile(d.annee)) 
-        d.mois = d.mois + (d.jour+jours) % 30 ;
-        d.jour = d
+    if (jours<0) return d;
+
+    while(jours>0){
+        int32_t jours_mois = jours_dans_mois(d.mois,d.annee);
+        if(d.jour+jours <= jours_dans mois)
+            d.jour+=jours;
+            jours = 0; /*bloquage du boucle while*/
+        else{
+            jours = jours_mois - d.jour + 1;
+            d.jour = 1 ;
+
+            if(d.mois = 12){
+                d.annee++;
+                d.mois = 1;
+            }
+            else{
+                d.mois++ ;
+            }
+        }
+    }
+    return d;
+    
+}
         
