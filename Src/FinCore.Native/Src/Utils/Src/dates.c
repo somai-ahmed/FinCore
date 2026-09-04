@@ -146,3 +146,13 @@ DATE difference_date(DATE d1, DATE d2){
     return (DATE){ .annee = annees, .mois = mois, .jour = jours };
 }
 
+int32_t date_en_jdn(DATE d)
+{
+    int32_t a;
+    int32_t y;
+    int32_t m;
+
+    a = (14 - d.mois) / 12;
+    y = d.annee + 4800 - a;
+    m = d.mois + 12 * a - 3;
+}
