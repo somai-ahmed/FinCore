@@ -164,3 +164,21 @@ int32_t date_en_jdn(DATE d)
            + y / 400
            - 32045;
 }
+
+DATE jdn_en_date(int32_t jdn)
+{
+    DATE d;
+    int32_t a, b, c, e, m;
+
+    a = jdn + 32044;
+    b = (4 * a + 3) / 146097;
+    c = a - (146097 * b) / 4;
+    e = (4 * c + 3) / 1461;
+    m = (5 * ((5 * e + 2) % 153)) / 5;
+
+    d.jour = c - (153 * m + 2) / 5 + 1;
+    d.mois = m + 3 - 12 * (m / 10);
+    d.annee = 100 * b + e - 4800 + (m / 10);
+
+    return d;
+}
