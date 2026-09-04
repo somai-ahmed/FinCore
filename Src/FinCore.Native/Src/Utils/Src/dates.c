@@ -91,9 +91,10 @@ DATE ajouter_jours_au_date(DATE d,int32_t jours){
 
     while(jours>0){
         int32_t jours_mois = jours_dans_mois(d.mois,d.annee);
-        if(d.jour+jours <= jours_mois)
+        if(d.jour+jours <= jours_mois){
             d.jour+=jours;
             jours = 0; /*bloquage du boucle while*/
+        }
         else{
             jours = jours_mois - d.jour + 1;
             d.jour = 1 ;
