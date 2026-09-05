@@ -198,4 +198,9 @@ bool analyser_date(const char *date_en_texte , DATE_FORMAT format , DATE *result
             liresucces = sscanf(date_en_texte, "%d/%d/%d", &mm, &jj, &aaaa); // jour, mois, annee
             break;
 
- 
+        case FORMAT_ISO:
+            liresucces = sscanf(date_en_texte, "%d-%d-%d", &aaaa, &mm, &jj); // annee, mois, jour
+            break;
+
+        case default :
+            return false;
