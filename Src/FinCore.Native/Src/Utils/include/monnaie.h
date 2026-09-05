@@ -11,5 +11,7 @@ typedef struct {
     int8_t echelle
 }monnaie;
 
+/* creation un montant nul a un echelle specefique */
+monnaie initiation_monnaie(int8_t echelle);
 
 #endif
