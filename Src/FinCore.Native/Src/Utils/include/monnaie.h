@@ -1,0 +1,1 @@
+/* ce fichier va contenir tous les propreites concernant les monnaies du systeme financier */
