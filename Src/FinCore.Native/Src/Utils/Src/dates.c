@@ -6,7 +6,7 @@ bool est_annee_bissextile(int32_t annee){
 }
 
 int32_t jours_dans_mois(int32_t mois,int32_t annee){
-    switch(mois)
+    switch(mois){
         case 1:
         case 3:
         case 5:
@@ -15,18 +15,20 @@ int32_t jours_dans_mois(int32_t mois,int32_t annee){
         case 10:
         case 12:
             return 31; 
-
+            break;
         case 4:
         case 6:
         case 9:
         case 11:
             return 30;
-
+            break;
         case 2 : 
             return est_annee_bissextile(annee) ? FEVRIER_JOURS_BISSEXTILE : FEVRIER_JOURS_NORMAL;
-
+            break;
         default :
             return 0 ;
+            break;
+    }
 }        
 
 bool date_valide(DATE d){
