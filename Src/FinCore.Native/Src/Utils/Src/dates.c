@@ -210,6 +210,16 @@ bool analyser_date(const char *date_en_texte , DATE_FORMAT format , DATE *result
 
     if (mm < 1 || mm > 12) return false;
 
+    int32_t max_jours = jours_dans_mois(mm, aaaa);
+
+    if (jj < 1 || jj > max_jours) {
+        return false;
+    }
     
-return true;
+    resultat->jour = jj;
+    resultat->mois = mm;
+    resultat->annee = aaaa;
+    
+    return true;
+    
 }
