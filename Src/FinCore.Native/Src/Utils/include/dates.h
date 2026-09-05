@@ -22,8 +22,9 @@ typedef struct DATE {
 } DATE;
 
 typedef enum {
-    DATE_FORMAT_ISO,
-    DATE_FORMAT_FR
+    DATE_FORMAT_JJMMAAAA,
+    DATE_FORMAT_MMJJAAAA,
+    DATE_FORMAT_ISO
 }DATE_FORMAT;
 
 #define LONGEUR_CHAINE_DATE 11 /* 4 POUR ANNNEE , 2 POUR JOUR , 2 POUR MOIS , 3 tirets ou SLACH '/' */
