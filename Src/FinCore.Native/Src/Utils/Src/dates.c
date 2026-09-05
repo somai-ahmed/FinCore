@@ -204,3 +204,9 @@ bool analyser_date(const char *date_en_texte , DATE_FORMAT format , DATE *result
 
         case default :
             return false;
+    }
+
+    if(liresuccess!=3) return false;
+
+return true;
+}
