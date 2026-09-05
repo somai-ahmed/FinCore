@@ -219,3 +219,29 @@ bool analyser_date(const char *date_en_texte , DATE_FORMAT format , DATE *result
     return true;
     
 }
+
+bool formater_date(DATE date, DATE_FORMAT format, char *buffer, int32_t taille_buffer) {
+    if (!buffer || taille_buffer <= 0) return false;
+
+    if (!date_valide(d)) return false; // délégation, comme avant
+
+    int ecrit;
+
+    switch (format) {
+        case FORMAT_JJMMAAAA:
+            ecrit = snprintf(buffer, taille_buffer, "%02d/%02d/%04d", date.jour, date.mois, date.annee);
+            break;
+        case FORMAT_MMJJAAAA:
+            ecrit = snprintf(buffer, taille_buffer, "%02d/%02d/%04d", date.mois, date.jour, date.annee);
+            break;
+        case FORMAT_ISO:
+            ecrit = snprintf(buffer, taille_buffer, "%04d-%02d-%02d", date.annee, date.mois, date.jour);
+            break;
+        default:
+            return false;
+    }
+
+    if (ecrit < 0 || ecrit >= taille_buffer) return false;
+
+    return true;
+}
