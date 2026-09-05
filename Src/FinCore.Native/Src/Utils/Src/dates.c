@@ -210,12 +210,8 @@ bool analyser_date(const char *date_en_texte , DATE_FORMAT format , DATE *result
 
     if (mm < 1 || mm > 12) return false;
 
-    int32_t max_jours = jours_dans_mois(mm, aaaa);
+    if (!date_valide(jj, mm, aaaa)) return false;   // délégation, pas de duplication
 
-    if (jj < 1 || jj > max_jours) {
-        return false;
-    }
-    
     resultat->jour = jj;
     resultat->mois = mm;
     resultat->annee = aaaa;
