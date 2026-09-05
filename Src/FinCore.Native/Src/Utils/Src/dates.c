@@ -182,3 +182,15 @@ DATE jdn_en_date(int32_t jdn)
 
     return d;
 }
+
+bool analyser_date(const char *date_en_texte , DATE_FORMAT format , DATE *resultat){
+    if(!date_en_texte || !resultat) return false;
+
+    int jj,mm,aaaa;
+    int liresucces;
+    
+    switch(format){
+        case FORMAT_MMJJAAAA :
+            liresucces = sscanf(date_en_texte, "%d/%d/%d", &jj, &mm, &aaaa); // jour, mois, annee
+
+ 
