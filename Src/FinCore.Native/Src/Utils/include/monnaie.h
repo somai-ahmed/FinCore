@@ -6,5 +6,10 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+typedef struct {
+    int64_t unites_min ;
+    int8_t echelle
+}monnaie;
+
 
 #endif
