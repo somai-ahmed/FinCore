@@ -92,3 +92,23 @@ monnaie monnaie_depuis_chaine(const char *chaine, int8_t echelle, bool success){
     if (success) *success = true;
     return m;
 }
+
+monnaie ajouter_monnaie(monnaie m1 ,monnaie m2 , bool success){
+    monnaie resultat = initiation_monnaie(m1.echelle);
+    if (success) *success = false;  // echec
+
+    /* regle d'or : on n'additionne que des montants de meme echelle */
+    if (m1.echelle != m2.echelle) {
+        return resultat;
+    }
+    /* verification d'overflow AVANT l'addition, pas apres */
+    if ((m2.valeur_mineure > 0 && m1.valeur_mineure > INT64_MAX - m2.valeur_mineure) || (m2.valeur_mineure < 0 && m1.valeur_mineure < INT64_MIN - m2.valeur_mineure)) {
+        return resultat;
+    }
+    
+    resultat.valeur_mineure = m1.valeur_mineure + m2.valeur_mineure;
+    resultat.echelle = m1.echelle;
+
+    if (success) *success = true;
+    return resultat;
+}
