@@ -17,4 +17,12 @@ monnaie initiation_monnaie(int8_t echelle);
 /* Cree une monnaie a partir de sa valeur en unites mineures
  * Exemple : monnaie_depuis_unites_mineures(12345, 3)    = 12.345 */
 Monnaie monnaie_depuis_unites_mineures( int64_t unites_mineures, int8_t echelle);
+
+/* Cree une monnaie a partir d une chaine de caracteres.
+ * Exemple :    "123.456" avec une echelle de 3
+ *     --> donne 123456 unites mineures.
+ * Le parametre "success" indique si la conversion a reussi.
+ */
+Monnaie monnaie_depuis_chaine(const char *chaine, int8_t echelle, bool *success);
+
 #endif
