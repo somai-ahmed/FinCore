@@ -34,4 +34,19 @@ monnaie ajouter_monnaie(monnaie m1 ,monnaie m2 , bool *success);
 
 /* soustraction le deuxieme montant du premier */
 monnaie soustraire_monnaie(monnaie m1,monnaie m2 , bool *success);
+
+/* Multiplie un montant par un nombre de points de base.
+ *
+ * 100 points de base  = 1.00 %
+ * 500 points de base  = 5.00 %
+ * 1000 points de base = 10.00 %
+ *
+ * Utilise pour :
+ *     - les taxes
+ *     - les interets
+ *     - les commissions
+ *     - les taux financiers
+ */
+Monnaie monnaie_multiplier_points_de_base(Monnaie m,int32_t points_de_base);
+
 #endif
