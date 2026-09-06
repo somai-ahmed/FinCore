@@ -112,3 +112,30 @@ monnaie ajouter_monnaie(monnaie m1 ,monnaie m2 , bool success){
     if (success) *success = true;
     return resultat;
 }
+
+monnaie soustraire_monnaie(monnaie m1, monnaie m2, bool *success) {
+    
+    monnaie resultat = initiation_monnaie(m1.echelle);
+
+    if (success) *success = false;  // echec 
+
+    /* meme regle que l'addition : echelles identiques obligatoires */
+    if (m1.echelle != m2.echelle) {
+        return resultat;
+    }
+
+    /* verification d'overflow/underflow AVANT la soustraction :
+       m1 - m2 deborde si :
+       - m2 est positif et m1 est deja trop proche de INT64_MIN
+       - m2 est negatif et m1 est deja trop proche de INT64_MAX */
+    if ((m2.valeur_mineure > 0 && m1.valeur_mineure < INT64_MIN + m2.valeur_mineure) ||
+        (m2.valeur_mineure < 0 && m1.valeur_mineure > INT64_MAX + m2.valeur_mineure)) {
+        return resultat;
+    }
+
+    resultat.valeur_mineure = m1.valeur_mineure - m2.valeur_mineure;
+    resultat.echelle = m1.echelle;
+
+    if (success) *success = true;
+    return resultat;
+}
