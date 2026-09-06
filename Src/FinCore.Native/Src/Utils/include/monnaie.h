@@ -49,4 +49,7 @@ monnaie soustraire_monnaie(monnaie m1,monnaie m2 , bool *success);
  */
 Monnaie monnaie_multiplier_points_de_base(Monnaie m,int32_t points_de_base);
 
+/* --------------------------------
+     operations du comparison
+-----------------------------------*/
 #endif
