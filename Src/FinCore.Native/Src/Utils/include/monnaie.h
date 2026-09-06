@@ -25,4 +25,12 @@ Monnaie monnaie_depuis_unites_mineures( int64_t unites_mineures, int8_t echelle)
  */
 Monnaie monnaie_depuis_chaine(const char *chaine, int8_t echelle, bool *success);
 
+/* --------------------------------
+        operations arithmetiques
+-----------------------------------*/
+
+/*    addition de deux montants     */
+monnaie ajouter_monnaie(monnaie m1 ,monnaie m2 , bool *success);
+
+
 #endif
