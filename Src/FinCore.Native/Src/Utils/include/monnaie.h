@@ -16,14 +16,14 @@ monnaie initiation_monnaie(int8_t echelle);
 
 /* Cree une monnaie a partir de sa valeur en unites mineures
  * Exemple : monnaie_depuis_unites_mineures(12345, 3)    = 12.345 */
-Monnaie monnaie_depuis_unites_mineures( int64_t unites_mineures, int8_t echelle);
+monnaie monnaie_depuis_unites_mineures( int64_t unites_mineures, int8_t echelle);
 
 /* Cree une monnaie a partir d une chaine de caracteres.
  * Exemple :    "123.456" avec une echelle de 3
  *     --> donne 123456 unites mineures.
  * Le parametre "success" indique si la conversion a reussi.
  */
-Monnaie monnaie_depuis_chaine(const char *chaine, int8_t echelle, bool *success);
+monnaie monnaie_depuis_chaine(const char *chaine, int8_t echelle, bool *success);
 
 /* --------------------------------
         operations arithmetiques
@@ -47,7 +47,7 @@ monnaie soustraire_monnaie(monnaie m1,monnaie m2 , bool *success);
  *     - les commissions
  *     - les taux financiers
  */
-Monnaie monnaie_multiplier_points_de_base(Monnaie m,int32_t points_de_base);
+monnaie monnaie_multiplier_points_de_base(Monnaie m,int32_t points_de_base);
 
 /* --------------------------------
      operations du comparison
@@ -61,5 +61,7 @@ Monnaie monnaie_multiplier_points_de_base(Monnaie m,int32_t points_de_base);
   --> 1 si a > b
  */
 int monnaie_comparer(monnaie m1,monnaie m2);
+
+bool monnaie_est_negative(monnaie m1);
 
 #endif
