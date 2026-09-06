@@ -65,4 +65,18 @@ int monnaie_comparer(monnaie m1,monnaie m2);
 bool monnaie_est_negative(monnaie m);
 bool monnaie_est_nulle(monnaie m);
 
+/* --------------------------------
+     operation de formatage
+-----------------------------------*/
+
+
+/*
+ * Convertit une monnaie en chaine de caracteres.
+ *
+ * Exemple :
+ *     Monnaie = 12345, echelle = 3
+ *     Resultat = "12.345"
+ */
+void monnaie_en_chaine(monnaie m,char *buffer,size_t taille_buffer);
+
 #endif
