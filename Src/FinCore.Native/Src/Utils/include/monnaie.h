@@ -34,5 +34,4 @@ monnaie ajouter_monnaie(monnaie m1 ,monnaie m2 , bool *success);
 
 /* soustraction le deuxieme montant du premier */
 monnaie soustraire_monnaie(monnaie m1,monnaie m2 , bool *success);
-
 #endif
