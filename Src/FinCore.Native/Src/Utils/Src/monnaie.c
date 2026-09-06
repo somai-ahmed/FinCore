@@ -86,7 +86,7 @@ monnaie monnaie_depuis_chaine(const char *chaine, int8_t echelle, bool success){
     }
 
     /* 6. appliquer le signe et valider */
-    m.valeur_mineure = negatif ? -valeur : valeur;
+    m.unites_min = negatif ? -valeur : valeur;
     m.echelle = echelle;
 
     if (success) *success = true;
@@ -102,11 +102,11 @@ monnaie ajouter_monnaie(monnaie m1 ,monnaie m2 , bool success){
         return resultat;
     }
     /* verification d'overflow AVANT l'addition, pas apres */
-    if ((m2.valeur_mineure > 0 && m1.valeur_mineure > INT64_MAX - m2.valeur_mineure) || (m2.valeur_mineure < 0 && m1.valeur_mineure < INT64_MIN - m2.valeur_mineure)) {
+    if ((m2.unites_min > 0 && m1.unites_min > INT64_MAX - m2.unites_min) || (m2.unites_min < 0 && m1.unites_min < INT64_MIN - m2.unites_min)) {
         return resultat;
     }
     
-    resultat.valeur_mineure = m1.valeur_mineure + m2.valeur_mineure;
+    resultat.unites_min = m1.unites_min + m2.unites_min;
     resultat.echelle = m1.echelle;
 
     if (success) *success = true;
@@ -128,13 +128,63 @@ monnaie soustraire_monnaie(monnaie m1, monnaie m2, bool *success) {
        m1 - m2 deborde si :
        - m2 est positif et m1 est deja trop proche de INT64_MIN
        - m2 est negatif et m1 est deja trop proche de INT64_MAX */
-    if ((m2.valeur_mineure > 0 && m1.valeur_mineure < INT64_MIN + m2.valeur_mineure) ||
-        (m2.valeur_mineure < 0 && m1.valeur_mineure > INT64_MAX + m2.valeur_mineure)) {
+    if ((m2.unites_min > 0 && m1.unites_min < INT64_MIN + m2.unites_min) ||
+        (m2.unites_min < 0 && m1.unites_min > INT64_MAX + m2.unites_min)) {
         return resultat;
     }
 
-    resultat.valeur_mineure = m1.valeur_mineure - m2.valeur_mineure;
+    resultat.unites_min = m1.unites_min - m2.unites_min;
     resultat.echelle = m1.echelle;
+
+    if (success) *success = true;
+    return resultat;
+}
+
+/* ============================================================
+ * Multiplication par points de base
+ * ============================================================ */
+monnaie monnaie_multiplier_points_de_base(monnaie m, int32_t points_de_base, bool *success) {
+
+    monnaie resultat = initiation_monnaie(m.echelle);
+
+    if (success) *success = false; // echec par defaut
+
+    if (m.echelle < 0) {
+        return resultat;
+    }
+
+    /* on calcule en int64 : unites_min * points_de_base, puis on divise par 10000
+       (10000 points de base = 100.00%) */
+
+    int64_t valeur = m.unites_min;
+    int64_t pdb = (int64_t)points_de_base;
+
+    /* verification d'overflow AVANT la multiplication */
+    if (valeur != 0) {
+        if (pdb > 0) {
+            if (valeur > 0 && valeur > INT64_MAX / pdb) {
+                return resultat;
+            }
+            if (valeur < 0 && valeur < INT64_MIN / pdb) {
+                return resultat;
+            }
+        } else if (pdb < 0) {
+            if (valeur > 0 && valeur > INT64_MIN / pdb) {
+                return resultat;
+            }
+            if (valeur < 0 && valeur < INT64_MAX / pdb) {
+                return resultat;
+            }
+        }
+    }
+
+    int64_t produit = valeur * pdb;
+
+    /* division entiere par 10000 (arrondi vers zero) */
+    int64_t resultat_valeur = produit / 10000;
+
+    resultat.unites_min = resultat_valeur;
+    resultat.echelle = m.echelle;
 
     if (success) *success = true;
     return resultat;
