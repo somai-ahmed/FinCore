@@ -16,7 +16,7 @@ monnaie initiation_monnaie(int8_t echelle);
 
 /* Cree une monnaie a partir de sa valeur en unites mineures
  * Exemple : monnaie_depuis_unites_mineures(12345, 3)    = 12.345 */
-monnaie monnaie_depuis_unites_mineures( int64_t unites_mineures, int8_t echelle);
+monnaie monnaie_depuis_unites_mineures( int64_t unites_min, int8_t echelle);
 
 /* Cree une monnaie a partir d une chaine de caracteres.
  * Exemple :    "123.456" avec une echelle de 3
