@@ -32,5 +32,7 @@ Monnaie monnaie_depuis_chaine(const char *chaine, int8_t echelle, bool *success)
 /*    addition de deux montants     */
 monnaie ajouter_monnaie(monnaie m1 ,monnaie m2 , bool *success);
 
+/* soustraction le deuxieme montant du premier */
+monnaie soustraire_monnaie(monnaie m1,monnaie m2 , bool *success);
 
 #endif
