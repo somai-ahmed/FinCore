@@ -52,4 +52,14 @@ Monnaie monnaie_multiplier_points_de_base(Monnaie m,int32_t points_de_base);
 /* --------------------------------
      operations du comparison
 -----------------------------------*/
+
+/*
+ * Compare deux montants
+ * Retourne :
+ --> -1 si a < b
+ --> 0 si a == b
+  --> 1 si a > b
+ */
+int monnaie_comparer(monnaie m1,monnaie m2);
+
 #endif
