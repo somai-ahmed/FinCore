@@ -62,6 +62,7 @@ monnaie monnaie_multiplier_points_de_base(Monnaie m,int32_t points_de_base);
  */
 int monnaie_comparer(monnaie m1,monnaie m2);
 
-bool monnaie_est_negative(monnaie m1);
+bool monnaie_est_negative(monnaie m);
+bool monnaie_est_nulle(monnaie m);
 
 #endif
