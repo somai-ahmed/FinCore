@@ -16,3 +16,32 @@ bool valider_longueur_chaine(const char *chaine, size_t min, size_t max){
 
     return longueur >= min && longueur <= max;
 }
+
+bool valider_caracteres_autorises(const char *chaine, const char *caracteres_extra){
+    if (chaine == NULL || caracteres_extra==NULL) return false;
+
+    const char *p = chaine ;
+    while (*p!='\0'){
+        if (isalnum((unsigned char)*p))
+        {
+            p++;
+            continue;
+        }
+
+        if (*p == ' ')
+        {
+            p++;
+            continue;
+        }
+
+        if (strchr(caracteres_extra, *p) != NULL)
+          {
+            p++;
+            continue;
+          }
+        return false;
+    }
+
+    return true;
+=
+  
