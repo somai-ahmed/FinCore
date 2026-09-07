@@ -241,3 +241,54 @@ bool monnaie_vers_chaine(monnaie m, char *tampon, size_t taille_tampon) {
     bool negatif = valeur < 0;
 
     uint64_t valeur_abs = negatif ? (uint64_t)(-(valeur + 1)) + 1 : (uint64_t)valeur;
+
+    /* on construit la chaine des chiffres a l'envers dans un tampon local */
+    char chiffres[32];
+    int i = 0;
+
+    if (valeur_abs == 0) {
+        chiffres[i++] = '0';
+    } else {
+        while (valeur_abs > 0 && n < (int)sizeof(chiffres)) {
+            chiffres[i++] = (char)('0' + (valeur_abs % 10));
+            valeur_abs /= 10;
+        }
+    }
+    /* completer avec des zeros a gauche si moins de chiffres que l'echelle + 1
+       (il faut au moins un chiffre avant la virgule) */
+    while (n < m.echelle + 1 && n < (int)sizeof(chiffres)) {
+        chiffres[n++] = '0';
+    }
+
+    /* construction de la chaine finale */
+    size_t pos = 0;
+
+    if (negatif) {
+        if (pos + 1 >= taille_tampon) return false;
+        tampon[pos++] = '-';
+    }
+
+    int partie_entiere_len = n - m.echelle;
+
+    /* partie entiere (les chiffres sont dans chiffres[] a l'envers) */
+    for (int i = 0; i < partie_entiere_len; i++) {
+        if (pos + 1 >= taille_tampon) return false;
+        tampon[pos++] = chiffres[n - 1 - i];
+    }
+
+    /* partie decimale */
+    if (m.echelle > 0) {
+        if (pos + 1 >= taille_tampon) return false;
+        tampon[pos++] = '.';
+
+        for (int i = 0; i < m.echelle; i++) {
+            if (pos + 1 >= taille_tampon) return false;
+            tampon[pos++] = chiffres[m.echelle - 1 - i];
+        }
+    }
+
+    if (pos + 1 > taille_tampon) return false;
+    tampon[pos] = '\0';
+
+    return true ;
+}
