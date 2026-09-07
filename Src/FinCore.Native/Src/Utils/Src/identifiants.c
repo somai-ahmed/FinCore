@@ -3,6 +3,6 @@
 
 generateur_id initiation_generateur_id(int64_t valeur_depart){
     generateur_id gen;
-    gen.compteur = 0;
+    gen.compteur = valeur_depart;
     return gen;
 }
