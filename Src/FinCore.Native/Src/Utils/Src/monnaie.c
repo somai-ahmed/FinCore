@@ -229,3 +229,11 @@ bool monnaie_est_negative(monnaie m) {
 bool monnaie_est_nulle(monnaie m) {
     return m.valeur_mineure == 0;
 }
+
+/*----------------------------
+        FOMRATAGE
+-----------------------------*/
+bool monnaie_vers_chaine(monnaie m, char *tampon, size_t taille_tampon) {
+    if (!tampon || taille_tampon == 0 || m.echelle < 0) {
+        return false;
+    }
