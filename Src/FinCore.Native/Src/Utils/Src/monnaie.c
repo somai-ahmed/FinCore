@@ -237,3 +237,7 @@ bool monnaie_vers_chaine(monnaie m, char *tampon, size_t taille_tampon) {
     if (!tampon || taille_tampon == 0 || m.echelle < 0) {
         return false;
     }
+    int64_t valeur = m.valeur_mineure;
+    bool negatif = valeur < 0;
+
+    uint64_t valeur_abs = negatif ? (uint64_t)(-(valeur + 1)) + 1 : (uint64_t)valeur;
