@@ -189,3 +189,29 @@ monnaie monnaie_multiplier_points_de_base(monnaie m, int32_t points_de_base, boo
     if (success) *success = true;
     return resultat;
 }
+
+/*--------------------------
+        COMPARISON           
+---------------------------*/
+
+/* l'output de cette fonction est entier 
+    on va tester et retourner 3 majeur nombre
+    la fonction retourne :
+        --> 0 :: si un erreur
+        --> -1 :: si le 2eme montant superieur au premier
+        --> 1 :: si le 1er montant superieur au premier
+*/
+int comparer_monnaie(monnaie m1,monnaie m2){
+    if (m1.echelle != m2.echelle) {
+        return 0;
+    }
+
+    if (m1.valeur_mineure < m2.valeur_mineure) {
+        return -1;
+    }
+    if (m1.valeur_mineure > m2.valeur_mineure) {
+        return 1;
+    }
+    return 0;
+}
+
