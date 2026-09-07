@@ -43,5 +43,5 @@ bool valider_caracteres_autorises(const char *chaine, const char *caracteres_ext
     }
 
     return true;
-=
+}
   
