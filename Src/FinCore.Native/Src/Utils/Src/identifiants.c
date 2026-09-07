@@ -10,5 +10,5 @@ generateur_id initiation_generateur_id(int64_t valeur_depart){
 int64_t generateur_id_suivant(generateur_id *gen);
     if (!gen) return -1;
     gen->compteur++;
-    return gen.compteur;
+    return gen->compteur;
 }
