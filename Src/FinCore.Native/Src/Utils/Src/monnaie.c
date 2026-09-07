@@ -215,3 +215,17 @@ int comparer_monnaie(monnaie m1,monnaie m2){
     return 0;
 }
 
+/* cette fonction retourne une variable booleenne cad
+    du "VRAI" ou "FAUX" 
+    si le montant est negatif :: la fonction retourne VRAI et inversement
+    */
+bool monnaie_est_negative(monnaie m) {
+    return m.valeur_mineure < 0;
+}
+/* cette fonction retourne une variable booleenne cad
+    du "VRAI" ou "FAUX" 
+    si le montant est NULLE :: la fonction retourne VRAI et sinon FAUX
+    */
+bool monnaie_est_nulle(monnaie m) {
+    return m.valeur_mineure == 0;
+}
