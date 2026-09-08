@@ -18,6 +18,7 @@ bool valider_longueur_chaine(const char *chaine, size_t min, size_t max){
     return longueur >= min && longueur <= max;
 }
 
+
 bool valider_caracteres_autorises(const char *chaine, const char *caracteres_extra){
     if (chaine == NULL || caracteres_extra==NULL) return false;
 
@@ -45,4 +46,5 @@ bool valider_caracteres_autorises(const char *chaine, const char *caracteres_ext
 
     return true;
 }
-  
+
+
