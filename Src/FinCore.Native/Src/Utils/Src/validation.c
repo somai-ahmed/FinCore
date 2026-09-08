@@ -58,4 +58,24 @@ bool valider_code_compte(const char *code, size_t longueur_min, size_t longueur_
     return true;
 }
 
+bool valider_format_reference(const char *reference, const char *prefixe_attendu){
+    if (reference == NULL || prefixe_attendu == NULL) return false;
 
+    size_t longueur_prefixe = strlen(prefixe_attendu);
+
+    if (strncmp(reference, prefixe_attendu, longueur_prefixe) != 0) {
+        return false;
+    }
+
+    const char *p = reference + longueur_prefixe;
+
+    if (*p != '-') return false;
+    p++;
+
+    if (!isdigit((unsigned char)*p)) return false;
+    while (isdigit((unsigned char)*p)) {
+        p++;
+    }
+
+    return *p == '\0';
+}
