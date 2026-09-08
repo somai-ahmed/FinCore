@@ -11,7 +11,7 @@ bool valider_chaine_non_vide(const char *chaine){
 
 bool valider_longueur_chaine(const char *chaine, size_t min, size_t max){
     if(chaine==NULL) return false;
-    if(!min ||!max || min=max) return false;
+    if(min > max) return false;
 
     size_t longueur = strlen(chaine);
 
@@ -20,31 +20,26 @@ bool valider_longueur_chaine(const char *chaine, size_t min, size_t max){
 
 
 bool valider_caracteres_autorises(const char *chaine, const char *caracteres_extra){
-    if (chaine == NULL || caracteres_extra==NULL) return false;
+    if (chaine == NULL) return false;
 
-    const char *p = chaine ;
-    while (*p!='\0'){
-        if (isalnum((unsigned char)*p))
-        {
+    const char *p = chaine;
+    while (*p != '\0') {
+        if (isalnum((unsigned char)*p)) {
             p++;
             continue;
         }
-
-        if (*p == ' ')
-        {
+        if (*p == ' ') {
             p++;
             continue;
         }
-
-        if (strchr(caracteres_extra, *p) != NULL)
-          {
+        if (caracteres_extra != NULL && strchr(caracteres_extra, *p) != NULL) {
             p++;
             continue;
-          }
+        }
         return false;
     }
-
     return true;
 }
+
 
 
