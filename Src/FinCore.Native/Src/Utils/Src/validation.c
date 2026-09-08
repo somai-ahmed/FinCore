@@ -84,3 +84,9 @@ bool valider_plage_i64(int64_t valeur, int64_t min, int64_t max){
     if (min > max) return false;
     return valeur >= min && valeur <= max;
 }
+
+bool valider_montant(monnaie m, bool autoriser_negatif){
+    if (m.echelle < 0) return false;
+    if (!autoriser_negatif && m.valeur_mineure < 0) return false;
+    return true;
+}
