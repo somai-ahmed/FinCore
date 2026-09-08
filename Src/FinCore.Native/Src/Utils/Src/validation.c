@@ -79,3 +79,8 @@ bool valider_format_reference(const char *reference, const char *prefixe_attendu
 
     return *p == '\0';
 }
+
+bool valider_plage_i64(int64_t valeur, int64_t min, int64_t max){
+    if (min > max) return false;
+    return valeur >= min && valeur <= max;
+}
