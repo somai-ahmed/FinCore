@@ -41,5 +41,21 @@ bool valider_caracteres_autorises(const char *chaine, const char *caracteres_ext
     return true;
 }
 
+bool valider_code_compte(const char *code, size_t longueur_min, size_t longueur_max){
+    if (code == NULL) return false;
+    if (longueur_min > longueur_max) return false;
+
+    size_t longueur = strlen(code);
+    if (longueur < longueur_min || longueur > longueur_max) {
+        return false;
+    }
+
+    for (const char *p = code; *p != '\0'; p++) {
+        if (!isdigit((unsigned char)*p)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 
