@@ -114,32 +114,32 @@ typedef struct prop_periode_fiscale {
 /*implementation d une structure pour appeler les champs du la structure compte*/
 typedef struct ref_compte{
     id_compte id;
-    char code [16]
+    char code[16];
     char nom[256];
 }ref_compte;
 
 typedef struct ligne_balance {
     ref_compte compte;
-    FNC_Monnaie total_debit;
-    FNC_Monnaie total_credit;
-    FNC_Monnaie solde_debit;
-    FNC_Monnaie solde_credit;
+    Monnaie total_debit;
+    Monnaie total_credit;
+    Monnaie solde_debit;
+    Monnaie solde_credit;
 }LigneBalance;
 
 typedef struct Entree_GrandLivre {
     DATE date;
     char reference[32];
     char libelle[256];
-    FinCore_Monnaie debit;
-    FinCore_Monnaie credit;
-    FinCore_Monnaie solde_cumule;
+    Monnaie debit;
+    Monnaie credit;
+    Monnaie solde_cumule;
 }Entree_GrandLivre;
 
 typedef struct ligne_bilan {
     char libelle[128];
-    FinCore_Monnaie  montant;
+    Monnaie montant;
     int est_sous_total;   /* 0/1 */
-    int profondeur /*voir documentation/bilan_exp.md*/
+    int profondeur;        /* voir documentation/bilan_exp.md */
 } ligne_bilan;
 
 /* ------------------------------------------------------------
