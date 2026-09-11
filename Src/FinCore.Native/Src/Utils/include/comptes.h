@@ -22,3 +22,7 @@ Monnaie comptes_avoir_solde(const Compte *compte);
 /* Hiérarchie */
 bool comptes_a_parent(const Compte *compte);
 bool comptes_est_enfant_de(const Compte *compte, id_compte parent_id);
+
+/* Activation */
+void comptes_activer(Compte *compte);
+void comptes_desactiver(Compte *compte);
