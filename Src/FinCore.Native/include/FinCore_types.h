@@ -77,33 +77,33 @@ typedef struct Compte {
 typedef struct ligne_journal{
     id_ligne id;
     id_compte compte_id;
-    FNC_Monnaie Debit;
-    FNC_Monnaie credit ;
+    Monnaie Debit;
+    Monnaie credit ;
     char libelle[256] ;
 }ligne_journal;
 
-typedef struct FinCore_Ecriture {
-    FNC_IdEcriture     id;
-    FNC_IdPeriode      periode_id;
-    DATE                   date[11];
-    char                   reference[32];
-    char                   description[256];
-    LigneJournal*  lignes;
-    size_t                 nombre_lignes;
-    int                    est_validee;     /* 0 = brouillon, 1 = validée */
-} FinCore_Ecriture;
+typedef struct Ecriture {
+    IdEcriture        id;
+    idperiodefiscale  periode_id;
+    DATE              date;
+    char              reference[32];
+    char              description[256];
+    ligne_journal*    lignes;
+    size_t            nombre_lignes;
+    int               est_validee;     /* 0 = brouillon, 1 = validée */
+} Ecriture;
 
 typedef enum status_periode_fiscale{
-    PERIODE_FISCALE_OUVERTE = 1 ;
-    PERIODE_FISCALE_CLOTURE = 2 ;
-    PERIODE_FISCALE_VEROUILLEE = 3 ;
-}statsus_periode_fiscale;
+    PERIODE_FISCALE_OUVERTE = 1,
+    PERIODE_FISCALE_CLOTURE = 2,
+    PERIODE_FISCALE_VEROUILLEE = 3
+}status_periode_fiscale;
 
 typedef struct prop_periode_fiscale {
-    FNC_IdPeriode    id;
-    char nom[64];
-    DATE date_debut;
-    DATE date_fin[11];
+    idperiodefiscale       id;
+    char                   nom[64];
+    DATE                   date_debut;
+    DATE                   date_fin;
     status_periode_fiscale statut;
 }prop_periode_fiscale;
 
