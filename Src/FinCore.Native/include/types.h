@@ -1,5 +1,5 @@
-#ifndef FINCORE_TYPES_H
-#define FINCORE_TYPES_H
+#ifndef TYPES_H
+#define TYPES_H
 
 #include <stdint.h>
 #include <stddef.h>
