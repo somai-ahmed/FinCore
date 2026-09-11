@@ -38,42 +38,39 @@ typedef uint32_t id_ligne;
  * Classification des comptes (plan comptable de type PCG tunisien / français)
  * ------------------------------------------------------------ */
 /*voir documentation/classes_comptabilite.md*/
-typedef enum FNC_ClasseCompte {
-    FNC_CLASSE_1_CP_ET_PNC = 1,   /* Comptes de capitaux propres et passifs non courants */
-    FNC_CLASSE_2_ACTIFS_NON_COURANTS = 2,
-    FNC_CLASSE_3_STOCKS = 3,
-    FNC_CLASSE_4_TIERS = 4,
-    FNC_CLASSE_5_TRESORERIE = 5,
-    /* Les charges et produits ne sont pas des classes au sens strict,
-       mais on les code ici pour l'uniformité du modèle. */
-    FNC_CLASSE_6_CHARGES = 6,
-    FNC_CLASSE_7_PRODUITS = 7
-} FNC_ClasseCompte;
+typedef enum ClasseCompte {
+    CLASSE_1_CP_ET_PNC = 1,
+    CLASSE_2_ACTIFS_NON_COURANTS = 2,
+    CLASSE_3_STOCKS = 3,
+    CLASSE_4_TIERS = 4,
+    CLASSE_5_TRESORERIE = 5,
+    CLASSE_6_CHARGES = 6,
+    CLASSE_7_PRODUITS = 7
+} ClasseCompte;
 
 typedef enum TypeCompte {
-    FNC_COMPTE_ACTIF = 1,          
-    FNC_COMPTE_PASSIF = 2,    
-    FNC_COMPTE_CAPITAUX = 3,    
-    FNC_COMPTE_PRODUIT = 4,   
-    FNC_COMPTE_CHARGE = 5    
-} FNC_TypeCompte;
+    COMPTE_ACTIF = 1,
+    COMPTE_PASSIF = 2,
+    COMPTE_CAPITAUX = 3,
+    COMPTE_PRODUIT = 4,
+    COMPTE_CHARGE = 5
+} TypeCompte;
 
-typedef enum FNC_SoldeNormal {
-    FNC_SOLDE_DEBITEUR = 0,        /* DEBIT */
-    FNC_SOLDE_CREDITEUR = 1        /* CREDIT */
-} FNC_SoldeNormal;
+typedef enum SoldeNormal {
+    SOLDE_DEBITEUR = 0,        /* DEBIT */
+    SOLDE_CREDITEUR = 1        /* CREDIT */
+} SoldeNormal;
 
 typedef struct Compte {
-    FNC_IdCompte     id;
-    char                 code[16];           /* ex. "512000" */
-    char                 nom[128];
-    FNC_ClasseCompte classe;
-    FNC_TypeCompte   type;
-    FNC_SoldeNormal  solde_normal;
-    FNC_IdCompte     parent_id;          /* 0 si racine */
-    int                  est_active;
+    id_compte    id;
+    char         code[16];     
+    char         nom[128];
+    ClasseCompte classe;
+    TypeCompte   type;
+    SoldeNormal  solde_normal;
+    id_compte    parent_id;          /* 0 si racine */
+    int          est_active;
 }Compte;
-
 /*--------------------------------------------------------------
     l implementation des structures pour la journal
 ---------------------------------------------------------------*/
