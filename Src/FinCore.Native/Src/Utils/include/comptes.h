@@ -26,3 +26,5 @@ bool comptes_est_enfant_de(const Compte *compte, id_compte parent_id);
 /* Activation */
 void comptes_activer(Compte *compte);
 void comptes_desactiver(Compte *compte);
+
+#endif
