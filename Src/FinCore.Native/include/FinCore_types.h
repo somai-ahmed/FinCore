@@ -13,23 +13,23 @@ typedef struct DATE{
 }DATE;
 
 /* ============================================================
- * Moteur comptable FinCore — Définitions des types fondamentaux
+ * Moteur comptable FinCore — definition des types fondamentaux
  * ============================================================ */
 
-/* Représentation monétaire en virgule fixe : unités entières mineures (ex. millimes)
- * pour éviter les erreurs d'arrondi en virgule flottante dans les calculs comptables. */
-typedef int64_t FNC_Monnaie;
+/* Representation monétaire en virgule fixe : unités entières mineures (ex. millimes)
+ * pour eviter les erreurs d'arrondi en virgule flottante dans les calculs comptables */
+typedef int64_t Monnaie;
 
-#define FNC_Monnaie_Unite 1000  /* 3 decimal places (millimes) */
+#define Monnaie_Unite 1000  /* 3 decimal places (millimes) */
 
-/*structure interne masquée aux consommateurs */
-typedef struct FNC_Session FNC_Session;
+/* structure interne maqsquee aux consommateurs */
+typedef struct Session Session;
 
 /* Identifiants uniques */
 typedef uint32_t id_compte;
-typedef uint32_t FNC_IdEcriture;
-typedef uint32_t FNC_JournalEntryId;
-typedef uint32_t FNC_idperiodefiscale;
+typedef uint32_t IdEcriture;
+typedef uint32_t JournalEntryId;
+typedef uint32_t idperiodefiscale;
 typedef uint32_t id_ligne;
 
 #define INVALID_ID 0
