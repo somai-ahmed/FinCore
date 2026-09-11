@@ -148,6 +148,6 @@ typedef struct ligne_bilan {
 typedef struct Buffer {
     uint8_t* donnees;
     size_t   taille;
-} FinCore_Buffer;
+} Buffer;
 
 #endif
