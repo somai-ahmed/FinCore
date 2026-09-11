@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include <Src/FinCore.Native/include/FinCore_types.h>
-#include <Src/FinCore.Native/include/FinCore_errors.h>
+#include <Src/FinCore.Native/include/types.h>
+#include <Src/FinCore.Native/include/errors.h>
 #include <monnaie.h>
 #include <identifiants.h>
 
