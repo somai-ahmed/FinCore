@@ -1,8 +1,8 @@
-#ifndef FINCORE_DETECTION_H
-#define FINCORE_DETETCTION_H
+#ifndef DETECTION_H
+#define DETETCTION_H
 
-#include "FinCore_types.h"
-#include "FinCore_errors.h"
+#include "types.h"
+#include "errors.h"
 
 
 /* ============================================================
@@ -25,27 +25,27 @@
 
 
 typedef enum Meth_Detection {
-    FinCore_DETECT_BENFORD = 0,
-    FinCore_DETECT_DOUBLONS = 1,
-    FinCore_DETECT_NOMBRES_RONDS = 2,
-    FinCore_DETECT_VALS_ABERRANTES = 3
+    DETECT_BENFORD = 0,
+    DETECT_DOUBLONS = 1,
+    DETECT_NOMBRES_RONDS = 2,
+    DETECT_VALS_ABERRANTES = 3
 } Meth_Detection;
 
 /*Les niveaux de gravite sont numerotes du niveau le plus sain 
     au niveau le plus dangereux*/
 typedef enum Gravite {
-   FinCore_GRAVITE_INFO     = 0,
-   FinCore_GRAVITE_FAIBLE   = 1,
-   FinCore_GRAVITE_MOYENNE  = 2,
-   FinCore_GRAVITE_ELEVEE   = 3,
-   FinCore_GRAVITE_CRITIQUE = 4
+   GRAVITE_INFO     = 0,
+   GRAVITE_FAIBLE   = 1,
+   GRAVITE_MOYENNE  = 2,
+   GRAVITE_ELEVEE   = 3,
+   GRAVITE_CRITIQUE = 4
 } Gravite;
 
 typedef struct Resultat_Detection{
     Meth_Detection methode;
     Gravite gravite;
-    id_ligne id_ligne; /*extrait de la fichier FinCore_types.h -- << typedef uint32_t id_ligne >> */
-    id_compte id_compte; /*extrait de la fichier FinCore_types.h -- << typedef uint32_t id_compte >> */
+    id_ligne id_ligne; /*extrait de la fichier types.h -- << typedef uint32_t id_ligne >> */
+    id_compte id_compte; /*extrait de la fichier types.h -- << typedef uint32_t id_compte >> */
     char description[256];
     double score ; /*la detection du resultat va etre analyse sur des bases mathematiques et des formules precis sous forme d'un score
     puis on va classer ceci selon le score obtenu*/
@@ -96,22 +96,22 @@ void detection_config_par_defaut(config_detection* cfg);
 /* Exécute toutes les méthodes de détection activées sur les écritures
     comptables validées pendant la période donnée
     Les résultats sont alloués en interne
-    l'appelant doit appeler FinCore_LibererResultatsDetection lorsqu'il a terminé */
+    l'appelant doit appeler LibererResultatsDetection lorsqu'il a terminé */
 
-FinCore_Etat execute_detection(
+Etat execute_detection(
     Session* session,
     PeriodId id_periode,
     const config_detection* cfg,
     Resultat_Detection resultats,
     size_t* nombre_resultats
-);/*output est du forme FinCore_Etat*/ /*struct en fichier src/FinCore.Native/include/FinCore_errors.h*/
+);/*output est du forme Etat*/ /*struct en fichier src/FinCore.Native/include/errors.h*/
 
 
 /* Exécute l'analyse de Benford sur les écritures comptables
     validées pendant la période donnée
     Le rapport d'analyse est rempli en interne
     l'appelant doit fournir un pointeur vers le rapport */
-FinCore_Etat Executer_Analyse_Benford(
+Etat Executer_Analyse_Benford(
     Session* session,
     PeriodId id_periode,
     Rapport_Benford* rapport
