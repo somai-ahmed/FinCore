@@ -14,3 +14,8 @@ FinCore_Etat comptes_creer(Compte *compte, const char *code, const char *nom, FN
 bool comptes_valider_code(const char *code);
 bool comptes_valider(const Compte *compte);
 
+/* Opérations sur le solde */
+FinCore_Etat comptes_debiter(Compte *compte, FNC_Monnaie montant);
+FinCore_Etat comptes_crediter(Compte *compte, FNC_Monnaie montant);
+FNC_Monnaie comptes_get_solde(const Compte *compte);
+
