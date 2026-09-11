@@ -1,9 +1,9 @@
-#ifndef FinCore_AE_H
-#define FinCore_AE_H
+#ifndef FINANCE_CORE_H
+#define FINANCE_CORE_H
 
-#include "FinCore_types.h"
-#include "FinCore_errors.h"
-#include "FinCore_detection.h"
+#include "types.h"
+#include "errors.h"
+#include "detection.h"
 
 
 
@@ -57,15 +57,15 @@ typedef enum {
 } TypeCompte;
 
 typedef enum {
-    FINC_CAT_BALANCE = 0,
-    FINC_CAT_BILAN = 1,
-    FINC_CAT_RESULTAT = 2
+    CAT_BALANCE = 0,
+    CAT_BILAN = 1,
+    CAT_RESULTAT = 2
 } Categorie_Compte;
 
 typedef enum {
-    FINC_PERIODE_OUVERTE = 0,
-    FINC_PERIODE_FERMEE = 1,
-    FINC_PERIODE_VERROUILLEE = 2
+    PERIODE_OUVERTE = 0,
+    PERIODE_FERMEE = 1,
+    PERIODE_VERROUILLEE = 2
 } ETAT_PERIODE;
 
 
@@ -86,11 +86,11 @@ typedef enum {
 */
     
 typedef enum {
-    FINC_DET_BENFORD = 0x01,
-    FINC_DET_DOUBLON = 0x02,
-    FINC_DET_NOMBRE_ROND = 0x04,
-    FINC_DET_VALEUR_ABERRANTE = 0x08,
-    FINC_DET_TOUTES = 0x0F
+    DET_BENFORD = 0x01,
+    DET_DOUBLON = 0x02,
+    DET_NOMBRE_ROND = 0x04,
+    DET_VALEUR_ABERRANTE = 0x08,
+    DET_TOUTES = 0x0F
 } IndicateurDetection;
 
 /*=========STRUCTURE DES DONNEES=========*/
