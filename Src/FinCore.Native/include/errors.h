@@ -1,5 +1,5 @@
-#ifndef FINCORE_ERRORS_H
-#define FINCORE_ERRORS_H
+#ifndef ERRORS_H
+#define ERRORS_H
 
 /* ============================================================
  * Moteur Comptable FinCore - Codes d'erreur
@@ -27,7 +27,7 @@
     -------------------------------------------------------------*/
         
 
-typedef enum FinCore_Etat {
+typedef enum Etat {
     ETAT_OK = 0,
 
     /* Erreurs générales : -1 à -99 */
@@ -163,8 +163,8 @@ typedef enum FinCore_Etat {
     ERR_TRANSACTION_NON_EQUILIBREE         = -905,
     ERR_TRANSACTION_INTERDITE              = -906
 
-}FinCore_Etat;
+}Etat;
 
-const char* FinCore_GetErrorMessage(FinCore_Status status);
+const char* GetErrorMessage(Status status);
 
 #endif
