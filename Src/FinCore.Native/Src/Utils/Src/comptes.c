@@ -122,3 +122,24 @@ Etat comptes_debiter(Compte *compte, Monnaie montant)
 
     return ETAT_OK;
 }
+/*meme logique du comptes_debiter */
+Etat comptes_crediter(Compte *compte, Monnaie montant)
+{
+    if (compte == NULL) {
+        return ERR_POINTEUR_NULLE;
+    }
+    if (montant < 0) {
+        return ERR_ARGUMENT_INVALIDE;
+    }
+    if (!compte->est_active) {
+        return ERR_COMPTE_INACTIF;
+    }
+
+    if (compte->solde_normal == SOLDE_CREDITEUR) {
+        compte->solde += montant;
+    } else {
+        compte->solde -= montant;
+    }
+
+    return ETAT_OK;
+}
