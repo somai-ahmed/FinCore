@@ -143,3 +143,11 @@ Etat comptes_crediter(Compte *compte, Monnaie montant)
 
     return ETAT_OK;
 }
+
+Monnaie comptes_avoir_solde(const Compte *compte)
+{
+    if (compte == NULL) {
+        return 0;
+    }
+    return compte->solde;
+}
