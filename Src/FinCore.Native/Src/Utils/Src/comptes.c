@@ -151,3 +151,22 @@ Monnaie comptes_avoir_solde(const Compte *compte)
     }
     return compte->solde;
 }
+
+/* structures */
+/* parent & enfant :: meme logique comme les arbres binaires et des recherche */
+
+bool comptes_a_parent(const Compte *compte)
+{
+    if (compte == NULL) {
+        return false;
+    }
+    return compte->parent_id != INVALID_ID;
+}
+
+bool comptes_est_enfant_de(const Compte *compte, id_compte parent_id)
+{
+    if (compte == NULL || parent_id == INVALID_ID) {
+        return false;
+    }
+    return compte->parent_id == parent_id;
+}
