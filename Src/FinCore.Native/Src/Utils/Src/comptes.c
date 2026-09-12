@@ -11,7 +11,7 @@ bool comptes_valider_code(const char *code){
     return valider_code_compte(code, COMPTES_CODE_LONGUEUR_MIN, COMPTES_CODE_LONGUEUR_MAX); /*validation.h*/
 }
 
-Etat comptes_creer(Compte *compte, const char *code, const char *nom, ClasseCompte classe, TypeCompte type, SoldeNormal solde_normal, id_compte parent_id)
+Etat comptes_creer(Compte *compte, const char *code, const char *nom, ClasseCompte classe, TypeCompte type, SoldeNormal solde_normal, id_compte parent_id){
 
 /* la fonction va retourner l'etat du l'instruction */
 /* etat est un type d'une structure enum deja implemente en ERROR.H */
@@ -67,8 +67,7 @@ Etat comptes_creer(Compte *compte, const char *code, const char *nom, ClasseComp
 
 /* cette partie de verification est un role essentiel d'un comptable programmeur pour 
     valider les compte son type et numero */
-bool comptes_valider(const Compte *compte)
-{
+bool comptes_valider(const Compte *compte){
     if (compte == NULL) {
         return false;
     }
@@ -102,8 +101,7 @@ bool comptes_valider(const Compte *compte)
 
 /* Operations sur le solde */
 
-Etat comptes_debiter(Compte *compte, Monnaie montant)
-{
+Etat comptes_debiter(Compte *compte, Monnaie montant){
     if (compte == NULL) {
         return ERR_POINTEUR_NULLE;
     }
@@ -123,8 +121,7 @@ Etat comptes_debiter(Compte *compte, Monnaie montant)
     return ETAT_OK;
 }
 /*meme logique du comptes_debiter */
-Etat comptes_crediter(Compte *compte, Monnaie montant)
-{
+Etat comptes_crediter(Compte *compte, Monnaie montant){
     if (compte == NULL) {
         return ERR_POINTEUR_NULLE;
     }
@@ -144,8 +141,7 @@ Etat comptes_crediter(Compte *compte, Monnaie montant)
     return ETAT_OK;
 }
 
-Monnaie comptes_avoir_solde(const Compte *compte)
-{
+Monnaie comptes_avoir_solde(const Compte *compte){
     if (compte == NULL) {
         return 0;
     }
@@ -155,18 +151,31 @@ Monnaie comptes_avoir_solde(const Compte *compte)
 /* structures */
 /* parent & enfant :: meme logique comme les arbres binaires et des recherche */
 
-bool comptes_a_parent(const Compte *compte)
-{
+bool comptes_a_parent(const Compte *compte){
     if (compte == NULL) {
         return false;
     }
     return compte->parent_id != INVALID_ID;
 }
 
-bool comptes_est_enfant_de(const Compte *compte, id_compte parent_id)
-{
+bool comptes_est_enfant_de(const Compte *compte, id_compte parent_id){
     if (compte == NULL || parent_id == INVALID_ID) {
         return false;
     }
     return compte->parent_id == parent_id;
+}
+
+/* activation & desactivation des comptes */
+void comptes_activer(Compte *compte){
+    if (compte == NULL) {
+        return;
+    }
+    compte->est_active = 1;
+}
+
+void comptes_desactiver(Compte *compte){
+    if (compte == NULL) {
+        return;
+    }
+    compte->est_active = 0;
 }
