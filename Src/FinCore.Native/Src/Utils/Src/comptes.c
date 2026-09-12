@@ -63,3 +63,39 @@ Etat comptes_creer(Compte *compte, const char *code, const char *nom, ClasseComp
     return ETAT_OK; /* success */
 /* en code dans main , si la fonction ne retorne pas l'etat ok , il y a un erreur et l'instruction est elimine*/
 }
+
+
+/* cette partie de verification est un role essentiel d'un comptable programmeur pour 
+    valider les compte son type et numero */
+bool comptes_valider(const Compte *compte)
+{
+    if (compte == NULL) {
+        return false;
+    }
+
+    if (!comptes_valider_code(compte->code)) {
+        return false;
+    }
+
+    if (compte->nom[0] == '\0') {
+        return false;
+    }
+
+    if (compte->classe < CLASSE_1_CP_ET_PNC || compte->classe > CLASSE_7_PRODUITS) {
+        return false;
+    }
+
+    if (compte->type < COMPTE_ACTIF || compte->type > COMPTE_CHARGE) {
+        return false;
+    }
+
+    if (compte->solde_normal != SOLDE_DEBITEUR && compte->solde_normal != SOLDE_CREDITEUR) {
+        return false;
+    }
+
+    if (compte->id != INVALID_ID && compte->parent_id == compte->id) {
+        return false;   /* un compte ne peut pas etre son propre parent */
+    }
+
+    return true;
+}
