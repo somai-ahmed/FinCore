@@ -99,3 +99,26 @@ bool comptes_valider(const Compte *compte)
 
     return true;
 }
+
+/* Operations sur le solde */
+
+Etat comptes_debiter(Compte *compte, Monnaie montant)
+{
+    if (compte == NULL) {
+        return ERR_POINTEUR_NULLE;
+    }
+    if (montant < 0) {
+        return ERR_ARGUMENT_INVALIDE;
+    }
+    if (!compte->est_active) {
+        return ERR_COMPTE_INACTIF;
+    }
+
+    if (compte->solde_normal == SOLDE_DEBITEUR) {
+        compte->solde += montant;
+    } else {
+        compte->solde -= montant;
+    }
+
+    return ETAT_OK;
+}
