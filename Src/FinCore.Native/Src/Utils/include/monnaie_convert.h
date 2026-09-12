@@ -13,5 +13,10 @@
  * variable. Ne peut pas echouer. */
 monnaie monnaie_depuis_fixe(Monnaie m);
 
+/* Convertit une monnaie a echelle variable vers une Monnaie (echelle
+ * fixe 3). Si l'echelle source est plus fine que 3, le montant est
+ * arrondi (perte de precision). "success" indique un depassement de
+ * capacite sur int64_t (false), sinon true. */
+Monnaie monnaie_vers_fixe(monnaie m, bool *success); /*inverse du monnaie_depuis_fixe accompagne par un variable du success pour confirmer la validation du convert */
 
 #endif
