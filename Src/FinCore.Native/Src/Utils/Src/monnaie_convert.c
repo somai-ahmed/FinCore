@@ -11,3 +11,7 @@ static int64_t puissance_de_dix(int n) {
     }
     return resultat;
 }
+
+monnaie monnaie_depuis_fixe(Monnaie m){
+    return monnaie_depuis_unites_mineures(m, MONNAIE_FIXE_ECHELLE); /* l"appelle du la fonction du le moteur de la monnaie du base <monnaie.h> */
+}
