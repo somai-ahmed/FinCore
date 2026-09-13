@@ -11,9 +11,8 @@ bool ch_copy_securise(char *dest, const char *src, size_t taille_dest);
 /* Retire les espaces (et tabulations) en debut/fin de chaine, en place */
 void ch_rogner(char *chaine);
 
-/* Compare deux chaines sans tenir compte de la casse.
- * Retourne 0 si egales, comme strcmp. */
-int comparer_ch_insensible(const char *a, const char *b);
+/* Compare deux chaines sans tenir compte de la casse */
+int strcmp(const char *a, const char *b);
 
 /* Verifie que la chaine ne contient que des chiffres [0-9] */
 bool chaine_est_numerique(const char *chaine);
