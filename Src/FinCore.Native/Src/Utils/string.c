@@ -66,3 +66,25 @@ void ch_rogner(char *chaine){
 
     chaine[i] = '\0';
 }
+
+int strcmp(const char *a, const char *b){
+    if (a == NULL || b == NULL)
+        return -1;
+
+    while (*a != '\0' && *b != '\0') {
+
+        unsigned char ca = (unsigned char)*a;
+        unsigned char cb = (unsigned char)*b;
+
+        ca = (unsigned char)tolower(ca);
+        cb = (unsigned char)tolower(cb);
+
+        if (ca != cb)
+            return ca - cb;
+
+        a++;
+        b++;
+    }
+
+    return (unsigned char)*a - (unsigned char)*b;
+}
