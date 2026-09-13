@@ -1,8 +1,7 @@
 #include "math_utils.h"
 #include <math.h>
 
-double math_moyenne(const double *valeurs, size_t nombre)
-{
+double math_moyenne(const double *valeurs, size_t nombre){
     double somme = 0.0;
     size_t i;
 
@@ -16,8 +15,7 @@ double math_moyenne(const double *valeurs, size_t nombre)
 }
 
 
-double math_ecart_type(const double *valeurs, size_t nombre)
-{
+double math_ecart_type(const double *valeurs, size_t nombre){
     double moyenne;
     double somme_carres = 0.0;
     size_t i;
@@ -33,8 +31,7 @@ double math_ecart_type(const double *valeurs, size_t nombre)
     return sqrt(somme_carres / (double)(nombre - 1));
 }
 
-double math_ecart_absolu_moyen(const double *valeurs, size_t nombre)
-{
+double math_ecart_absolu_moyen(const double *valeurs, size_t nombre){
     double moyenne;
     double somme_abs = 0.0;
     size_t i;
@@ -50,12 +47,11 @@ double math_ecart_absolu_moyen(const double *valeurs, size_t nombre)
 }
 
 /* chercher le minimum ou le maximum du deux nombres entrees */
-int64_t math_min_i64(int64_t a, int64_t b)
-{
-    return (a < b) ? a : b;
-}
+int64_t math_min_i64(int64_t a, int64_t b){ return (a < b) ? a : b; }
 
-int64_t math_max_i64(int64_t a, int64_t b)
-{
-    return (a > b) ? a : b;
+int64_t math_max_i64(int64_t a, int64_t b){ return (a > b) ? a : b; }
+
+double math_arrondir(double valeur, int decimales){
+    double facteur = pow(10.0, decimales);
+    return round(valeur * facteur) / facteur;
 }
