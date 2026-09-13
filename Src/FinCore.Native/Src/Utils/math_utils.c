@@ -69,3 +69,11 @@ int math_premier_chiffre(double valeur){
     }
     return (int)valeur;
 }
+
+/* voir Documentation/math/frequence_benford.ipynb */
+double math_frequence_benford(int chiffre){
+    if (chiffre < 1 || chiffre > 9) {
+        return 0.0;
+    }
+    return log10(1.0 + 1.0 / (double)chiffre);
+}
