@@ -1,8 +1,9 @@
 #include "string.h"
 #include <ctype.h>
+#include <stdeff.h>
 
-int longeurchaine(const char *chaine){
-  int len = 0;
+size_t longeurchaine(const char *chaine){
+  size_t len = 0;
   if (chaine) {
     for (; chaine[len] != '\0'; len++) {
     }
@@ -24,3 +25,17 @@ bool chaine_est_numerique(const char *chaine) {
     return true;
 }
   
+bool chaine_copier_securise(char *dest, const char *src, size_t taille_dest){
+    if (dest == NULL || src == NULL || taille_dest == 0)
+        return false;
+
+    size_t i ;
+
+    while (i < taille_dest - 1 && src[i] != '\0') {
+        dest[i] = src[i];
+        i++;
+    }
+
+    dest[i] = '\0';
+    return true;
+}
