@@ -5,4 +5,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+/* -------------------------------
+    statistiques de base
+---------------------------------*/
+double math_moyenne(const double *valeurs, size_t nombre);
+double math_ecart_type(const double *valeurs, size_t nombre);
+double math_ecart_absolu_moyen(const double *valeurs, size_t nombre);
+
 #endif
