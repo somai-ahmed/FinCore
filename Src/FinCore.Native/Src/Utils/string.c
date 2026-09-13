@@ -1,6 +1,7 @@
 #include "string.h"
 #include <ctype.h>
 #include <stdeff.h>
+#include <stdbool.h>
 
 size_t longeurchaine(const char *chaine){
   size_t len = 0;
