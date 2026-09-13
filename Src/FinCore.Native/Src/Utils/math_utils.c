@@ -48,3 +48,14 @@ double math_ecart_absolu_moyen(const double *valeurs, size_t nombre)
     }
     return somme_abs / (double)nombre;
 }
+
+/* chercher le minimum ou le maximum du deux nombres entrees */
+int64_t math_min_i64(int64_t a, int64_t b)
+{
+    return (a < b) ? a : b;
+}
+
+int64_t math_max_i64(int64_t a, int64_t b)
+{
+    return (a > b) ? a : b;
+}
