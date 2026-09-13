@@ -1,5 +1,5 @@
 #include "math_utils.h"
-#include <math.h>
+#include <math.h> /* pour l'usage du fonctions multiples (sqrt/pow/log10/round/fabs) */
 
 double math_moyenne(const double *valeurs, size_t nombre){
     double somme = 0.0;
