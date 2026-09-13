@@ -18,4 +18,12 @@ double math_ecart_absolu_moyen(const double *valeurs, size_t nombre);
 int64_t math_min_i64(int64_t a, int64_t b);
 int64_t math_max_i64(int64_t a, int64_t b);
 double math_arrondir(double valeur, int decimales);
+
+/* -------------------------------
+    utilitaires pour Benford
+---------------------------------*/
+/* Premier chiffre significatif (1-9) d'un nombre, signe ignore.
+ * Retourne 0 si valeur == 0. */
+int math_premier_chiffre(double valeur);
+
 #endif
