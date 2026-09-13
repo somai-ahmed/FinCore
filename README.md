@@ -1,2 +1,3 @@
 # FinCore
-A native C accounting engine with a VB.NET desktop interface, P/Invoke interoperability, Excel reporting, and Benford's Law-based financial anomaly detection.
+
+A multi-language financial analytics platform combining a native C accounting engine, Python/PySide6 desktop interface, and R statistical analysis, with CSV/Excel interoperability and Benford’s Law-based financial anomaly detection.
