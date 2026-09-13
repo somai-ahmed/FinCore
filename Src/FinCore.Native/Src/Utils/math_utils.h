@@ -34,4 +34,3 @@ double math_frequence_benford(int chiffre);
 double math_chi_carre(const double *observe, const double *attendu, size_t nombre);
 
 #endif
-#endif
