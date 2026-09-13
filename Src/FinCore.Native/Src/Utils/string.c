@@ -41,4 +41,28 @@ bool ch_copy_securise(char *dest, const char *src, size_t taille_dest){
     return true;
 }
 
-void chaine_rogner(char *chaine)
+void ch_rogner(char *chaine){
+    if (chaine == NULL) return;
+
+    size_t debut = 0;
+    size_t fin = longeurchaine(chaine);
+
+    /* efface les espace du debut de la chaine */
+    while (chaine[debut] != '\0' && isspace((unsigned char)chaine[debut])) {
+        debut++;
+    }
+    /* efface les espace du fin de la chaine */
+    while (fin > debut && isspace((unsigned char)chaine[fin - 1])) {
+        fin--;
+    }
+
+    size_t i = 0;
+
+    while (debut < fin) {
+        chaine[i] = chaine[debut];
+        i++;
+        debut++;
+    }
+
+    chaine[i] = '\0';
+}
