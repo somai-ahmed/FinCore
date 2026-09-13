@@ -77,3 +77,22 @@ double math_frequence_benford(int chiffre){
     }
     return log10(1.0 + 1.0 / (double)chiffre);
 }
+
+double math_chi_carre(const double *observe, const double *attendu, size_t nombre){ /* χ (chi) est une lettre de l’alphabet grec : χ. */
+    /* voir Documentation/math/statistics.ipynb */
+    double resultat = 0.0;
+    size_t i;
+
+    if (observe == NULL || attendu == NULL || nombre == 0) {
+        return 0.0;
+    }
+    for (i = 0; i < nombre; i++) {
+        double diff;
+        if (attendu[i] == 0.0) {
+            continue;
+        }
+        diff = observe[i] - attendu[i];
+        resultat += (diff * diff) / attendu[i];
+    }
+    return resultat;
+}
