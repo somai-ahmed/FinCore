@@ -55,3 +55,17 @@ double math_arrondir(double valeur, int decimales){
     double facteur = pow(10.0, decimales);
     return round(valeur * facteur) / facteur;
 }
+
+int math_premier_chiffre(double valeur){
+    valeur = fabs(valeur);
+    if (valeur == 0.0) {
+        return 0;
+    }
+    while (valeur < 1.0) {
+        valeur *= 10.0;
+    }
+    while (valeur >= 10.0) {
+        valeur /= 10.0;
+    }
+    return (int)valeur;
+}
