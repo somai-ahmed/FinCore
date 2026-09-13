@@ -25,5 +25,13 @@ double math_arrondir(double valeur, int decimales);
 /* Premier chiffre significatif (1-9) d'un nombre, signe ignore.
  * Retourne 0 si valeur == 0. */
 int math_premier_chiffre(double valeur);
+/* Frequence attendue du chiffre d (1-9) selon la loi de Benford :
+ * log10(1 + 1/d) */
+double math_frequence_benford(int chiffre);
 
+/* Test du chi-carre entre frequences observees et attendues.
+ * "nombre" = taille des deux tableaux (doivent correspondre). */
+double math_chi_carre(const double *observe, const double *attendu, size_t nombre);
+
+#endif
 #endif
