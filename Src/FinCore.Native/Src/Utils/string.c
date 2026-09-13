@@ -26,7 +26,7 @@ bool chaine_est_numerique(const char *chaine) {
     return true;
 }
   
-bool chaine_copier_securise(char *dest, const char *src, size_t taille_dest){
+bool ch_copy_securise(char *dest, const char *src, size_t taille_dest){
     if (dest == NULL || src == NULL || taille_dest == 0)
         return false;
 
@@ -40,3 +40,5 @@ bool chaine_copier_securise(char *dest, const char *src, size_t taille_dest){
     dest[i] = '\0';
     return true;
 }
+
+void chaine_rogner(char *chaine)
