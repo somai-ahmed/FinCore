@@ -10,3 +10,6 @@ int longeurchaine(const char *chaine){
   return len ;
 }
 
+bool chaine_non_vide(const char *chaine){ 
+  return (chaine != NULL && longeurchaine(chaine) > 0);
+}
