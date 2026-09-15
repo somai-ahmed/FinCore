@@ -19,3 +19,10 @@ Etat ecritures_creer(Ecriture *ecriture, idperiodefiscale periode_id, DATE date,
 
     return ETAT_OK;
 }
+
+void ecritures_detruire(Ecriture *ecriture) {
+    if (!ecriture) return;
+    free(ecriture->lignes);
+    ecriture->lignes = NULL;
+    ecriture->nombre_lignes = 0;
+}
