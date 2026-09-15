@@ -71,3 +71,9 @@ Etat ecritures_ajouter_ligne(Ecriture *ecriture, id_compte compte_id, Monnaie de
 size_t ecritures_nombre_lignes(const Ecriture *ecriture) {
     return ecriture ? ecriture->nombre_lignes : 0;
 }
+
+bool ecritures_avoir_ligne(const Ecriture *ecriture, size_t index, ligne_journal *ligne_out) {
+    if (!ecriture || !ligne_out || index >= ecriture->nombre_lignes) return false;
+    *ligne_out = ecriture->lignes[index];
+    return true;
+}
