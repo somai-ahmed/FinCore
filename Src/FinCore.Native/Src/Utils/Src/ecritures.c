@@ -91,3 +91,8 @@ Monnaie ecritures_total_credit(const Ecriture *ecriture) {
     for (size_t i = 0; i < ecriture->nombre_lignes; i++) total += ecriture->lignes[i].credit;
     return total;
 }
+
+bool ecritures_est_equilibree(const Ecriture *ecriture) {
+    if (!ecriture || ecriture->nombre_lignes == 0) return false;
+    return ecritures_total_debit(ecriture) == ecritures_total_credit(ecriture);
+}
