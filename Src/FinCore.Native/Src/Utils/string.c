@@ -1,4 +1,4 @@
-#include "string.h"
+#include "string_comptable.h"
 #include <ctype.h>
 #include <stdeff.h>
 #include <stdbool.h>
