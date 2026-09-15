@@ -107,3 +107,7 @@ Etat ecritures_valider(const Ecriture *ecriture) {
     if (!ecritures_est_equilibree(ecriture)) return ERR_JOURNAL_NON_EQUILIBRE;
     return ETAT_OK;
 }
+
+bool ecritures_est_comptabilisee(const Ecriture *ecriture) {
+    return ecriture ? (ecriture->est_validee != 0) : false;
+}
