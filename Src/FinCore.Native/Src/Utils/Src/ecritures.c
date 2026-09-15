@@ -119,3 +119,27 @@ static Compte *trouver_compte(Compte *comptes, size_t nombre_comptes, id_compte 
         if (comptes[i].id == id) return &comptes[i];
     return NULL;
 }
+
+Etat ecritures_comptabiliser(Ecriture *ecriture, Compte *comptes, size_t nombre_comptes) {
+    if (!ecriture || !comptes) return ERR_POINTEUR_NULLE;
+    if (ecriture->est_validee) return ERR_JOURNAL_DEJA_COMPTABILISE;
+
+    Etat etat = ecritures_valider(ecriture);
+    if (etat != ETAT_OK) return etat;
+
+    /* 1ere passe : tous les comptes doivent exister avant qu'on touche un seul solde */
+    for (size_t i = 0; i < ecriture->nombre_lignes; i++)
+        if (!trouver_compte(comptes, nombre_comptes, ecriture->lignes[i].compte_id))
+            return ERR_COMPTE_INTROUVABLE;
+
+    /* 2eme passe : application, plus d'echec possible ici */
+    for (size_t i = 0; i < ecriture->nombre_lignes; i++) {
+        ligne_journal *ligne = &ecriture->lignes[i];
+        Compte *compte = trouver_compte(comptes, nombre_comptes, ligne->compte_id);
+        if (ligne->Debit > 0) comptes_debiter(compte, ligne->Debit);
+        else comptes_crediter(compte, ligne->credit);
+    }
+
+    ecriture->est_validee = 1;
+    return ETAT_OK;
+}
