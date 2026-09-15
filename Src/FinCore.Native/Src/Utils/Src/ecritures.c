@@ -111,3 +111,11 @@ Etat ecritures_valider(const Ecriture *ecriture) {
 bool ecritures_est_comptabilisee(const Ecriture *ecriture) {
     return ecriture ? (ecriture->est_validee != 0) : false;
 }
+
+
+/* fonction alternative pour recuperer le compte , on le mettre STATIC function pour qu'elle est utilise juste ici */
+static Compte *trouver_compte(Compte *comptes, size_t nombre_comptes, id_compte id) {
+    for (size_t i = 0; i < nombre_comptes; i++)
+        if (comptes[i].id == id) return &comptes[i];
+    return NULL;
+}
