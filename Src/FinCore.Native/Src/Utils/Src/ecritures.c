@@ -42,3 +42,28 @@ bool ecritures_ligne_valide(const ligne_journal *ligne) {
     bool a_credit = ligne->credit > 0;
     return a_debit != a_credit; 
 }
+
+
+Etat ecritures_ajouter_ligne(Ecriture *ecriture, id_compte compte_id, Monnaie debit, Monnaie credit, const char *libelle) {
+    if (!ecriture || !libelle) return ERR_POINTEUR_NULLE;
+    if (ecriture->est_validee) return ERR_JOURNAL_DEJA_COMPTABILISE;
+    if (compte_id == INVALID_ID) return ERR_COMPTE_DEBIT_INVALIDE;
+    if (debit < 0 || credit < 0) return ERR_JOURNAL_MONTANT_NEGATIF;
+    if (debit > 0 && credit > 0) return ERR_JOURNAL_DEBIT_CREDIT_SIMULTANES;
+    if (debit == 0 && credit == 0) return ERR_JOURNAL_SANS_MONTANT;
+
+    ligne_journal *nouvelles = realloc(ecriture->lignes, (ecriture->nombre_lignes + 1) * sizeof(ligne_journal));
+    if (!nouvelles) return ERR_SORTIE_DU_MEMOIRE;
+    ecriture->lignes = nouvelles;
+
+    ligne_journal *ligne = &ecriture->lignes[ecriture->nombre_lignes];
+    ligne->id = (id_ligne)(ecriture->nombre_lignes + 1);
+    ligne->compte_id = compte_id;
+    ligne->Debit = debit;
+    ligne->credit = credit;
+    strncpy(ligne->libelle, libelle, sizeof(ligne->libelle) - 1);
+    ligne->libelle[sizeof(ligne->libelle) - 1] = '\0';
+
+    ecriture->nombre_lignes++;
+    return ETAT_OK;
+}
