@@ -1,5 +1,5 @@
-#ifndef STRINGS_H
-#define STRINGS_H
+#ifndef STRINGS_COMPTABLE_H
+#define STRINGS_COMPTABLE_H
 
 #include <stddef.h>
 #include <stdbool.h>
