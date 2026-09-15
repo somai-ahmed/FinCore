@@ -84,3 +84,10 @@ Monnaie ecritures_total_debit(const Ecriture *ecriture) {
     for (size_t i = 0; i < ecriture->nombre_lignes; i++) total += ecriture->lignes[i].Debit;
     return total;
 }
+
+Monnaie ecritures_total_credit(const Ecriture *ecriture) {
+    Monnaie total = 0;
+    if (!ecriture) return total;
+    for (size_t i = 0; i < ecriture->nombre_lignes; i++) total += ecriture->lignes[i].credit;
+    return total;
+}
