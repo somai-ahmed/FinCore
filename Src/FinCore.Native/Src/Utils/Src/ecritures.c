@@ -26,3 +26,19 @@ void ecritures_detruire(Ecriture *ecriture) {
     ecriture->lignes = NULL;
     ecriture->nombre_lignes = 0;
 }
+
+bool ecritures_ligne_valide(const ligne_journal *ligne) {
+    if (!ligne || ligne->compte_id == INVALID_ID) return false;
+    if (ligne->Debit < 0 || ligne->credit < 0) return false;
+    bool a_debit = ligne->Debit > 0;
+    bool a_credit = ligne->credit > 0;
+    return a_debit != a_credit;  
+}
+
+bool ecritures_ligne_valide(const ligne_journal *ligne) {
+    if (!ligne || ligne->compte_id == INVALID_ID) return false;
+    if (ligne->Debit < 0 || ligne->credit < 0) return false;
+    bool a_debit = ligne->Debit > 0;
+    bool a_credit = ligne->credit > 0;
+    return a_debit != a_credit; 
+}
