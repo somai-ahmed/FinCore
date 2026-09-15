@@ -96,3 +96,14 @@ bool ecritures_est_equilibree(const Ecriture *ecriture) {
     if (!ecriture || ecriture->nombre_lignes == 0) return false;
     return ecritures_total_debit(ecriture) == ecritures_total_credit(ecriture);
 }
+
+Etat ecritures_valider(const Ecriture *ecriture) {
+    if (!ecriture) return ERR_POINTEUR_NULLE;
+    if (ecriture->nombre_lignes == 0) return ERR_JOURNAL_VIDE;
+    if (!date_valide(ecriture->date)) return ERR_DATE_JOURNAL_INVALIDE;
+    if (ecriture->description[0] == '\0') return ERR_LIBELLE_JOURNAL_MANQUANT;
+    for (size_t i = 0; i < ecriture->nombre_lignes; i++)
+        if (!ecritures_ligne_valide(&ecriture->lignes[i])) return ERR_LIGNE_JOURNAL_INVALIDE;
+    if (!ecritures_est_equilibree(ecriture)) return ERR_JOURNAL_NON_EQUILIBRE;
+    return ETAT_OK;
+}
