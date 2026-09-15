@@ -67,3 +67,7 @@ Etat ecritures_ajouter_ligne(Ecriture *ecriture, id_compte compte_id, Monnaie de
     ecriture->nombre_lignes++;
     return ETAT_OK;
 }
+
+size_t ecritures_nombre_lignes(const Ecriture *ecriture) {
+    return ecriture ? ecriture->nombre_lignes : 0;
+}
