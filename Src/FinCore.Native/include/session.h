@@ -18,8 +18,8 @@
  *
  * Convention de retour : Etat (ETAT_OK == 0, ERR_* negatif en cas d'echec).
  */
-#ifndef FINCORE_SESSION_H
-#define FINCORE_SESSION_H
+#ifndef SESSION_H
+#define SESSION_H
 
 #include <stddef.h>
 #include <stdint.h>
@@ -104,5 +104,5 @@ const Ecriture *Session_avoir_EcritureAt(const Session *session, size_t index);
 }
 #endif
 
-#endif /* FINCORE_SESSION_H */
+#endif
 
