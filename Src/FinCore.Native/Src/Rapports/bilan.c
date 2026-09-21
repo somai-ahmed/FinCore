@@ -77,3 +77,35 @@ Monnaie bilan_somme_soldes(const Compte *comptes, size_t nb_comptes, const Ligne
  
     return somme;
 }
+
+ 
+/* le solde NET d une classe = (somme des soldes debiteurs) - (somme des soldes crediteurs)
+   positif = la classe est globalement debitrice, negatif = globalement creditrice
+   c est ce qui permet aux comptes d amortissement (classe 2, solde crediteur) de se retirer de leur classe */
+static Monnaie net_classe(const Compte *comptes, size_t nb_comptes, const LigneBalance *balance, size_t nb_balance, ClasseCompte classe){
+ 
+    return bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, classe, SOLDE_DEBITEUR)
+         - bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, classe, SOLDE_CREDITEUR);
+}
+ 
+/* le resultat de l exercice = les produits nets (classe 7) - les charges nettes (classe 6)
+   positif => benefice, negatif => perte
+   si des ecritures de cloture ont deja vide les classes 6 et 7, le resultat ici est 0 (il est deja dans la classe 1) : pas de double comptage */
+Monnaie bilan_resultat(const Compte *comptes, size_t nb_comptes, const LigneBalance *balance, size_t nb_balance){
+    Monnaie produits_nets;
+    Monnaie charges_nettes;
+ 
+    if (!comptes || !balance) return 0;
+   
+    /* pour les produits nets : credit(solde_crediteur) - debit(solde_debiteur)
+       pour les charges nettes : debit(solde_debiteur) - credit(solde_crediteur) */
+   
+    produits_nets  = bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, CLASSE_7_PRODUITS, SOLDE_CREDITEUR)
+                   - bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, CLASSE_7_PRODUITS, SOLDE_DEBITEUR);
+   
+    charges_nettes = bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, CLASSE_6_CHARGES, SOLDE_DEBITEUR)
+                   - bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, CLASSE_6_CHARGES, SOLDE_CREDITEUR);
+ 
+    return produits_nets - charges_nettes;
+}
+ 
