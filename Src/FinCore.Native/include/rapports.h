@@ -121,4 +121,48 @@ typedef struct {
 Etat creer_bilan(const Session *session, const DATE *date_arrete, Bilan *sortie);
 void liberer_bilan(Bilan *bilan);
 
+/* ---- Compte de résultat ---- */
+
+#define CR_MAX_LIGNES 256
+
+typedef enum {
+    CR_PRODUITS_EXPLOITATION = 0,
+    CR_CHARGES_EXPLOITATION,
+    CR_PRODUITS_FINANCIERS,
+    CR_CHARGES_FINANCIERES,
+    CR_PRODUITS_EXCEPTIONNELS,
+    CR_CHARGES_EXCEPTIONNELLES,
+    CR_IMPOT_BENEFICES,
+    CR_NB_RUBRIQUES              /* toujours en dernier : sert de taille de tableau */
+} RubriqueCR;
+
+typedef struct {
+    char code[16];
+    char nom[64];
+    RubriqueCR rubrique;
+    Monnaie montant;
+} LigneCompteResultat;
+
+/* Tableau de taille fixe (pas de pointeur) : plus simple à lire depuis ctypes. */
+typedef struct {
+    LigneCompteResultat lignes[CR_MAX_LIGNES];
+    int nb_lignes;
+    Monnaie total_rubrique[CR_NB_RUBRIQUES];
+    Monnaie total_produits;
+    Monnaie total_charges;
+    Monnaie resultat_exploitation;
+    Monnaie resultat_financier;
+    Monnaie resultat_exceptionnel;
+    Monnaie resultat_avant_impot;
+    Monnaie resultat_net;
+} CompteResultat;
+
+Etat compte_resultat_generer(const Compte *comptes,
+                             const Monnaie *total_debit,
+                             const Monnaie *total_credit,
+                             int nb_comptes,
+                             CompteResultat *resultat);
+
+const char *compte_resultat_nom_rubrique(RubriqueCR rubrique);
+
 #endif  
