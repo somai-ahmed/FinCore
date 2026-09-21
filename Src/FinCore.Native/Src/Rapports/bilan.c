@@ -29,23 +29,51 @@ static Etat trouver_indice_compte(const Compte *comptes, size_t nb_comptes, id_c
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Monnaie bilan_somme_soldes(const Compte *comptes, size_t nb_comptes,
-                           const LigneBalance *balance, size_t nb_balance,
-                           ClasseCompte classe, SoldeNormal sens);
-Monnaie bilan_resultat(const Compte *comptes, size_t nb_comptes,
-                       const LigneBalance *balance, size_t nb_balance);
-Etat    bilan_verifier(Monnaie total_actif, Monnaie total_passif);
+static void bilan_ajouter_ligne(ligne_bilan *sortie, size_t capacite, size_t *nb_lignes, const char *libelle, Monnaie montant, int est_sous_total, int profondeur){
+ 
+    if (*nb_lignes < capacite) {
+        memset(&sortie[*nb_lignes], 0, sizeof(sortie[*nb_lignes]));
+        snprintf(sortie[*nb_lignes].libelle, sizeof(sortie[*nb_lignes].libelle), "%s", libelle);
+        sortie[*nb_lignes].montant = montant;
+        sortie[*nb_lignes].est_sous_total = est_sous_total;
+        sortie[*nb_lignes].profondeur = profondeur;
+    }
+ 
+    (*nb_lignes)++;
+}
+ 
+/* ---------------------------------------------------
+                  LES SOMMES PAR CLASSE
+---------------------------------------------------- */
+ 
+/* la somme des soldes d une classe de comptes (les classes vont de 1 a 7)
+   - sens = SOLDE_DEBITEUR : on additionne les solde_debit des comptes de la classe
+   - sens = SOLDE_CREDITEUR : on additionne les solde_credit des comptes de la classe
+   il faut les comptes car une ligne de balance ne contient pas la classe : on la retrouve avec l id du compte
+   si un pointeur est NULL la fonction retourne 0 ; une ligne de balance dont le compte est inconnu est ignoree
+   (bilan_generer controle ca AVANT d appeler cette fonction)
+   voir documentation/comptabilite/finctionnement_du_bilan.ipynb
+   */
+Monnaie bilan_somme_soldes(const Compte *comptes, size_t nb_comptes, const LigneBalance *balance, size_t nb_balance, ClasseCompte classe, SoldeNormal sens){
+    Monnaie somme = 0;
+    size_t i, indice;
+ 
+    if (!comptes || !balance) return 0;
+ 
+    for (i = 0; i < nb_balance; i++) {
+ 
+        /* on cherche le compte de cette ligne de balance pour connaitre sa classe */
+        if (trouver_indice_compte(comptes, nb_comptes, balance[i].compte.id, &indice) != ETAT_OK)
+            continue;
+ 
+        if (comptes[indice].classe != classe)
+            continue;
+ 
+        if (sens == SOLDE_DEBITEUR)
+            somme += balance[i].solde_debit;
+        else
+            somme += balance[i].solde_credit;
+    }
+ 
+    return somme;
+}
