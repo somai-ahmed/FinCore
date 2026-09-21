@@ -106,3 +106,18 @@ Monnaie balance_total_debit(const LigneBalance *lignes, size_t nombre){
     return somme;
 }
 
+/* la somme des credits de toute la balance 
+   meme principe que balance_total_debit mais avec total_credit */
+Monnaie balance_total_credit(const LigneBalance *lignes, size_t nombre){
+    Monnaie somme = 0;
+    size_t i;
+ 
+    /* pas de tableau : il n y a rien a additionner */
+    if (!lignes) return 0;
+ 
+    for (i = 0; i < nombre; i++) {
+        somme += lignes[i].total_credit;
+    }
+ 
+    return somme;
+}
