@@ -114,3 +114,45 @@ static int trouver_rubrique(const char *code, RubriqueCR *rubrique) {
     return 1;
 }
 
+/*
+ * Calcule le montant d'un compte pour le compte de resultat
+ * Une charge est normalement débitrice : montant = débit - crédit
+ * Un produit est normalement créditeur : montant = crédit - débit
+ * Comme ça, un montant positif veut dire "situation normale" dans les deux cas
+ */
+static Monnaie calculer_montant(int est_produit, Monnaie debit, Monnaie credit) {
+    if (est_produit) {
+        return credit - debit;
+    }
+    return debit - credit;
+}
+
+/* Calcule les totaux et les résultats intermédiaires à partir des totaux par rubrique */
+static void calculer_resultats(CompteResultat *r) {
+    r->total_produits = r->total_rubrique[CR_PRODUITS_EXPLOITATION]
+                      + r->total_rubrique[CR_PRODUITS_FINANCIERS]
+                      + r->total_rubrique[CR_PRODUITS_EXCEPTIONNELS];
+
+    r->total_charges = r->total_rubrique[CR_CHARGES_EXPLOITATION]
+                     + r->total_rubrique[CR_CHARGES_FINANCIERES]
+                     + r->total_rubrique[CR_CHARGES_EXCEPTIONNELLES]
+                     + r->total_rubrique[CR_IMPOT_BENEFICES];
+
+    r->resultat_exploitation = r->total_rubrique[CR_PRODUITS_EXPLOITATION]
+                             - r->total_rubrique[CR_CHARGES_EXPLOITATION];
+
+    r->resultat_financier = r->total_rubrique[CR_PRODUITS_FINANCIERS]
+                          - r->total_rubrique[CR_CHARGES_FINANCIERES];
+
+    r->resultat_exceptionnel = r->total_rubrique[CR_PRODUITS_EXCEPTIONNELS]
+                             - r->total_rubrique[CR_CHARGES_EXCEPTIONNELLES];
+
+    /* resultat avant impôt = les trois resultats precedants additionnees */
+    r->resultat_avant_impot = r->resultat_exploitation
+                            + r->resultat_financier
+                            + r->resultat_exceptionnel;
+
+    /* resultat net = ce qu'il reste une fois l'impot sur les bénéfices payé
+       Positif = benefice || negatif = perte */
+    r->resultat_net = r->resultat_avant_impot - r->total_rubrique[CR_IMPOT_BENEFICES];
+}
