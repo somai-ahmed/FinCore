@@ -71,3 +71,46 @@ static const RegleRubrique REGLES_RUBRIQUES[] = {
     { "77",  CR_PRODUITS_EXCEPTIONNELS },
     { "787", CR_PRODUITS_EXCEPTIONNELS }
 };
+
+
+/* Nombre de règles : taille totale du tableau divisée par la taille d'une case */
+#define NB_REGLES_RUBRIQUES ((int)(sizeof(REGLES_RUBRIQUES) / sizeof(REGLES_RUBRIQUES[0])))
+
+/* ------------------------------------------------------------------ */
+/*  Fonctions internes (static = visibles seulement dans ce fichier)  */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Cherche la rubrique d'un compte à partir de son code
+ * Retourne 1 si c'est un compte de charge ou de produit, 0 sinon
+ * (les comptes des classes 1 à 5 n'ont rien à faire dans le compte de résultat)
+ */
+static int trouver_rubrique(const char *code, RubriqueCR *rubrique) {
+    /* Un code vide, ou qui ne commence pas par 6 ou 7, on l'ignore */
+    if (code == NULL || (code[0] != '6' && code[0] != '7')) {
+        return 0;
+    }
+
+    /* Valeur de secours : si aucune règle ne correspond, on ne perd pas le compte,
+       on le met dans l'exploitation de son côté (charge ou produit) */
+    *rubrique = (code[0] == '6') ? CR_CHARGES_EXPLOITATION : CR_PRODUITS_EXPLOITATION;
+
+    size_t meilleure_longueur = 0;
+
+    for (int i = 0; i < NB_REGLES_RUBRIQUES; i++) {
+        /* strlen donne le nombre de caractères du préfixe (sans le '\0' final) */
+        size_t longueur = strlen(REGLES_RUBRIQUES[i].prefixe);
+
+        /* strncmp compare seulement les "longueur" premiers caractères des deux
+           textes et renvoie 0 s'ils sont identiques. Donc 0 = le code commence
+           bien par ce préfixe */
+        if (longueur > meilleure_longueur &&
+            strncmp(code, REGLES_RUBRIQUES[i].prefixe, longueur) == 0) {
+            meilleure_longueur = longueur;
+            *rubrique = REGLES_RUBRIQUES[i].rubrique;
+        }
+    }
+
+    return 1;
+}
+
