@@ -121,3 +121,23 @@ Monnaie balance_total_credit(const LigneBalance *lignes, size_t nombre){
  
     return somme;
 }
+
+/* la balance est equilibree quand la somme de tous les debits est egale a la somme de tous les credits
+   (c est le principe de la partie double : chaque ecriture debite autant qu elle credite)
+   true = equilibree, false = desequilibree (ou pas de tableau a verifier)
+  ceci est l'affirmation generale pour la verification d une balance equilibree 
+  
+  voir documentation/explication_comptabilite/balance_equilibre :: pour plus d'informations et mieux du professionalisme et bonne explication du
+  cette fonction
+  */
+
+bool balance_est_equilibree(const LigneBalance *lignes, size_t nombre){
+ 
+    if (!lignes) return false; /* la verification comme toujouts du l'existance du ligne du balance comme les deux fonctions precedants "balance_total_debit/balance_total_credit" */
+ 
+    return balance_total_debit(lignes, nombre) == balance_total_credit(lignes, nombre); /* la fonction retourne la verification si le total_debit = tital_credit */
+
+  /*puisque la fonction du type output BOOLEEN , elle recoit TRUE si et seulement si total_debit = tital_credit sinon retourne FALSE dans tout autres cas */
+}
+
+
