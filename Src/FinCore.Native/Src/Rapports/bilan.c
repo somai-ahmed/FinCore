@@ -109,3 +109,92 @@ Monnaie bilan_resultat(const Compte *comptes, size_t nb_comptes, const LigneBala
     return produits_nets - charges_nettes;
 }
  
+/*-----------------------------------------------------------------
+                  LA GENERATION DU BILAN 
+-----------------------------------------------------------------*/
+ 
+Etat bilan_generer(const Compte *comptes, size_t nb_comptes, const LigneBalance *balance, size_t nb_balance, ligne_bilan *sortie, size_t capacite, size_t *nb_sortie, Monnaie *total_actif, Monnaie *total_passif){
+ 
+    size_t i, indice;
+    size_t nb_lignes = 0;
+    Etat etat;
+    Monnaie actifs_non_courants, stocks, tiers_debiteurs, tresorerie, actifs_courants;
+    Monnaie capitaux_classe_1, resultat, fonds_propres, tiers_crediteurs, concours_bancaires, passifs_courants;
+ 
+ 
+    if (!comptes || !balance || !nb_sortie || !total_actif || !total_passif) return ERR_POINTEUR_NULLE;
+
+    /*-------------------------initialisation-----------------------------*/
+    /* les totaux repartent a zero et on annonce toujours la taille requise : 15 lignes */
+    *total_actif = 0;
+    *total_passif = 0;
+    *nb_sortie = NB_LIGNES_BILAN;
+   
+    if (capacite < NB_LIGNES_BILAN)
+        return ERR_TRES_PETIT_BUFFER;
+    if (sortie == NULL)
+        return ERR_POINTEUR_NULLE;
+ 
+    /* sans aucune ligne de balance il n y a rien a mettre dans le bilan */
+    if (nb_balance == 0) return ERR_DONNEES_BILAN_INSUFFISANTES;
+ 
+    /* 1. le controle de la balance : chaque ligne doit avoir un compte connu et une classe valide (de 1 a 7)
+          sinon son solde ne serait dans aucun poste et le bilan serait faux sans qu on sache pourquoi */
+    for (i = 0; i < nb_balance; i++) {
+        etat = trouver_indice_compte(comptes, nb_comptes, balance[i].compte.id, &indice);
+        if (etat != ETAT_OK)
+            return etat;
+        if (comptes[indice].classe < CLASSE_1_CP_ET_PNC || comptes[indice].classe > CLASSE_7_PRODUITS)
+            return ERR_CLASSE_COMPTE_INVALIDE;
+    }
+ 
+    /* 2. le calcul des postes de l ACTIF (ce que l entreprise possede)
+        - classes 2 et 3 : en NET (les amortissements et les provisions se retirent de leur classe)
+        - classes 4 et 5 : compte par compte selon le signe, seuls les soldes DEBITEURS sont a l actif */
+    actifs_non_courants = net_classe(comptes, nb_comptes, balance, nb_balance, CLASSE_2_ACTIFS_NON_COURANTS);
+    stocks              = net_classe(comptes, nb_comptes, balance, nb_balance, CLASSE_3_STOCKS);
+    tiers_debiteurs     = bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, CLASSE_4_TIERS, SOLDE_DEBITEUR);
+    tresorerie          = bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, CLASSE_5_TRESORERIE, SOLDE_DEBITEUR);
+    actifs_courants     = stocks + tiers_debiteurs + tresorerie;
+ 
+    /* 3. le calcul des postes du PASSIF (comment c est finance)
+        - classe 1 : le net est negatif (soldes crediteurs) donc on le remet en positif avec le signe -
+        - le resultat de l exercice s ajoute aux capitaux propres
+        - classes 4 et 5 : seuls les soldes CREDITEURS sont au passif (un client crediteur ou une banque a decouvert par exemple) */
+    capitaux_classe_1   = -net_classe(comptes, nb_comptes, balance, nb_balance, CLASSE_1_CP_ET_PNC);
+    resultat            = bilan_resultat(comptes, nb_comptes, balance, nb_balance);
+    fonds_propres       = capitaux_classe_1 + resultat;
+    tiers_crediteurs    = bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, CLASSE_4_TIERS, SOLDE_CREDITEUR);
+    concours_bancaires  = bilan_somme_soldes(comptes, nb_comptes, balance, nb_balance, CLASSE_5_TRESORERIE, SOLDE_CREDITEUR);
+    passifs_courants    = tiers_crediteurs + concours_bancaires;
+ 
+    *total_actif  = actifs_non_courants + actifs_courants;
+    *total_passif = fonds_propres + passifs_courants;
+ 
+    /* les lignes du bilan dans l ordre d affichage : bilan_ajouter_ligne(sortie, capacite, &nb_lignes, libelle, montant, est_sous_total, profondeur)
+          les libelles sont sans accents pour eviter les problemes d encodage entre le compilateur et l interface
+          les lignes est_sous_total = 1 sont des totaux : il ne faut pas les additionner avec les postes qu elles contiennent */
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "ACTIF", 0, 0, 0);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Actifs non courants", actifs_non_courants, 0, 1);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Actifs courants", actifs_courants, 1, 1);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Stocks", stocks, 0, 2);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Tiers debiteurs", tiers_debiteurs, 0, 2);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Tresorerie", tresorerie, 0, 2);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "TOTAL ACTIF", *total_actif, 1, 0);
+ 
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "PASSIF", 0, 0, 0);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Capitaux propres et passifs non courants", fonds_propres, 1, 1);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Capital, reserves et dettes non courantes", capitaux_classe_1, 0, 2);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Resultat de l exercice", resultat, 0, 2);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Passifs courants", passifs_courants, 1, 1);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Tiers crediteurs", tiers_crediteurs, 0, 2);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "Concours bancaires", concours_bancaires, 0, 2);
+    bilan_ajouter_ligne(sortie, capacite, &nb_lignes, "TOTAL PASSIF", *total_passif, 1, 0);
+ 
+    /* le controle final : si on a ajoute plus ou moins de 15 lignes, NB_LIGNES_BILAN n est plus a jour (erreur de programmation) */
+    if (nb_lignes != NB_LIGNES_BILAN)
+        return ERR_ECHEC_GENERATION_RAPPORT;
+ 
+    return ETAT_OK;
+}
+
