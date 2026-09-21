@@ -102,7 +102,7 @@ Monnaie grand_livre_solde_initial(const Compte *compte, const Ecriture *ecriture
 /* -------------------------------------------------------------
                   LA GENERATION DU GRAND LIVRE 
    ------------------------------------------------------------- */
- 
+
 Etat grand_livre_generer(id_compte compte_id, const Compte *comptes, size_t nb_comptes, const Ecriture *ecritures, size_t nb_ecritures, DATE debut, DATE fin, Entree_GrandLivre *sortie, size_t capacite, size_t *nb_sortie){
  
     if (!comptes || !nb_sortie) return ERR_POINTEUR_NULLE;
