@@ -59,3 +59,42 @@ static int comparer_entrees_grand_livre(const void *a, const void *b){
  
     return strcmp(entree_a->reference, entree_b->reference);
 }
+
+
+/* -------------------------------------------------------------------------
+   LE SOLDE INITIAL : ce que valait le compte avant la plage demandee (SI)
+   ----------------------------------------------------------------------- */
+ 
+/* le solde initial d un compte = son solde AVANT la date avant_date (le report des periodes precedentes)
+   on additionne l effet de toutes les lignes du compte, dans les ecritures comptabilisees datees strictement avant avant_date
+   le resultat est dans le sens normal du compte (voir effet_sur_solde)
+   si un pointeur est NULL la fonction retourne 0 (sous le type Monnaie) */
+Monnaie grand_livre_solde_initial(const Compte *compte, const Ecriture *ecritures, size_t nb_ecritures, DATE avant_date){
+    Monnaie solde = 0;
+    size_t j, k;
+ 
+    if (!compte || !ecritures) return 0;
+ 
+    for (j = 0; j < nb_ecritures; j++) {
+        const Ecriture *ecr = &ecritures[j];
+ 
+         /* Seules les ecritures comptabilisees anterieures a avant_date
+            sont prises en compte dans le report */
+         if (!ecritures_est_comptabilisee(ecr) || comparer_dates(ecr->date, avant_date) >= 0)
+             continue;
+         
+         if (!ecr->lignes)
+             continue;
+ 
+        for (k = 0; k < ecr->nombre_lignes; k++) {
+            const ligne_journal *ligne = &ecr->lignes[k];
+            Monnaie d = ligne->Debit;
+            Monnaie c = ligne->credit;
+ 
+            if (ligne->compte_id == compte->id)
+                solde += effet_sur_solde(compte, d, c);
+        }
+    }
+ 
+    return solde;
+}
