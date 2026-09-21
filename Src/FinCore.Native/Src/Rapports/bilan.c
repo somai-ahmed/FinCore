@@ -198,3 +198,15 @@ Etat bilan_generer(const Compte *comptes, size_t nb_comptes, const LigneBalance 
     return ETAT_OK;
 }
 
+/*----------------------------------------------------
+               LA VERIFICATION DU BILAN
+   ----------------------------------------------------*/
+ 
+/* la verification du bilan (meme role que balance_verifier pour la balance) :
+   l ACTIF doit etre egal au PASSIF, c est le principe de la partie double : tout ce que l entreprise possede est finance par quelqu un */
+Etat bilan_verifier(Monnaie total_actif, Monnaie total_passif){
+ 
+    if (total_actif != total_passif) return ERR_BILAN_NON_EQUILIBRE;
+ 
+    return ETAT_OK;
+}
