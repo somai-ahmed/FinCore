@@ -98,3 +98,101 @@ Monnaie grand_livre_solde_initial(const Compte *compte, const Ecriture *ecriture
  
     return solde;
 }
+
+/* -------------------------------------------------------------
+                  LA GENERATION DU GRAND LIVRE 
+   ------------------------------------------------------------- */
+ 
+Etat grand_livre_generer(id_compte compte_id, const Compte *comptes, size_t nb_comptes, const Ecriture *ecritures, size_t nb_ecritures, DATE debut, DATE fin, Entree_GrandLivre *sortie, size_t capacite, size_t *nb_sortie){
+ 
+    if (!comptes || !nb_sortie) return ERR_POINTEUR_NULLE;
+    if (!ecritures && nb_ecritures > 0) return ERR_POINTEUR_NULLE;
+    if (!periodes_plage_valide(debut, fin)) return ERR_PLAGE_DATES_INVALIDE;
+    if (compte_id == INVALID_ID) return ERR_IDENTIFIANT_INVALIDE;
+
+    size_t i, j, k, indice;
+    size_t nb_entrees = 0;
+    const Compte *compte;
+    Monnaie cumul;
+    Etat etat;
+   
+    /* retrouver le compte avec l'appelle du la fonction trouver_indice_compte */
+    etat = trouver_indice_compte(comptes, nb_comptes, compte_id, &indice);
+    if (etat != ETAT_OK)
+        return etat;
+    compte = &comptes[indice];
+ 
+    /*on COMPTE seulement les mouvements du compte, sans rien ecrire
+          ca permet d annoncer la taille requise (appel avec capacite = 0) */
+    for (j = 0; j < nb_ecritures; j++) {
+        const Ecriture *ecr = &ecritures[j];
+ 
+        if (!ecriture_retenue(ecr, debut, fin))
+            continue;
+        if (ecr->nombre_lignes > 0 && ecr->lignes == NULL)
+            return ERR_POINTEUR_NULLE;
+ 
+        for (k = 0; k < ecr->nombre_lignes; k++) {
+            if (ecr->lignes[k].compte_id == compte_id)
+                nb_entrees++;
+        }
+    }
+ 
+    *nb_sortie = nb_entrees;
+    if (capacite < nb_entrees)
+        return ERR_TRES_PETIT_BUFFER;
+    if (nb_entrees == 0)
+        return ERR_AUCUNE_DONNEE_PERIODE;
+    if (sortie == NULL)
+        return ERR_POINTEUR_NULLE;
+ 
+    /* second passage : on REMPLIT sortie, une entree par ligne d ecriture qui touche le compte
+          (une ecriture qui a 2 lignes sur ce compte donne donc 2 entrees)
+          la fonction snprintf est la meme que dans balance.c : elle copie la chaine vers la destination sans depasser sa taille du la biblio <string.h>
+          <voir documentation/string_func/snprintf.ipynb>
+          */
+   
+    i = 0;
+    for (j = 0; j < nb_ecritures; j++) {
+        const Ecriture *ecr = &ecritures[j];
+ 
+        if (!ecriture_retenue(ecr, debut, fin))
+            continue;
+ 
+        for (k = 0; k < ecr->nombre_lignes; k++) {
+            const ligne_journal *ligne = &ecr->lignes[k];
+            Monnaie d = ligne->Debit;
+            Monnaie c = ligne->credit;
+ 
+            if (ligne->compte_id != compte_id)
+                continue;
+ 
+            memset(&sortie[i], 0, sizeof(sortie[i]));
+            sortie[i].date = ecr->date;
+            snprintf(sortie[i].reference, sizeof(sortie[i].reference), "%s", ecr->reference);
+ 
+            /* le libelle du mouvement : celui de la ligne, ou celui de l ecriture si la ligne n en a pas */
+            if (ligne->libelle[0] != '\0')
+                snprintf(sortie[i].libelle, sizeof(sortie[i].libelle), "%s", ligne->libelle);
+            else
+                snprintf(sortie[i].libelle, sizeof(sortie[i].libelle), "%s", ecr->description);
+ 
+            sortie[i].debit  = d;
+            sortie[i].credit = c;
+            i++;
+        }
+    }
+ 
+      /* Trier les mouvements avant de calculer le solde cumule */
+      qsort(sortie, nb_entrees, sizeof(sortie[0]), comparer_entrees_grand_livre);
+      
+      /* Partir du solde initial et appliquer chaque mouvement chronologiquement */
+      cumul = grand_livre_solde_initial(compte, ecritures, nb_ecritures, debut);
+      
+      for (i = 0; i < nb_entrees; i++) {
+          cumul += effet_sur_solde(compte, sortie[i].debit, sortie[i].credit);
+          sortie[i].solde_cumule = cumul;
+      }
+   
+      return ETAT_OK;
+}
