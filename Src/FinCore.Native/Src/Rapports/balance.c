@@ -89,3 +89,20 @@ Etat balance_generer(const Compte *comptes, size_t nb_comptes, const Ecriture *e
   
       return ETAT_OK; /* l etat qui passe tous les erreurs et assure le travail du back-end du balance et la validation de tous les champs */
 }
+
+/* la somme des debits de toute la balance 
+   on parcourt chaque ligne du tableau et on additionne son champ total_debit */
+Monnaie balance_total_debit(const LigneBalance *lignes, size_t nombre){
+    Monnaie somme = 0;
+    size_t i;
+ 
+    /* le cas d absence de tableau : NULL a additionner */
+    if (!lignes) return 0; /* sous le type monnaie */
+ 
+    for (i = 0; i < nombre; i++) {
+        somme += lignes[i].total_debit;
+    }
+ 
+    return somme;
+}
+
