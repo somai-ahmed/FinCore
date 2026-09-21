@@ -196,3 +196,37 @@ Etat grand_livre_generer(id_compte compte_id, const Compte *comptes, size_t nb_c
    
       return ETAT_OK;
 }
+
+/* ------------------------------------
+      LA VERIFICATION DU GRAND LIVRE
+  ------------------------------------*/
+ 
+/* la verification du grand livre d un compte :
+   ligne est la ligne de la balance de CE compte, calculee sur la meme plage de dates que le grand livre
+   le total des debits et des credits des entrees doit etre egal a total_debit et total_credit de cette ligne
+   elle retourne le premier probleme trouve sous forme de code d erreur */
+
+Etat grand_livre_verifier(const Entree_GrandLivre *entrees, size_t nombre, const LigneBalance *ligne){
+    Monnaie somme_debit = 0;
+    Monnaie somme_credit = 0;
+    size_t i;
+ 
+    if (!ligne) return ERR_POINTEUR_NULLE;
+    if (!entrees && nombre > 0) return ERR_POINTEUR_NULLE;
+ 
+    for (i = 0; i < nombre; i++) {
+ 
+        /* un montant negatif n a pas de sens dans un mouvement du grand livre */
+        if (entrees[i].debit < 0 || entrees[i].credit < 0)
+            return ERR_MOUVEMENT_COMPTABLE_INVALIDE;
+ 
+        somme_debit  += entrees[i].debit;
+        somme_credit += entrees[i].credit;
+    }
+ 
+    /* si le grand livre est vide alors que la balance a des mouvements, les sommes sont differentes : le grand livre est incoherent */
+    if (somme_debit != ligne->total_debit || somme_credit != ligne->total_credit)
+        return ERR_GRAND_LIVRE_BALANCE_INCOHERENTS;
+ 
+    return ETAT_OK;
+}
