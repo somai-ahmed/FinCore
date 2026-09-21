@@ -140,4 +140,36 @@ bool balance_est_equilibree(const LigneBalance *lignes, size_t nombre){
   /*puisque la fonction du type output BOOLEEN , elle recoit TRUE si et seulement si total_debit = tital_credit sinon retourne FALSE dans tout autres cas */
 }
 
+/* la verification complete de la balance (meme role que ecritures_valider pour une ecriture) 
+   SANS calculer , elle controle que les chiffres de la balance --> elle retourne le premier probleme trouve sous forme de code d erreur */
 
+Etat balance_verifier(const LigneBalance *lignes, size_t nombre){
+    size_t i;
+ 
+    if (!lignes) return ERR_POINTEUR_NULLE;
+ 
+    if (nombre == 0) return ERR_AUCUNE_DONNEE_PERIODE; /* l absence des donness du periode*/
+ 
+    /* 1. le total des debits doit etre egal au total des credits */
+    if (!balance_est_equilibree(lignes, nombre)) return ERR_BALANCE_NON_EQUILIBREE; /*le total des debits doit etre egal au total des credit */
+ 
+    /* l adoption du boucle for qui va contenir plusieurs conditions de verifications*/
+    for (i = 0; i < nombre; i++) {
+        const LigneBalance *ligne = &lignes[i];
+ 
+        /* un montant negatif n a pas de sens dans une balance */
+        if (ligne->total_debit < 0 || ligne->total_credit < 0 || ligne->solde_debit < 0 || ligne->solde_credit < 0)
+            return ERR_BALANCE_DEBIT_CREDIT_INCOHERENTS;
+ 
+        /* le solde est d un seul cote : debiteur OU crediteur, jamais les deux en meme temps */
+        if (ligne->solde_debit > 0 && ligne->solde_credit > 0)
+            return ERR_BALANCE_DEBIT_CREDIT_INCOHERENTS;
+ 
+        /* le solde doit correspondre aux totaux : solde_debit - solde_credit == total_debit - total_credit */
+        if (ligne->solde_debit - ligne->solde_credit != ligne->total_debit - ligne->total_credit)
+            return ERR_BALANCE_DEBIT_CREDIT_INCOHERENTS;
+    }
+ 
+    return ETAT_OK;
+}
+ 
