@@ -156,3 +156,74 @@ static void calculer_resultats(CompteResultat *r) {
        Positif = benefice || negatif = perte */
     r->resultat_net = r->resultat_avant_impot - r->total_rubrique[CR_IMPOT_BENEFICES];
 }
+
+/* ------------------------------------------------------------------
+                     Fonctions publiques                                            
+------------------------------------------------------------------- */
+
+/*
+ * Génère le compte de résultat.
+ * comptes / total_debit / total_credit sont trois tableaux "parallèles" :
+ * la case i de chaque tableau parle du même compte.
+ */
+Etat compte_resultat_generer(const Compte *comptes,
+                             const Monnaie *total_debit,
+                             const Monnaie *total_credit,
+                             int nb_comptes,
+                             CompteResultat *resultat) {
+    /* Première protection : aucun pointeur ne doit être vide. */
+    if (comptes == NULL || total_debit == NULL || total_credit == NULL || resultat == NULL) {
+        return ERR_RAPPORT_PARAM_NULL;
+    }
+    if (nb_comptes < 0) {
+        return ERR_RAPPORT_PARAM_INVALIDE;
+    }
+
+    /* memset remplit toute la structure avec des 0 : lignes vides, totaux a zero.
+       sizeof(*resultat) = la taille exacte de la structure à effacer. */
+    memset(resultat, 0, sizeof(*resultat));
+
+    for (int i = 0; i < nb_comptes; i++) {
+        const char *code = comptes[i].code;
+        RubriqueCR rubrique;
+
+        /* On saute les comptes qui ne sont pas des charges ou des produits.
+           On ne regarde pas est_active : un compte désactivé peut quand même
+           avoir eu des mouvements pendant la periode. */
+        if (!trouver_rubrique(code, &rubrique)) {
+            continue;
+        }
+
+        /* On saute aussi les comptes sans aucun mouvement, ils n'apportent rien. */
+        if (total_debit[i] == 0 && total_credit[i] == 0) {
+            continue;
+        }
+
+        /* Le tableau de lignes est plein : on le signale au lieu de deborder . */
+        if (resultat->nb_lignes >= CR_MAX_LIGNES) {
+            return ERR_RAPPORT_CAPACITE;
+        }
+
+        int est_produit = (code[0] == '7');
+        Monnaie montant = calculer_montant(est_produit, total_debit[i], total_credit[i]);
+
+        /* On prend un pointeur vers la prochaine case libre pour ecrire plus court. */
+        LigneCompteResultat *ligne = &resultat->lignes[resultat->nb_lignes];
+
+        /* snprintf copie le texte dans le tableau de la ligne, s'arrete avant
+           la fin si c est trop long, et ajoute toujours le '\0' final. */
+        snprintf(ligne->code, sizeof(ligne->code), "%s", code);
+        snprintf(ligne->nom, sizeof(ligne->nom), "%s", comptes[i].nom);
+
+        ligne->rubrique = rubrique;
+        ligne->montant = montant;
+
+        resultat->nb_lignes++;
+        resultat->total_rubrique[rubrique] += montant;
+    }
+
+    calculer_resultats(resultat);
+
+    return ETAT_OK;
+}
+
