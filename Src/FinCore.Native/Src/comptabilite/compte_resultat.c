@@ -15,6 +15,9 @@
 #include "Src/FinCore.Native/include/types.h"
 #include "Src/FinCore.Native/include/errors.h" 
 
+#include "Src/FinCore.Native/include/comptes.h"
+#include "Src/FinCore.Native/include/monnaie.h"
+#include "Src/FinCore.Native/include/reports.h"
 
 /* ------------------------------------------------------------------
    Table de correspondance : début du code du compte -> rubrique   
