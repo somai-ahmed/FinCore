@@ -1,9 +1,12 @@
 #ifndef DETECTION_H
-#define DETETCTION_H
+#define DETECTION_H 
 
 #include "types.h"
 #include "errors.h"
+#include "periodes.h"
 
+
+typedef struct Session Session;
 
 /* ============================================================
 * Moteur Comptable FinCore - Moteur de détection
@@ -102,7 +105,7 @@ Etat execute_detection(
     Session* session,
     PeriodId id_periode,
     const config_detection* cfg,
-    Resultat_Detection resultats,
+    Resultat_Detection** resultats,
     size_t* nombre_resultats
 );/*output est du forme Etat*/ /*struct en fichier src/FinCore.Native/include/errors.h*/
 
