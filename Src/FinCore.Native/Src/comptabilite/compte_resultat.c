@@ -14,9 +14,7 @@
 
 #include "Src/FinCore.Native/include/types.h"
 #include "Src/FinCore.Native/include/errors.h" 
-#include <comptes.h>
-#include <monnaie.h>
-#include <reports.h>
+
 
 /* ------------------------------------------------------------------
    Table de correspondance : début du code du compte -> rubrique   
@@ -227,3 +225,16 @@ Etat compte_resultat_generer(const Compte *comptes,
     return ETAT_OK;
 }
 
+/* Donne le nom lisible d'une rubrique (pour l'affichage ou l'export). */
+const char *compte_resultat_nom_rubrique(RubriqueCR rubrique) {
+    switch (rubrique) {
+        case CR_PRODUITS_EXPLOITATION:   return "Produits d'exploitation";
+        case CR_CHARGES_EXPLOITATION:    return "Charges d'exploitation";
+        case CR_PRODUITS_FINANCIERS:     return "Produits financiers";
+        case CR_CHARGES_FINANCIERES:     return "Charges financières";
+        case CR_PRODUITS_EXCEPTIONNELS:  return "Produits exceptionnels";
+        case CR_CHARGES_EXCEPTIONNELLES: return "Charges exceptionnelles";
+        case CR_IMPOT_BENEFICES:         return "Impôt sur les bénéfices";
+        default:                         return "Rubrique inconnue";
+    }
+}
