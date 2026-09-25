@@ -40,3 +40,41 @@ Etat detecter_valeurs_aberrantes(Session *session, PeriodId id_periode, const co
 
 /* Calcule le rapport statistique complet de Benford (va etre codee dans benford.c) */
 Etat calculer_rapport_benford(Session *session, PeriodId id_periode, Rapport_Benford *rapport);
+
+/* ------------------------------------------------------------------ 
+                 Fonctions internes ( static functions)                                           
+ ------------------------------------------------------------------ */
+
+/*
+ * Ajoute les résultats d'une méthode (source, nb_source) à la fin du
+ * tableau final (dest, nb_dest), puis libère le petit tableau source
+ * (on n'en a plus besoin une fois copié dans le tableau final).
+ *
+ * realloc() agrandit un bloc mémoire déjà alloué en gardant son contenu ;
+ * s'il ne peut pas agrandir sur place, il déplace tout ailleurs et rend
+ * la nouvelle adresse (c'est pour ça qu'on ne doit jamais écraser dest
+ * avant d'avoir vérifié que realloc n'a pas renvoyé NULL).
+ */
+
+static Etat fusionner_resultats(Resultat_Detection **dest, size_t *nb_dest, Resultat_Detection *source, size_t nb_source) {
+    if (nb_source == 0) {
+        free(source); /* tableau vide éventuel : rien à copier, mais on le libère quand même */
+        return ETAT_OK;
+    }
+
+    size_t nouvelle_taille = *nb_dest + nb_source;
+    Resultat_Detection *nv_dest = realloc(*dest, nouvelle_taille * sizeof(Resultat_Detection));
+    if (nv_dest == NULL) {
+        free(source);
+        return ERR_DETECTION_MEMOIRE;
+    }
+
+    /* memcpy copie nb_source structures d'un coup, juste après ce qui existait déjà */
+    memcpy(nv_dest + *nb_dest, source, nb_source * sizeof(Resultat_Detection));
+
+    *dest = nv_dest;
+    *nb_dest = nouvelle_taille;
+
+    free(source); /* le petit tableau a été recopié, on n'en a plus besoin */
+    return ETAT_OK;
+}
