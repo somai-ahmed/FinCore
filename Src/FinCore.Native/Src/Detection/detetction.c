@@ -175,3 +175,16 @@ Etat Executer_Analyse_Benford(Session* session, PeriodId id_periode, Rapport_Ben
        de Benford, chi-carré) est fait dans le fichier  "benford.c" -- checkout  */
     return calculer_rapport_benford(session, id_periode, rapport);
 }
+
+void liberer_resultats_detection(Resultat_Detection* resultat, size_t nombre_resultats) {
+    /*
+     * Le tableau est un seul bloc alloué par malloc/realloc (voir
+     * fusionner_resultats), donc un seul free() qui libere tout d'un coup.
+     * nombre_resultats n'est pas utilise pour l'instant, on le garde dans
+     * la signature pour rester fidele à l'API et pouvoir évoluer plus tard
+     * (ex : si un jour un champ de Resultat_Detection est alloue à part).
+     */
+    (void)nombre_resultats; /* évite un warning -Wunused-parameter */
+
+    free(resultat);
+}
