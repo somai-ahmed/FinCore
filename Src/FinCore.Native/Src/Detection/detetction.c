@@ -15,7 +15,8 @@
 #include <stdlib.h>  /* malloc, realloc, free pour l allocation dynamique */
 #include <string.h> /* pour l usage du memcpy function pour le copiage du un bloc de memoire */
 
-#include <Src/FinCore.Native/include/types.h>
-#include <Src/FinCore.Native/include/errors.h>
-#include <session.h>
-#include <detection.h>  /* inclut deja periodes.h et déclare Session */
+
+#include "Src/FinCore.Native/include/types.h"
+#include "Src/FinCore.Native/include/errors.h"
+#include "Src/FinCore.Native/include/session.h"
+#include "Src/FinCore.Native/include/detection.h"
