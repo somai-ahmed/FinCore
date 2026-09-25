@@ -165,3 +165,13 @@ Etat execute_detection(Session* session, PeriodId id_periode, const config_detec
 
     return ETAT_OK;
 }
+
+Etat Executer_Analyse_Benford(Session* session, PeriodId id_periode, Rapport_Benford* rapport) {
+    if (session == NULL || rapport == NULL) {
+        return ERR_DETECTION_PARAM_NULL;
+    }
+
+    /* Le calcul réel (extraction des premiers chiffres, comparaison à la loi
+       de Benford, chi-carré) est fait dans le fichier  "benford.c" -- checkout  */
+    return calculer_rapport_benford(session, id_periode, rapport);
+}
