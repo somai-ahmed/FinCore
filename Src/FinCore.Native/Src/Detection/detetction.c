@@ -152,13 +152,13 @@ Etat execute_detection(Session* session, PeriodId id_periode, const config_detec
 
         Etat etat = methodes[i].executer(session, id_periode, cfg, &partiels, &nb_partiels);
         if (etat != ETAT_OK) {
-            nettoyer_apres_erreur(resultats, nombre_resultats);
+            liberer_apres_erreur(resultats, nombre_resultats);
             return etat;
         }
 
         etat = fusionner_resultats(resultats, nombre_resultats, partiels, nb_partiels);
         if (etat != ETAT_OK) {
-            nettoyer_apres_erreur(resultats, nombre_resultats);
+            liberer_apres_erreur(resultats, nombre_resultats);
             return etat;
         }
     }
