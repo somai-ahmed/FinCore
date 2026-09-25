@@ -87,3 +87,30 @@ static void liberer_apres_erreur(Resultat_Detection **resultats, size_t *nombre_
     *resultats = NULL;
     *nombre_resultats = 0;
 }
+
+ /* ------------------------------------------------------------------ 
+                  API publique (declare en detection.)                  
+ ------------------------------------------------------------------ */
+
+void detection_config_par_defaut(config_detection* cfg) {
+    /* voir documentation/detection/config_par_defaut.ipynb*/
+    if (cfg == NULL) {
+        return;
+    }
+
+    cfg->benford_est_active = 1;
+    cfg->doublons_est_active = 1;
+    cfg->nombres_ronds_active = 1;
+    cfg->valeurs_aberrantes_active = 1;
+
+    /* Au-delà de 3 écarts-types, un montant est jugé statistiquement extrême
+       par rapport aux autres écritures du même compte. */
+    cfg->seuil_ecart_type_extreme = 3.0;
+
+    /* Un montant est jugé "rond" s'il est divisible par ce seuil (ex : 1000 DT). */
+    cfg->seuil_ecart_nombres_ronds = 1000.0;
+
+    /* Fenêtre de recherche des doublons : on compare chaque écriture aux
+       autres écritures des 7 jours autour d'elle. */
+    cfg->fenetre_jours_doublon = 7;
+}
