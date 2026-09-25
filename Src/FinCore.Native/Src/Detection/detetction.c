@@ -78,3 +78,12 @@ static Etat fusionner_resultats(Resultat_Detection **dest, size_t *nb_dest, Resu
     free(source); /* le petit tableau a été recopié, on n'en a plus besoin */
     return ETAT_OK;
 }
+
+/* liberer *resultats en cas d'erreur en cours de route, pour ne rien laisser de partiel. */
+static void liberer_apres_erreur(Resultat_Detection **resultats, size_t *nombre_resultats) {
+    /* liberation */
+    /* initialisation a 0 / NULL */
+    free(*resultats);
+    *resultats = NULL;
+    *nombre_resultats = 0;
+}
