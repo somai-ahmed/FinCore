@@ -114,3 +114,54 @@ void detection_config_par_defaut(config_detection* cfg) {
        autres écritures des 7 jours autour d'elle. */
     cfg->fenetre_jours_doublon = 7;
 }
+
+Etat execute_detection(Session* session, PeriodId id_periode, const config_detection* cfg, Resultat_Detection** resultats, size_t* nombre_resultats) {
+ 
+    if (session == NULL || cfg == NULL || resultats == NULL || nombre_resultats == NULL) {
+        return ERR_DETECTION_PARAM_NULL;
+    }
+
+    *resultats = NULL;
+    *nombre_resultats = 0;
+
+    /*
+     * Table {drapeau actif, fonction a appeler} : ça evite de repeter 4 fois
+     * le même bloc "si actif -> appeler -> fusionner -> vérifier l'erreur".
+     */
+    struct {
+        int est_active;
+        Etat (*executer)(Session*, PeriodId, const config_detection*, Resultat_Detection**, size_t*);
+    }
+  
+   methodes[] = {
+        { cfg->benford_est_active , detecter_benford_anomalies },
+        { cfg->doublons_est_active ,detecter_doublons },
+        { cfg->nombres_ronds_active, detecter_montants_ronds },
+        { cfg->valeurs_aberrantes_active, detecter_valeurs_aberrantes }
+    };
+ 
+    int nb_methodes = (int)(sizeof(methodes) / sizeof(methodes[0]));
+
+    for (int i = 0; i < nb_methodes; i++) {
+        if (!methodes[i].est_active) {
+            continue;
+        }
+
+        Resultat_Detection *partiels = NULL;
+        size_t nb_partiels = 0;
+
+        Etat etat = methodes[i].executer(session, id_periode, cfg, &partiels, &nb_partiels);
+        if (etat != ETAT_OK) {
+            nettoyer_apres_erreur(resultats, nombre_resultats);
+            return etat;
+        }
+
+        etat = fusionner_resultats(resultats, nombre_resultats, partiels, nb_partiels);
+        if (etat != ETAT_OK) {
+            nettoyer_apres_erreur(resultats, nombre_resultats);
+            return etat;
+        }
+    }
+
+    return ETAT_OK;
+}
