@@ -76,6 +76,7 @@ typedef struct config_detection{
     int benford_est_active ;
     int doublons_est_active;
     int nombres_ronds_active;
+    int valeurs_aberrantes_active; 
     double seuil_ecart_type_extreme;    /* ex :3,0 sigma */
     double seuil_ecart_nombres_ronds; /*ex: montants divisibles par 1000*/
     int fenetre_jours_doublon; /*période de recherche des doublons*/
